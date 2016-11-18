@@ -1,0 +1,5 @@
+[Nov 18]
+: Added the View class
+: Added the Player class
+	: Player classes uses the Entity class
+: Main activity runs GameActivity which draws character
