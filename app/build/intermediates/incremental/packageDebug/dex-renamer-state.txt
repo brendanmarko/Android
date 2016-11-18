@@ -1,7 +1,0 @@
-#Fri Nov 18 11:34:59 EST 2016
-base.0=/home/brendan/Desktop/Game/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_61919d15c0e92afd2bb9f31497daa3ab499226a3
-renamed.1=classes.dex
-renamed.0=classes2.dex
-file.1=/home/brendan/Desktop/Game/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_4bbeb4125eb8392e3dcadaeddfe01f337c59c0a3/classes.dex
-base.1=/home/brendan/Desktop/Game/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_4bbeb4125eb8392e3dcadaeddfe01f337c59c0a3
-file.0=/home/brendan/Desktop/Game/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_61919d15c0e92afd2bb9f31497daa3ab499226a3/classes.dex
