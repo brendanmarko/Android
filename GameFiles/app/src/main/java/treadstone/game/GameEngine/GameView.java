@@ -1,5 +1,6 @@
 package treadstone.game.GameEngine;
 
+import java.util.ArrayList;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
@@ -23,6 +24,10 @@ public class GameView extends SurfaceView implements Runnable
     private Canvas          canvas;
     private SurfaceHolder   curr_holder;
 
+    ArrayList<BackgroundEffect> background_visuals = new ArrayList<>();
+
+    BackgroundEffect b1, b2, b3, b4;
+
     public GameView(Context curr_context, Point dimensions)
     {
         super(curr_context);
@@ -38,6 +43,20 @@ public class GameView extends SurfaceView implements Runnable
         // Test Enemy added to Map
         test_enemy1 = new TestEnemy(curr_context, "bob_evil", 2000, 50);
         test_enemy1.setMaxBounds(dimensions.x - test_enemy1.getImageHeight(), dimensions.y);
+
+        // Background Effects
+        b1 = new BackgroundEffect(curr_context, "star_yellow", 0, 0, 4);
+        b2 = new BackgroundEffect(curr_context, "star_small", 0, 0, 10);
+        b3 = new BackgroundEffect(curr_context, "star_small", 0, 0, 8);
+        b4 = new BackgroundEffect(curr_context, "star_small", 0, 0, 6);
+
+        background_visuals.add(b1);
+        background_visuals.add(b2);
+        background_visuals.add(b3);
+        background_visuals.add(b4);
+
+        setBackgroundLimits(background_visuals);
+
     }
 
     @Override
@@ -57,6 +76,7 @@ public class GameView extends SurfaceView implements Runnable
     {
         curr_player.update();
         test_enemy1.update();
+        updateListContents(background_visuals);
     }
 
     public void draw()
@@ -72,6 +92,7 @@ public class GameView extends SurfaceView implements Runnable
             // Draw Entities
             drawTarget(curr_player);
             drawTarget(test_enemy1);
+            drawListContents(background_visuals);
 
             // Unlock and draw
             curr_holder.unlockCanvasAndPost(canvas);
@@ -144,6 +165,34 @@ public class GameView extends SurfaceView implements Runnable
     public void drawTarget(MovableImage curr_target)
     {
         canvas.drawBitmap(curr_target.getImage(), curr_target.getX(), curr_target.getY(), paint);
+    }
+
+    public void setBackgroundLimits(ArrayList<BackgroundEffect> curr_list)
+    {
+
+        for (BackgroundEffect curr_item : curr_list)
+        {
+            curr_item.setMaxBounds(max_x - curr_item.getImageHeight(), max_y);
+        }
+
+    }
+
+    public void drawListContents(ArrayList<BackgroundEffect> curr_list)
+    {
+
+        for (MovableImage curr_item : curr_list)
+        {
+            drawTarget(curr_item);
+        }
+    }
+
+    public void updateListContents(ArrayList<BackgroundEffect> curr_list)
+    {
+
+        for (BackgroundEffect curr_item : curr_list)
+        {
+            curr_item.update();
+        }
     }
 
 }

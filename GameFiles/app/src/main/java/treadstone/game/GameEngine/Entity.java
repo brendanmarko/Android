@@ -1,5 +1,7 @@
 package treadstone.game.GameEngine;
 
+import java.util.Random;
+
 public abstract class Entity
 {
 
@@ -54,6 +56,13 @@ public abstract class Entity
     public void respawn()
     {
         curr_pos.setPosition(start_pos.getX(), start_pos.getY());
+    }
+
+    public void random_spawn()
+    {
+        Random generator = new Random();
+        int random_factor = generator.nextInt(10);
+        curr_pos.setPosition(max_x, (max_y * random_factor)/10);
     }
 
 }

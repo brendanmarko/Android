@@ -31,3 +31,8 @@
 [EnemyTest class]
 	[2 hours]
 	[Created a class test primitive AI which will lay framework for Enemies]
+
+[BackgroundEffect class]
+	[2 hours]
+	[A class that adds moving, scrolling objects into the Background to add variety]
+		[ie) leaves in the wind, clouds, stars etc...]

@@ -1,15 +1,15 @@
 package treadstone.game.GameEngine;
 
+
 import android.content.Context;
 
-public class TestEnemy extends MovableImage
+public class BackgroundEffect extends MovableImage
 {
 
-    TestEnemy(Context context, String name, int x, int y)
+    BackgroundEffect(Context context, String name, int x, int y, int speed)
     {
-        super(context, name, x, y, 15, name);
-        setSpeed(10);
-        startStatic();
+        super(context, name, x, y, speed, name);
+        setSpeed(speed);
     }
 
     public void update()
@@ -43,7 +43,5 @@ public class TestEnemy extends MovableImage
         }
 
     }
-
-
 
 }
