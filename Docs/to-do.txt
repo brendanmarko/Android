@@ -1,0 +1,5 @@
+[Week 1 Goals]
+	[Hit Detection]
+	[Character Movement]
+		[Controller scheme]
+	[Backgrounds for Levels]
