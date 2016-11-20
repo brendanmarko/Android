@@ -6,6 +6,7 @@ public abstract class Entity
     private String          name;
     private int             x, y;
     private Position        curr_pos;
+    private int             max_x, max_y;
 
     Entity(String new_name, int x, int y)
     {
@@ -31,6 +32,22 @@ public abstract class Entity
     public void setPosition(int x, int y)
     {
         curr_pos.setPosition(x, y);
+    }
+
+    public void setMaxBounds(int x, int y)
+    {
+        max_x = x;
+        max_y = y;
+    }
+
+    public int getXMax()
+    {
+        return max_x;
+    }
+
+    public int getYMax()
+    {
+        return max_y;
     }
 
 }

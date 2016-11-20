@@ -2,6 +2,8 @@ package treadstone.game.GameEngine;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.view.Display;
+import android.graphics.Point;
 
 public class GameActivity extends Activity
 {
@@ -12,7 +14,12 @@ public class GameActivity extends Activity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        game_view = new GameView(this);
+
+        Display curr_display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        curr_display.getSize(size);
+
+        game_view = new GameView(this, size);
         setContentView(game_view);
     }
 
