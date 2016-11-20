@@ -9,14 +9,13 @@ import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 
-import treadstone.game.R;
-
 public class GameView extends SurfaceView implements Runnable
 {
 
     volatile boolean        view_active;
     Thread                  game_thread = null;
     Player                  curr_player;
+    TestEnemy               test_enemy1;
     private int             max_x;
     private int             max_y;
 
@@ -31,8 +30,14 @@ public class GameView extends SurfaceView implements Runnable
         paint = new Paint();
         max_x = dimensions.x;
         max_y = dimensions.y;
+
+        // Player added to Game
         curr_player = new Player(curr_context, "Mini-Meep", 50, 50);
         curr_player.setMaxBounds(dimensions.x - curr_player.getImageHeight(), dimensions.y);
+
+        // Test Enemy added to Map
+        test_enemy1 = new TestEnemy(curr_context, "bob_evil", 2000, 50);
+        test_enemy1.setMaxBounds(dimensions.x - test_enemy1.getImageHeight(), dimensions.y);
     }
 
     @Override
@@ -51,6 +56,7 @@ public class GameView extends SurfaceView implements Runnable
     public void update()
     {
         curr_player.update();
+        test_enemy1.update();
     }
 
     public void draw()
@@ -63,8 +69,9 @@ public class GameView extends SurfaceView implements Runnable
             canvas = curr_holder.lockCanvas();
             canvas.drawColor(Color.argb(255, 0, 0, 0));
 
-            // Draw Player
-            canvas.drawBitmap(curr_player.getImage(), curr_player.getX(), curr_player.getY(), paint);
+            // Draw Entities
+            drawTarget(curr_player);
+            drawTarget(test_enemy1);
 
             // Unlock and draw
             curr_holder.unlockCanvasAndPost(canvas);
@@ -132,6 +139,11 @@ public class GameView extends SurfaceView implements Runnable
 
         return true;
 
+    }
+
+    public void drawTarget(MovableImage curr_target)
+    {
+        canvas.drawBitmap(curr_target.getImage(), curr_target.getX(), curr_target.getY(), paint);
     }
 
 }

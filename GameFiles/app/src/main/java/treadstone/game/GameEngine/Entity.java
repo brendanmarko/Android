@@ -4,13 +4,14 @@ public abstract class Entity
 {
 
     private String          name;
-    private int             x, y;
     private Position        curr_pos;
     private int             max_x, max_y;
+    private Position        start_pos;
 
     Entity(String new_name, int x, int y)
     {
         name = new_name;
+        start_pos = new Position(x, y);
         curr_pos = new Position(x, y);
     }
 
@@ -48,6 +49,11 @@ public abstract class Entity
     public int getYMax()
     {
         return max_y;
+    }
+
+    public void respawn()
+    {
+        curr_pos.setPosition(start_pos.getX(), start_pos.getY());
     }
 
 }
