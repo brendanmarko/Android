@@ -1,0 +1,33 @@
+[Template]
+------
+[Date]
+------
+[Task]
+	[Time]
+	[Notes]
+
+--------
+[Nov 18]
+--------
+[View class]
+	[1 hour]
+	[Handles drawing to the Canvas]
+
+[Player class]
+	[2 hours]
+	[Handles player attributes and interactions]
+
+[Activities]
+	[2 hours]
+	[Basic loop of Game and MainActivity launch into GameActivity]
+
+--------
+[Nov 20]
+--------
+[Hierarchy of Entities]
+	[3 hours]
+	[Restructed the Entity class to have useful Inheritance]
+
+[EnemyTest class]
+	[2 hours]
+	[Created a class test primitive AI which will lay framework for Enemies]
