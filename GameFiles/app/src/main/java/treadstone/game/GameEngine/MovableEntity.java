@@ -5,6 +5,7 @@ public abstract class MovableEntity extends Entity
 
     private int             speed;
     private boolean         running;
+    private boolean         moving;
     private int             running_factor;
 
     MovableEntity(String name, int x, int y, int run_speed)
@@ -83,6 +84,24 @@ public abstract class MovableEntity extends Entity
             setPosition(getX(), getYMax());
         }
 
+    }
+
+    @Override
+    public void setPosition(int x, int y)
+    {
+        if (getX() == x && getY() == y)
+        {
+            moving = false;
+            return;
+        }
+
+        getPosition().setPosition(x, y);
+        moving = true;
+    }
+
+    public boolean isMoving()
+    {
+        return moving;
     }
 
 }

@@ -32,6 +32,11 @@ public abstract class Entity
         return curr_pos.getY();
     }
 
+    public Position getPosition()
+    {
+        return curr_pos;
+    }
+
     public void setPosition(int x, int y)
     {
         curr_pos.setPosition(x, y);

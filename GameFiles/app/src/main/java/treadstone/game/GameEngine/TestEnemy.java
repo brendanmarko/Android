@@ -16,6 +16,7 @@ public class TestEnemy extends MovableImage
     {
         setPosition(getX()-getSpeed(), getY());
         boundsCheck(getX(), getY());
+        getHitRect().updateHitbox(getX(), getY(), getImage());
     }
 
     @Override
@@ -43,7 +44,5 @@ public class TestEnemy extends MovableImage
         }
 
     }
-
-
 
 }

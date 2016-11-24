@@ -15,7 +15,13 @@ public class Player extends MovableImage
     public void update()
     {
         setPosition(getX()+getSpeed(), getY());
+
+        if (isMoving())
+        {
         boundsCheck(getX(), getY());
+        getHitRect().updateHitbox(getX(), getY(), getImage());
+        }
+
     }
 
 }

@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
@@ -13,23 +14,24 @@ import android.view.SurfaceHolder;
 public class GameView extends SurfaceView implements Runnable
 {
 
-    volatile boolean        view_active;
-    Thread                  game_thread = null;
-    Player                  curr_player;
-    TestEnemy               test_enemy1;
-    private int             max_x;
-    private int             max_y;
+    volatile boolean                view_active;
+    Thread                          game_thread = null;
+    Player                          curr_player;
+    TestEnemy                       test_enemy1, test_enemy2;
+    private int                     max_x, max_y;
 
-    private Paint           paint;
-    private Canvas          canvas;
-    private SurfaceHolder   curr_holder;
+    private Paint                   paint;
+    private Canvas                  canvas;
+    private SurfaceHolder           curr_holder;
 
-    ArrayList<BackgroundEffect> background_visuals = new ArrayList<>();
+    ArrayList<TestEnemy>            enemy_list = new ArrayList<>();
+    ArrayList<BackgroundEffect>     background_visuals = new ArrayList<>();
 
     BackgroundEffect b1, b2, b3, b4;
 
     public GameView(Context curr_context, Point dimensions)
     {
+
         super(curr_context);
         curr_holder = getHolder();
         paint = new Paint();
@@ -43,6 +45,11 @@ public class GameView extends SurfaceView implements Runnable
         // Test Enemy added to Map
         test_enemy1 = new TestEnemy(curr_context, "bob_evil", 2000, 50);
         test_enemy1.setMaxBounds(dimensions.x - test_enemy1.getImageHeight(), dimensions.y);
+        test_enemy2 = new TestEnemy(curr_context, "bob_evil", 1000, 50);
+        test_enemy2.setMaxBounds(dimensions.x - test_enemy1.getImageHeight(), dimensions.y);
+
+        enemy_list.add(test_enemy1);
+        enemy_list.add(test_enemy2);
 
         // Background Effects
         b1 = new BackgroundEffect(curr_context, "star_yellow", 0, 0, 4);
@@ -75,8 +82,8 @@ public class GameView extends SurfaceView implements Runnable
     public void update()
     {
         curr_player.update();
-        test_enemy1.update();
-        updateListContents(background_visuals);
+        updateEnemies();
+        updateBackgroundEffects();
     }
 
     public void draw()
@@ -89,10 +96,15 @@ public class GameView extends SurfaceView implements Runnable
             canvas = curr_holder.lockCanvas();
             canvas.drawColor(Color.argb(255, 0, 0, 0));
 
+            // Paint Colour
+            paint.setColor(Color.argb(255, 255, 0, 0));
+
             // Draw Entities
             drawTarget(curr_player);
-            drawTarget(test_enemy1);
-            drawListContents(background_visuals);
+            drawEnemies();
+            drawBackgroundEffects();
+            drawHitboxes();
+            checkCollisions();
 
             // Unlock and draw
             curr_holder.unlockCanvasAndPost(canvas);
@@ -177,22 +189,73 @@ public class GameView extends SurfaceView implements Runnable
 
     }
 
-    public void drawListContents(ArrayList<BackgroundEffect> curr_list)
+    public void drawBackgroundEffects()
     {
 
-        for (MovableImage curr_item : curr_list)
+        for (MovableImage curr_item : background_visuals)
         {
             drawTarget(curr_item);
         }
     }
 
-    public void updateListContents(ArrayList<BackgroundEffect> curr_list)
+    public void drawEnemies()
     {
 
-        for (BackgroundEffect curr_item : curr_list)
+        for (TestEnemy curr_enemy : enemy_list)
+        {
+            drawTarget(curr_enemy);
+        }
+    }
+
+    public void updateBackgroundEffects()
+    {
+
+        for (BackgroundEffect curr_item : background_visuals)
         {
             curr_item.update();
         }
+
+    }
+
+    public void updateEnemies()
+    {
+
+        for (TestEnemy curr_enemy : enemy_list)
+        {
+            curr_enemy.update();
+        }
+
+    }
+
+    public void checkCollisions()
+    {
+
+        for (TestEnemy curr_enemy : enemy_list)
+        {
+
+            if (Rect.intersects(curr_player.getHitRect().getHitbox(), curr_enemy.getHitRect().getHitbox()))
+            {
+                System.out.println("Collision found, removing enemy and affecting player!");
+                enemy_list.remove(curr_enemy);
+            }
+
+        }
+
+    }
+
+    public void drawHitboxes()
+    {
+
+        Rect curr_box;
+        curr_box = curr_player.getHitRect().getHitbox();
+        canvas.drawRect(curr_box.left, curr_box.top, curr_box.right, curr_box.bottom, paint);
+
+        for (TestEnemy curr_enemy : enemy_list)
+        {
+            curr_box = curr_enemy.getHitRect().getHitbox();
+            canvas.drawRect(curr_box.left, curr_box.top, curr_box.right, curr_box.bottom, paint);
+        }
+
     }
 
 }
