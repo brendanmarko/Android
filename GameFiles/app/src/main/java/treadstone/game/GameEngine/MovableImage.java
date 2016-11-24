@@ -12,12 +12,12 @@ public abstract class MovableImage extends MovableEntity
     private int                 image_id;
     private RectangleHitbox     hitbox;
 
-    MovableImage(Context context, String name, int x, int y, int run_speed, String image_name)
+    MovableImage(Context context, String name, float x, float y, int speed, String image_name)
     {
-        super(name, x, y, run_speed);
+        super(name, x, y, speed);
         image_id = context.getResources().getIdentifier(image_name, "drawable", context.getPackageName());
         image = BitmapFactory.decodeResource(context.getResources(), image_id);
-        hitbox = new RectangleHitbox(x, y, image);
+        hitbox = new RectangleHitbox((int) x, (int) y, image);
     }
 
     public Bitmap getImage()
@@ -25,7 +25,7 @@ public abstract class MovableImage extends MovableEntity
         return image;
     }
 
-    public int getImageHeight()
+    public float getImageHeight()
     {
         return image.getHeight();
     }
@@ -33,6 +33,37 @@ public abstract class MovableImage extends MovableEntity
     public RectangleHitbox getHitRect()
     {
         return hitbox;
+    }
+
+    @Override
+    public void boundsCheck(float x, float y)
+    {
+
+        if (x < 0.0f)
+        {
+            setPosition(0.0f, getY());
+        }
+
+        if (x > getXMax())
+        {
+            setPosition(getXMax(), getY());
+        }
+
+        if (y < 0.0f)
+        {
+            setPosition(getX(), 0.0f);
+        }
+
+        if (y > getYMax())
+        {
+            setPosition(getX(), getYMax());
+        }
+
+        if (y + getImageHeight() > getYMax())
+        {
+            setPosition(getX(), getYMax() - getImageHeight());
+        }
+
     }
 
 }

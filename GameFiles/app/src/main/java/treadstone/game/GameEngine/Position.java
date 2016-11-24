@@ -3,25 +3,25 @@ package treadstone.game.GameEngine;
 public class Position
 {
 
-    private int position[] = {0, 0};
+    private float position[] = {0.0f, 0.0f};
 
-    Position(int new_x, int new_y)
+    Position(float new_x, float new_y)
     {
         position[0] = new_x;
         position[1] = new_y;
     }
 
-    public int getX()
+    public float getX()
     {
         return position[0];
     }
 
-    public int getY()
+    public float getY()
     {
         return position[1];
     }
 
-    public void setPosition(int new_x, int new_y)
+    public void setPosition(float new_x, float new_y)
     {
         position[0] = new_x;
         position[1] = new_y;

@@ -7,10 +7,10 @@ public abstract class Entity
 
     private String          name;
     private Position        curr_pos;
-    private int             max_x, max_y;
+    private float           max_x, max_y;
     private Position        start_pos;
 
-    Entity(String new_name, int x, int y)
+    Entity(String new_name, float x, float y)
     {
         name = new_name;
         start_pos = new Position(x, y);
@@ -22,12 +22,12 @@ public abstract class Entity
         return name;
     }
 
-    public int getX()
+    public float getX()
     {
         return curr_pos.getX();
     }
 
-    public int getY()
+    public float getY()
     {
         return curr_pos.getY();
     }
@@ -37,23 +37,23 @@ public abstract class Entity
         return curr_pos;
     }
 
-    public void setPosition(int x, int y)
+    public void setPosition(float x, float y)
     {
         curr_pos.setPosition(x, y);
     }
 
-    public void setMaxBounds(int x, int y)
+    public void setMaxBounds(float x, float y)
     {
         max_x = x;
         max_y = y;
     }
 
-    public int getXMax()
+    public float getXMax()
     {
         return max_x;
     }
 
-    public int getYMax()
+    public float getYMax()
     {
         return max_y;
     }

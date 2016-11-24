@@ -3,15 +3,13 @@ package treadstone.game.GameEngine;
 public abstract class MovableEntity extends Entity
 {
 
-    private int             speed;
-    private boolean         running;
+    private int             speed, max_speed;
     private boolean         moving;
-    private int             running_factor;
 
-    MovableEntity(String name, int x, int y, int run_speed)
+    MovableEntity(String name, float x, float y, int speed)
     {
         super(name, x, y);
-        running_factor = run_speed;
+        max_speed = speed;
     }
 
     public int getSpeed()
@@ -19,54 +17,23 @@ public abstract class MovableEntity extends Entity
         return speed;
     }
 
-    private void changeSpeed(int new_speed)
-    {
-        speed = new_speed;
-    }
-
-    public void changePace()
-    {
-
-        if (running)
-        {
-            running = false;
-            changeSpeed(speed - running_factor);
-        }
-
-        else
-        {
-            running = true;
-            changeSpeed(speed + running_factor);
-        }
-
-    }
-
-    public boolean isRunning()
-    {
-        return running;
-    }
-
     public void setSpeed(int new_speed)
     {
         speed = new_speed;
     }
 
-    public void startStatic()
+    public void setStatic()
     {
-        running = false;
+        speed = 0;
+        moving = false;
     }
 
-    public int getRunningFactor()
-    {
-    return running_factor;
-    }
-
-    public void boundsCheck(int x, int y)
+    public void boundsCheck(float x, float y)
     {
 
-        if (x < 0)
+        if (x < 0.0f)
         {
-            setPosition(0, getY());
+            setPosition(0.0f, getY());
         }
 
         if (x > getXMax())
@@ -74,9 +41,9 @@ public abstract class MovableEntity extends Entity
             setPosition(getXMax(), getY());
         }
 
-        if (y < 0)
+        if (y < 0.0f)
         {
-            setPosition(getX(), 0);
+            setPosition(getX(), 0.0f);
         }
 
         if (y > getYMax())
@@ -87,8 +54,9 @@ public abstract class MovableEntity extends Entity
     }
 
     @Override
-    public void setPosition(int x, int y)
+    public void setPosition(float x, float y)
     {
+
         if (getX() == x && getY() == y)
         {
             moving = false;
@@ -97,11 +65,29 @@ public abstract class MovableEntity extends Entity
 
         getPosition().setPosition(x, y);
         moving = true;
+
     }
 
     public boolean isMoving()
     {
         return moving;
+    }
+
+    public void toggleMoving(boolean move)
+    {
+
+        moving = move;
+
+        if (moving)
+        {
+            speed = max_speed;
+        }
+
+        else
+        {
+            speed = 0;
+        }
+
     }
 
 }

@@ -19,10 +19,10 @@ public class BackgroundEffect extends MovableImage
     }
 
     @Override
-    public void boundsCheck(int x, int y)
+    public void boundsCheck(float x, float y)
     {
 
-        if (x < 0)
+        if (x < 0.0f)
         {
             random_spawn();
         }
@@ -32,7 +32,7 @@ public class BackgroundEffect extends MovableImage
             setPosition(getXMax(), getY());
         }
 
-        if (y < 0)
+        if (y < 0.0f)
         {
             random_spawn();
         }

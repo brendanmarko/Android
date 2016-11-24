@@ -29,24 +29,24 @@ public class GameView extends SurfaceView implements Runnable
 
     BackgroundEffect b1, b2, b3, b4;
 
-    public GameView(Context curr_context, Point dimensions)
+    public GameView(Context curr_context, Point max)
     {
 
         super(curr_context);
         curr_holder = getHolder();
         paint = new Paint();
-        max_x = dimensions.x;
-        max_y = dimensions.y;
+        max_x = max.x;
+        max_y = max.y;
 
         // Player added to Game
         curr_player = new Player(curr_context, "Mini-Meep", 50, 50);
-        curr_player.setMaxBounds(dimensions.x - curr_player.getImageHeight(), dimensions.y);
+        curr_player.setMaxBounds(max.x - curr_player.getImageHeight(), max.y);
 
         // Test Enemy added to Map
         test_enemy1 = new TestEnemy(curr_context, "bob_evil", 2000, 50);
-        test_enemy1.setMaxBounds(dimensions.x - test_enemy1.getImageHeight(), dimensions.y);
+        test_enemy1.setMaxBounds(max.x - test_enemy1.getImageHeight(), max.y);
         test_enemy2 = new TestEnemy(curr_context, "bob_evil", 1000, 50);
-        test_enemy2.setMaxBounds(dimensions.x - test_enemy1.getImageHeight(), dimensions.y);
+        test_enemy2.setMaxBounds(max.x - test_enemy2.getImageHeight(), max.y);
 
         enemy_list.add(test_enemy1);
         enemy_list.add(test_enemy2);
@@ -160,14 +160,19 @@ public class GameView extends SurfaceView implements Runnable
 
             case MotionEvent.ACTION_UP:
                 System.out.println("Finger lifted");
-                curr_player.changePace();
+                curr_player.toggleMoving(false);
                 break;
 
             case MotionEvent.ACTION_DOWN:
-                System.out.println("Finger down!");
-                curr_player.changePace();
+                System.out.println("Movement tap detected");
+                curr_player.toggleMoving(true);
+                // curr_player.processMovement(curr_motion.getRawX(), curr_motion.getRawY());
                 break;
 
+            case MotionEvent.ACTION_MOVE:
+                System.out.println("Movement move");
+                curr_player.processMovement(curr_motion.getRawX(), curr_motion.getRawY());
+                break;
         }
 
         return true;

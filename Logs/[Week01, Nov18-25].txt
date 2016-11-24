@@ -36,3 +36,18 @@
 	[2 hours]
 	[A class that adds moving, scrolling objects into the Background to add variety]
 		[ie) leaves in the wind, clouds, stars etc...]
+
+--------
+[Nov 24]
+--------
+[Added Touch Movement]
+	[4 hours]
+	[Allowed the Player to move towards where the screen was touched]
+
+[Added Hit Detection]
+	[2 hours]
+	[Game can calculate when there are collisions between Enemies and Player]
+
+[Problems]
+	[Sometimes crashes when hit detection occurs in the rear of enemies]
+	[Holding the screen at a location causes jittery movement]

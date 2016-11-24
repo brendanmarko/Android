@@ -1,6 +1,5 @@
 package treadstone.game.GameEngine;
 
-
 import android.graphics.Rect;
 
 import java.util.ArrayList;
@@ -19,7 +18,6 @@ public class CollisionChecker
 
     private TestEnemy collisionFound()
     {
-        
         return null;
     }
 
