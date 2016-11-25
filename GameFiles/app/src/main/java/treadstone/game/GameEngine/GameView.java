@@ -1,12 +1,13 @@
 package treadstone.game.GameEngine;
 
 import java.util.ArrayList;
+import android.graphics.Rect;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Rect;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
@@ -27,7 +28,9 @@ public class GameView extends SurfaceView implements Runnable
     ArrayList<TestEnemy>            enemy_list = new ArrayList<>();
     ArrayList<BackgroundEffect>     background_visuals = new ArrayList<>();
 
-    BackgroundEffect b1, b2, b3, b4;
+    BackgroundEffect                b1, b2, b3, b4;
+
+    // private TouchHandler            touch_handler;
 
     public GameView(Context curr_context, Point max)
     {
@@ -37,6 +40,9 @@ public class GameView extends SurfaceView implements Runnable
         paint = new Paint();
         max_x = max.x;
         max_y = max.y;
+
+        // Add TouchHandler
+        // touch_handler = new TouchHandler(this, new GestureDetector());
 
         // Player added to Game
         curr_player = new Player(curr_context, "Mini-Meep", 50, 50);
@@ -155,24 +161,23 @@ public class GameView extends SurfaceView implements Runnable
     public boolean onTouchEvent(MotionEvent curr_motion)
     {
 
-        switch (curr_motion.getAction() & MotionEvent.ACTION_MASK)
+        if (curr_motion.getAction() == MotionEvent.ACTION_UP)
         {
-
-            case MotionEvent.ACTION_UP:
                 System.out.println("Finger lifted");
                 curr_player.toggleMoving(false);
-                break;
+        }
 
-            case MotionEvent.ACTION_DOWN:
+        else if (curr_motion.getAction() == MotionEvent.ACTION_DOWN)
+        {
                 System.out.println("Movement tap detected");
                 curr_player.toggleMoving(true);
-                // curr_player.processMovement(curr_motion.getRawX(), curr_motion.getRawY());
-                break;
-
-            case MotionEvent.ACTION_MOVE:
-                System.out.println("Movement move");
                 curr_player.processMovement(curr_motion.getRawX(), curr_motion.getRawY());
-                break;
+        }
+
+        else if (curr_motion.getAction() == MotionEvent.ACTION_MOVE)
+        {
+            System.out.println("Movement move");
+            curr_player.processMovement(curr_motion.getRawX(), curr_motion.getRawY());
         }
 
         return true;
@@ -240,8 +245,8 @@ public class GameView extends SurfaceView implements Runnable
 
             if (Rect.intersects(curr_player.getHitRect().getHitbox(), curr_enemy.getHitRect().getHitbox()))
             {
-                System.out.println("Collision found, removing enemy and affecting player!");
                 enemy_list.remove(curr_enemy);
+                break;
             }
 
         }

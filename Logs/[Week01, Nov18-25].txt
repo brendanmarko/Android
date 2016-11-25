@@ -48,6 +48,17 @@
 	[2 hours]
 	[Game can calculate when there are collisions between Enemies and Player]
 
+----------
 [Problems]
-	[Sometimes crashes when hit detection occurs in the rear of enemies]
+----------
 	[Holding the screen at a location causes jittery movement]
+	
+-----------------
+[Solved Problems]
+-----------------
+	[Problem #1]
+	[Sometimes crashes when hit detection occurs in the rear of enemies]
+		[Does not occur on hitting the of Enemy]
+		[Occurs when hitting the second spawned Enemy]
+	[Solution]
+		[Broke out of for each loop when removing enemy to stop iteration over enemy_list]
