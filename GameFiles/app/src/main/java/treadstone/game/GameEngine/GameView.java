@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
@@ -32,9 +33,14 @@ public class GameView extends SurfaceView implements Runnable
 
     // private TouchHandler            touch_handler;
 
+    public GameView(Context context, AttributeSet attrs, int defStyle)
+    {
+        super(context, attrs, defStyle);
+    }
+
+
     public GameView(Context curr_context, Point max)
     {
-
         super(curr_context);
         curr_holder = getHolder();
         paint = new Paint();
@@ -69,13 +75,11 @@ public class GameView extends SurfaceView implements Runnable
         background_visuals.add(b4);
 
         setBackgroundLimits(background_visuals);
-
     }
 
     @Override
     public void run()
     {
-
         while (view_active)
         {
             update();
@@ -97,7 +101,6 @@ public class GameView extends SurfaceView implements Runnable
 
         if (curr_holder.getSurface().isValid())
         {
-
             // Lock Canvas
             canvas = curr_holder.lockCanvas();
             canvas.drawColor(Color.argb(255, 0, 0, 0));
@@ -114,14 +117,12 @@ public class GameView extends SurfaceView implements Runnable
 
             // Unlock and draw
             curr_holder.unlockCanvasAndPost(canvas);
-
         }
 
     }
 
     public void control()
     {
-
         try
         {
             game_thread.sleep(20);
@@ -136,7 +137,6 @@ public class GameView extends SurfaceView implements Runnable
 
     public void pause()
     {
-
         view_active = false;
 
         try
@@ -160,7 +160,6 @@ public class GameView extends SurfaceView implements Runnable
 
     public boolean onTouchEvent(MotionEvent curr_motion)
     {
-
         if (curr_motion.getAction() == MotionEvent.ACTION_UP)
         {
                 System.out.println("Finger lifted");
