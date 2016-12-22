@@ -44,22 +44,22 @@ public abstract class MovableImage extends MovableEntity
             setPosition(0.0f, getY());
         }
 
-        if (x > getXMax())
+        else if (x > getXMax())
         {
             setPosition(getXMax(), getY());
         }
 
-        if (y < 0.0f)
+        else if (y < 0.0f)
         {
             setPosition(getX(), 0.0f);
         }
 
-        if (y > getYMax())
+        else if (y > getYMax())
         {
             setPosition(getX(), getYMax());
         }
 
-        if (y + getImageHeight() > getYMax())
+        else if (y + getImageHeight() > getYMax())
         {
             setPosition(getX(), getYMax() - getImageHeight());
         }

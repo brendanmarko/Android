@@ -26,14 +26,14 @@ public class Player extends MovableImage
 
     public void processMovement(float x_location, float y_location)
     {
-        System.out.println("curr_pos: " + getX() + ", " + getY());
+        // System.out.println("curr_pos: " + getX() + ", " + getY());
         float div_factor;
         spanX = x_location - getX();
         spanY = y_location - getY();
         spanZ = (float) Math.sqrt((spanX * spanX) + (spanY * spanY));
         div_factor = spanZ/getSpeed();
         setPosition(getX() + spanX/div_factor, getY() + spanY/div_factor);
-        System.out.println("new_pos: " + getX() + ", " + getY());
+        //System.out.println("new_pos: " + getX() + ", " + getY());
     }
 
 }

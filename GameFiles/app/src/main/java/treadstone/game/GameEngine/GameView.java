@@ -1,25 +1,25 @@
 package treadstone.game.GameEngine;
 
+import android.graphics.Point;
+import android.util.Log;
 import java.util.ArrayList;
 import android.graphics.Rect;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.content.Context;
 import android.graphics.Canvas;
+
 import android.util.AttributeSet;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 
 public class GameView extends SurfaceView implements Runnable
 {
-
     volatile boolean                view_active;
     Thread                          game_thread = null;
     Player                          curr_player;
-    TestEnemy                       test_enemy1, test_enemy2;
+    TestEnemy                       test_enemy1, test_enemy2, test_enemy3;
     private int                     max_x, max_y;
 
     private Paint                   paint;
@@ -30,44 +30,55 @@ public class GameView extends SurfaceView implements Runnable
     ArrayList<BackgroundEffect>     background_visuals = new ArrayList<>();
 
     BackgroundEffect                b1, b2, b3, b4;
+    CollisionChecker                collision_check;
 
-    // private TouchHandler            touch_handler;
+    public GameView(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+        System.out.println("Inside 2 args [C, A]");
+        init();
+    }
 
+    // public GameView(Context curr_context, Point max)
     public GameView(Context context, AttributeSet attrs, int defStyle)
     {
         super(context, attrs, defStyle);
     }
 
-
     public GameView(Context curr_context, Point max)
     {
         super(curr_context);
-        curr_holder = getHolder();
-        paint = new Paint();
+        System.out.println("MAX PASSED_X: " + max.x);
+        System.out.println("MAX PASSED_Y: " + max.y);
         max_x = max.x;
         max_y = max.y;
+        System.out.println("POINT GAMEVIEW CTOR RUN");
+        init();
+    }
 
-        // Add TouchHandler
-        // touch_handler = new TouchHandler(this, new GestureDetector());
-
+    public void init()
+    {
         // Player added to Game
-        curr_player = new Player(curr_context, "Mini-Meep", 50, 50);
-        curr_player.setMaxBounds(max.x - curr_player.getImageHeight(), max.y);
+        curr_player = new Player(getContext(), "Mini-Meep", 50, 50);
+        curr_player.setMaxBounds(max_x/3, max_y);
 
         // Test Enemy added to Map
-        test_enemy1 = new TestEnemy(curr_context, "bob_evil", 2000, 50);
-        test_enemy1.setMaxBounds(max.x - test_enemy1.getImageHeight(), max.y);
-        test_enemy2 = new TestEnemy(curr_context, "bob_evil", 1000, 50);
-        test_enemy2.setMaxBounds(max.x - test_enemy2.getImageHeight(), max.y);
+        test_enemy1 = new TestEnemy(getContext(), "bob_evil", 2000, 50);
+        test_enemy1.setMaxBounds(max_x - test_enemy1.getImageHeight(), max_y);
+        test_enemy2 = new TestEnemy(getContext(), "bob_evil", 1000, 50);
+        test_enemy2.setMaxBounds(max_x - test_enemy2.getImageHeight(), max_y);
+        test_enemy3 = new TestEnemy(getContext(), "bob_evil", 1000,  max_y + 10);
+        test_enemy3.setMaxBounds(max_x - test_enemy2.getImageHeight(), max_y);
 
         enemy_list.add(test_enemy1);
         enemy_list.add(test_enemy2);
+        enemy_list.add(test_enemy3);
 
         // Background Effects
-        b1 = new BackgroundEffect(curr_context, "star_yellow", 0, 0, 4);
-        b2 = new BackgroundEffect(curr_context, "star_small", 0, 0, 10);
-        b3 = new BackgroundEffect(curr_context, "star_small", 0, 0, 8);
-        b4 = new BackgroundEffect(curr_context, "star_small", 0, 0, 6);
+        b1 = new BackgroundEffect(getContext(), "star_yellow", 0, 0, 4);
+        b2 = new BackgroundEffect(getContext(), "star_small", 0, 0, 10);
+        b3 = new BackgroundEffect(getContext(), "star_small", 0, 0, 8);
+        b4 = new BackgroundEffect(getContext(), "star_small", 0, 0, 6);
 
         background_visuals.add(b1);
         background_visuals.add(b2);
@@ -98,7 +109,6 @@ public class GameView extends SurfaceView implements Runnable
 
     public void draw()
     {
-
         if (curr_holder.getSurface().isValid())
         {
             // Lock Canvas
@@ -162,20 +172,17 @@ public class GameView extends SurfaceView implements Runnable
     {
         if (curr_motion.getAction() == MotionEvent.ACTION_UP)
         {
-                System.out.println("Finger lifted");
-                curr_player.toggleMoving(false);
+            curr_player.toggleMoving(false);
         }
 
         else if (curr_motion.getAction() == MotionEvent.ACTION_DOWN)
         {
-                System.out.println("Movement tap detected");
-                curr_player.toggleMoving(true);
-                curr_player.processMovement(curr_motion.getRawX(), curr_motion.getRawY());
+            curr_player.toggleMoving(true);
+            return true;
         }
 
         else if (curr_motion.getAction() == MotionEvent.ACTION_MOVE)
         {
-            System.out.println("Movement move");
             curr_player.processMovement(curr_motion.getRawX(), curr_motion.getRawY());
         }
 
@@ -190,7 +197,6 @@ public class GameView extends SurfaceView implements Runnable
 
     public void setBackgroundLimits(ArrayList<BackgroundEffect> curr_list)
     {
-
         for (BackgroundEffect curr_item : curr_list)
         {
             curr_item.setMaxBounds(max_x - curr_item.getImageHeight(), max_y);
@@ -200,7 +206,6 @@ public class GameView extends SurfaceView implements Runnable
 
     public void drawBackgroundEffects()
     {
-
         for (MovableImage curr_item : background_visuals)
         {
             drawTarget(curr_item);
@@ -209,7 +214,6 @@ public class GameView extends SurfaceView implements Runnable
 
     public void drawEnemies()
     {
-
         for (TestEnemy curr_enemy : enemy_list)
         {
             drawTarget(curr_enemy);
@@ -218,7 +222,6 @@ public class GameView extends SurfaceView implements Runnable
 
     public void updateBackgroundEffects()
     {
-
         for (BackgroundEffect curr_item : background_visuals)
         {
             curr_item.update();
@@ -228,7 +231,6 @@ public class GameView extends SurfaceView implements Runnable
 
     public void updateEnemies()
     {
-
         for (TestEnemy curr_enemy : enemy_list)
         {
             curr_enemy.update();
@@ -236,25 +238,20 @@ public class GameView extends SurfaceView implements Runnable
 
     }
 
-    public void checkCollisions()
+    public void checkCollisions() /** TO DO : Handle Collision **/
     {
+        collision_check = new CollisionChecker(curr_player, enemy_list);
 
-        for (TestEnemy curr_enemy : enemy_list)
+        if (collision_check.hitCheck())
         {
-
-            if (Rect.intersects(curr_player.getHitRect().getHitbox(), curr_enemy.getHitRect().getHitbox()))
-            {
-                enemy_list.remove(curr_enemy);
-                break;
-            }
-
+            Log.d("collision_log", "Collision just occurred");
+            // handle collision here
         }
 
     }
 
     public void drawHitboxes()
     {
-
         Rect curr_box;
         curr_box = curr_player.getHitRect().getHitbox();
         canvas.drawRect(curr_box.left, curr_box.top, curr_box.right, curr_box.bottom, paint);

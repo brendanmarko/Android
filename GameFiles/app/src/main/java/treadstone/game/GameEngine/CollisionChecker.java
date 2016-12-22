@@ -7,18 +7,29 @@ import java.util.ArrayList;
 public class CollisionChecker
 {
 
-    private Rect                        curr_player;
+    private Player                      curr_player;
     private ArrayList<TestEnemy>        target_list;
 
-    CollisionChecker(Rect player, ArrayList<TestEnemy> enemy_list)
+    CollisionChecker(Player player, ArrayList<TestEnemy> enemy_list)
     {
         curr_player = player;
         target_list = enemy_list;
     }
 
-    private TestEnemy collisionFound()
+    public boolean hitCheck()
     {
-        return null;
+
+        for (TestEnemy curr_enemy : target_list)
+        {
+            if (Rect.intersects(curr_player.getHitRect().getHitbox(), curr_enemy.getHitRect().getHitbox()))
+            {
+                target_list.remove(curr_enemy);
+                return true;
+            }
+        }
+
+        return false;
+
     }
 
 }

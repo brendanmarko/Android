@@ -27,19 +27,14 @@ public class TestEnemy extends MovableImage
             random_spawn();
         }
 
-        if (x > getXMax())
+        else if (x > getXMax())
         {
             setPosition(getXMax(), getY());
         }
 
-        if (y < 0)
+        else if (y + getImageHeight() > getYMax())
         {
-            random_spawn();
-        }
-
-        if (y > getYMax())
-        {
-            setPosition(getX(), getYMax());
+            setPosition(getX(), getYMax() - getImageHeight());
         }
 
     }
