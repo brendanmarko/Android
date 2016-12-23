@@ -10,3 +10,14 @@ Got the Fragments to properly display on the Android app!
 
 	To do
 	Have ScreenFragment properly display/launch the GameView level needed
+
+Day 2 [24/12/16]
+The ControllerFragment and ScreenFragment properly display on a single screen
+The handlers for the ControllerFragment are working properly and do NOT interrupt the ScreenFragment touchEvents!
+
+	Problems
+	None
+
+	To do
+	Add the functionality to end levels and create an "EndGame" Menu
+	Create an Introduction Menu to handle app Navigation

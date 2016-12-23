@@ -22,8 +22,6 @@ public class GameActivity extends FragmentActivity
         Point size = new Point();
         curr_display.getSize(size);
 
-        System.out.println("Screen Fragment attempt");
-
         // Fragment Management
         FragmentManager manager = getSupportFragmentManager();
 

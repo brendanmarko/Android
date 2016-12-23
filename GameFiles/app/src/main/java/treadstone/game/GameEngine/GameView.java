@@ -109,7 +109,7 @@ public class GameView extends SurfaceView implements Runnable
     public void draw()
     {
 
-    Log.d("draw_test", "Testing draw within GameView.draw()");
+    // Log.d("draw_test", "Testing draw within GameView.draw()");
 
         if (curr_holder.getSurface().isValid())
         {
@@ -131,7 +131,7 @@ public class GameView extends SurfaceView implements Runnable
             curr_holder.unlockCanvasAndPost(canvas);
         }
 
-    Log.d("draw_test", "Testing draw within GameView.draw() complete!");
+    // Log.d("draw_test", "Testing draw within GameView.draw() complete!");
 
     }
 

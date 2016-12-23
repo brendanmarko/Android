@@ -5,6 +5,7 @@ import treadstone.game.R;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -32,6 +33,39 @@ public class ControllerFragment extends Fragment
         button_b = (ImageButton) curr_view.findViewById(R.id.button_b);
         button_c = (ImageButton) curr_view.findViewById(R.id.button_c);
         button_s = (ImageButton) curr_view.findViewById(R.id.button_start);
+
+        // Establish Listeners for ImageButtons
+        button_a.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                Log.d("button_a_click", "button_a clicked within ControllerFragment");
+            }
+        });
+
+        button_b.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                Log.d("button_b_click", "button_b clicked within ControllerFragment");
+            }
+        });
+
+        button_c.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                Log.d("button_c_click", "button_c clicked within ControllerFragment");
+            }
+        });
+
+        button_s.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                Log.d("button_s_click", "button_s clicked within ControllerFragment");
+            }
+        });
     }
 
     @Override
@@ -45,7 +79,5 @@ public class ControllerFragment extends Fragment
     {
         super.onSaveInstanceState(bundle);
     }
-
-    // Handle all Button clicks
 
 }
