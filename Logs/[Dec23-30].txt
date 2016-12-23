@@ -1,0 +1,11 @@
+The goal for this week is to establish as much functionality as possible in the construction of making levels on the fly, as well as the seamless integration of multiple fragements within the fragment manager.
+
+Day 1 [23/12/16]
+Got the Fragments to properly display on the Android app!
+
+	Problems
+	ScreenFragment is not properly displaying the GameView object
+		: might not be properly initialized?
+
+	To do
+	Have ScreenFragment properly display/launch the GameView level needed

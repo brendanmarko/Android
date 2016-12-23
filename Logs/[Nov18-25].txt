@@ -1,0 +1,64 @@
+[Template]
+------
+[Date]
+------
+[Task]
+	[Time]
+	[Notes]
+
+--------
+[Nov 18]
+--------
+[View class]
+	[1 hour]
+	[Handles drawing to the Canvas]
+
+[Player class]
+	[2 hours]
+	[Handles player attributes and interactions]
+
+[Activities]
+	[2 hours]
+	[Basic loop of Game and MainActivity launch into GameActivity]
+
+--------
+[Nov 20]
+--------
+[Hierarchy of Entities]
+	[3 hours]
+	[Restructed the Entity class to have useful Inheritance]
+
+[EnemyTest class]
+	[2 hours]
+	[Created a class test primitive AI which will lay framework for Enemies]
+
+[BackgroundEffect class]
+	[2 hours]
+	[A class that adds moving, scrolling objects into the Background to add variety]
+		[ie) leaves in the wind, clouds, stars etc...]
+
+--------
+[Nov 24]
+--------
+[Added Touch Movement]
+	[4 hours]
+	[Allowed the Player to move towards where the screen was touched]
+
+[Added Hit Detection]
+	[2 hours]
+	[Game can calculate when there are collisions between Enemies and Player]
+
+----------
+[Problems]
+----------
+	[Holding the screen at a location causes jittery movement]
+	
+-----------------
+[Solved Problems]
+-----------------
+	[Problem #1]
+	[Sometimes crashes when hit detection occurs in the rear of enemies]
+		[Does not occur on hitting the of Enemy]
+		[Occurs when hitting the second spawned Enemy]
+	[Solution]
+		[Broke out of for each loop when removing enemy to stop iteration over enemy_list]
