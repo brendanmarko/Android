@@ -1,7 +1,5 @@
 package treadstone.game.GameEngine;
 
-import treadstone.game.R;
-
 import android.util.Log;
 import android.view.View;
 import android.os.Bundle;
@@ -12,7 +10,7 @@ import android.view.LayoutInflater;
 
 public class ScreenFragment extends Fragment
 {
-    private static int          xMax, yMax;
+    private int xMax, yMax;
 
     public ScreenFragment()
     {
@@ -22,8 +20,8 @@ public class ScreenFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle)
     {
-        xMax = bundle.getInt("X_BOUND");
-        yMax = bundle.getInt("Y_BOUND");
+        xMax = getArguments().getInt("X_BOUND");
+        yMax = getArguments().getInt("Y_BOUND");
         return new GameView(this.getContext(), new Point(xMax, yMax));
     }
 
@@ -32,7 +30,5 @@ public class ScreenFragment extends Fragment
     {
         Log.d("ScreenFragment", "ScreenFragment created!");
     }
-
-
 
 }

@@ -35,11 +35,8 @@ public class GameView extends SurfaceView implements Runnable
     public GameView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
-        System.out.println("Inside 2 args [C, A]");
-        init();
     }
 
-    // public GameView(Context curr_context, Point max)
     public GameView(Context context, AttributeSet attrs, int defStyle)
     {
         super(context, attrs, defStyle);
@@ -48,11 +45,8 @@ public class GameView extends SurfaceView implements Runnable
     public GameView(Context curr_context, Point max)
     {
         super(curr_context);
-        System.out.println("MAX PASSED_X: " + max.x);
-        System.out.println("MAX PASSED_Y: " + max.y);
         max_x = max.x;
         max_y = max.y;
-        System.out.println("POINT GAMEVIEW CTOR RUN");
         init();
     }
 
