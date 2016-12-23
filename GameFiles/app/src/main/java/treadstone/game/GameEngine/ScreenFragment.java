@@ -10,7 +10,8 @@ import android.view.LayoutInflater;
 
 public class ScreenFragment extends Fragment
 {
-    private int xMax, yMax;
+    private int             xMax, yMax;
+    private GameView        curr_screen;
 
     public ScreenFragment()
     {
@@ -22,13 +23,39 @@ public class ScreenFragment extends Fragment
     {
         xMax = getArguments().getInt("X_BOUND");
         yMax = getArguments().getInt("Y_BOUND");
-        return new GameView(this.getContext(), new Point(xMax, yMax));
+        curr_screen = new GameView(this.getContext(), new Point(xMax, yMax));
+        return curr_screen;
     }
 
     @Override
     public void onViewCreated(View curr_view, Bundle savedInstanceState)
     {
         Log.d("ScreenFragment", "ScreenFragment created!");
+    }
+
+    public void run()
+    {
+        curr_screen.run();
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        curr_screen.resume();
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        curr_screen.pause();
+    }
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();
     }
 
 }

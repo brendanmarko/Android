@@ -32,18 +32,16 @@ public class GameActivity extends FragmentActivity
         bundle.putInt("X_BOUND", size.x);
         bundle.putInt("Y_BOUND", size.y);
 
+        // Add Fragment [Controller]
+        FragmentTransaction transaction = manager.beginTransaction();
+        ControllerFragment controller = new ControllerFragment();
+        transaction.replace(R.id.controller_screen, controller, "controller_screen");
+
         // Add Fragment [GameView]
-        FragmentTransaction transaction_one = manager.beginTransaction();
         ScreenFragment screen = new ScreenFragment();
         screen.setArguments(bundle);
-        transaction_one.add(R.id.game_screen, screen);
-        transaction_one.commit();
-
-        // Add Fragment [Controller]
-        FragmentTransaction transaction_two = manager.beginTransaction();
-        ControllerFragment controller = new ControllerFragment();
-        transaction_two.add(R.id.game_screen, controller);
-        transaction_two.commit();
+        transaction.replace(R.id.game_screen, screen, "game_screen");
+        transaction.commit();
     }
 
     @Override

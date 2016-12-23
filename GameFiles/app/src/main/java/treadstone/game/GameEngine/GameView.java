@@ -48,10 +48,15 @@ public class GameView extends SurfaceView implements Runnable
         max_x = max.x;
         max_y = max.y;
         init();
+        Log.d("view_create", "GameView successfully created!");
     }
 
     public void init()
     {
+        // Initialize Surface Requirements
+        paint = new Paint();
+        curr_holder = getHolder();
+
         // Player added to Game
         curr_player = new Player(getContext(), "Mini-Meep", 50, 50);
         curr_player.setMaxBounds(max_x/3, max_y);
@@ -103,6 +108,9 @@ public class GameView extends SurfaceView implements Runnable
 
     public void draw()
     {
+
+    Log.d("draw_test", "Testing draw within GameView.draw()");
+
         if (curr_holder.getSurface().isValid())
         {
             // Lock Canvas
@@ -122,6 +130,8 @@ public class GameView extends SurfaceView implements Runnable
             // Unlock and draw
             curr_holder.unlockCanvasAndPost(canvas);
         }
+
+    Log.d("draw_test", "Testing draw within GameView.draw() complete!");
 
     }
 
@@ -181,7 +191,6 @@ public class GameView extends SurfaceView implements Runnable
         }
 
         return true;
-
     }
 
     public void drawTarget(MovableImage curr_target)
