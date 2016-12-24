@@ -19,7 +19,7 @@ public class MainActivity extends Activity
 
     public void run()
     {
-        Intent i = new Intent(this, GameActivity.class);
+        Intent i = new Intent(this, MenuActivity.class);
         startActivity(i);
         finish();
     }

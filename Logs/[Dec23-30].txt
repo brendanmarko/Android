@@ -1,7 +1,7 @@
 The goal for this week is to establish as much functionality as possible in the construction of making levels on the fly, 
 as well as the seamless integration of multiple fragements within the fragment manager.
 
-Day 1 [23/12/16]
+Day 1 [22/12/16]
 Got the Fragments to properly display on the Android app!
 
 	Problems
@@ -11,7 +11,7 @@ Got the Fragments to properly display on the Android app!
 	To do
 	Have ScreenFragment properly display/launch the GameView level needed
 
-Day 2 [24/12/16]
+Day 2 [23/12/16]
 The ControllerFragment and ScreenFragment properly display on a single screen
 The handlers for the ControllerFragment are working properly and do NOT interrupt the ScreenFragment touchEvents!
 
@@ -21,3 +21,11 @@ The handlers for the ControllerFragment are working properly and do NOT interrup
 	To do
 	Add the functionality to end levels and create an "EndGame" Menu
 	Create an Introduction Menu to handle app Navigation
+	Add shooting projectiles to the Player
+		subsequent hit detection on missiles fired that are active
+
+Day 3 [24/12/16]
+Added a simple Menu to function as a means to navigate the app
+
+	Problems
+	None
