@@ -26,6 +26,11 @@ The handlers for the ControllerFragment are working properly and do NOT interrup
 
 Day 3 [24/12/16]
 Added a simple Menu to function as a means to navigate the app
+Changed the Button handler to use switch statement instead of multiple handlers
 
 	Problems
-	None
+	Required Android 2.X and above to map multiple button presses at once, further research required perhaps, still want this functionality
+
+	To do
+	Link the button reaction to the proper activities so the inputs can be properly managed and translated to the displayed GameView
+	Create Projectile class that extends Movable Image and create proper sublcasses Bullet, Missile

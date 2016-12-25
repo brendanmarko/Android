@@ -1,19 +1,20 @@
 package treadstone.game.GameEngine;
 
-import treadstone.game.R;
-
-
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
+import treadstone.game.R;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.view.LayoutInflater;
+import android.support.v4.app.Fragment;
 
-public class ControllerFragment extends Fragment
+public class ControllerFragment extends Fragment implements View.OnClickListener
 {
-    private ImageButton button_a, button_b, button_c, button_s;
+    private ImageButton button_a;
+    private ImageButton button_b;
+    private ImageButton button_c;
+    private ImageButton button_s;
 
     public ControllerFragment()
     {
@@ -35,37 +36,30 @@ public class ControllerFragment extends Fragment
         button_s = (ImageButton) curr_view.findViewById(R.id.button_start);
 
         // Establish Listeners for ImageButtons
-        button_a.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
-                Log.d("button_a_click", "button_a clicked within ControllerFragment");
-            }
-        });
+        button_a.setOnClickListener(this);
+        button_b.setOnClickListener(this);
+        button_c.setOnClickListener(this);
+        button_s.setOnClickListener(this);
+    }
 
-        button_b.setOnClickListener(new View.OnClickListener()
+    @Override
+    public void onClick(View v)
+    {
+        switch (v.getId())
         {
-            public void onClick(View v)
-            {
-                Log.d("button_b_click", "button_b clicked within ControllerFragment");
-            }
-        });
+            case R.id.button_a:
+                Log.d("button_a", "A BUTTON CLICKED IN CTRLFRAG");
 
-        button_c.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
-                Log.d("button_c_click", "button_c clicked within ControllerFragment");
-            }
-        });
+            case R.id.button_b:
+                Log.d("button_b", "B BUTTON CLICKED IN CTRLFRAG");
 
-        button_s.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
-                Log.d("button_s_click", "button_s clicked within ControllerFragment");
-            }
-        });
+            case R.id.button_c:
+                Log.d("button_b", "B BUTTON CLICKED IN CTRLFRAG");
+
+            case R.id.button_start:
+                Log.d("button_start", "START BUTTON CLICKED IN CTRLFRAG");
+        }
+
     }
 
     @Override
