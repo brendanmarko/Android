@@ -2,15 +2,22 @@ package treadstone.game.GameEngine;
 
 import treadstone.game.R;
 
+import android.app.Activity;
+import android.content.Context;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.Display;
 import android.graphics.Point;
 import android.support.v4.app.FragmentActivity;
 
-public class GameActivity extends FragmentActivity
+public class GameActivity extends FragmentActivity implements OnControllerPress
 {
+
+    private ScreenFragment screen;
+    private ControllerFragment controller;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -32,11 +39,11 @@ public class GameActivity extends FragmentActivity
 
         // Add Fragment [Controller]
         FragmentTransaction transaction = manager.beginTransaction();
-        ControllerFragment controller = new ControllerFragment();
+        controller = new ControllerFragment();
         transaction.replace(R.id.controller_screen, controller, "controller_screen");
 
         // Add Fragment [GameView]
-        ScreenFragment screen = new ScreenFragment();
+        screen = new ScreenFragment();
         screen.setArguments(bundle);
         transaction.replace(R.id.game_screen, screen, "game_screen");
         transaction.commit();
@@ -52,6 +59,12 @@ public class GameActivity extends FragmentActivity
     protected void onResume()
     {
         super.onResume();
+    }
+
+    public void onButtonPress(ControllerFragment.ProjectileType s)
+    {
+        Log.d("int_test", "Testing OnControllerPress interface with " + s);
+        screen.handleButtonPress(s);
     }
 
 }

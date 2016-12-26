@@ -34,3 +34,15 @@ Changed the Button handler to use switch statement instead of multiple handlers
 	To do
 	Link the button reaction to the proper activities so the inputs can be properly managed and translated to the displayed GameView
 	Create Projectile class that extends Movable Image and create proper sublcasses Bullet, Missile
+
+Day 4 [Dec 26/12/16]
+Created an Interface to handle the communication between the ControllerFragment and parent Activity
+ScreenFragment now receives the button code for the button that was pressed
+
+	Problems
+	None
+
+	To do
+	Build Projectile class
+	Build Player shooting functionality
+	Add functionality to the GameView to display Projectile changes

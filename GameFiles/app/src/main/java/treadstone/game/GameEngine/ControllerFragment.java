@@ -1,5 +1,6 @@
 package treadstone.game.GameEngine;
 
+import android.app.Activity;
 import android.util.Log;
 import treadstone.game.R;
 import android.os.Bundle;
@@ -15,6 +16,10 @@ public class ControllerFragment extends Fragment implements View.OnClickListener
     private ImageButton button_b;
     private ImageButton button_c;
     private ImageButton button_s;
+
+    public enum ProjectileType {BULLET, MISSILE, SHIELD}
+
+    OnControllerPress button_listener;
 
     public ControllerFragment()
     {
@@ -48,16 +53,23 @@ public class ControllerFragment extends Fragment implements View.OnClickListener
         switch (v.getId())
         {
             case R.id.button_a:
-                Log.d("button_a", "A BUTTON CLICKED IN CTRLFRAG");
+                Log.d("button_a", "A BUTTON CLICKED IN CTRL_FRAG");
+                button_listener.onButtonPress(ProjectileType.BULLET);
+                break;
 
             case R.id.button_b:
-                Log.d("button_b", "B BUTTON CLICKED IN CTRLFRAG");
+                Log.d("button_b", "B BUTTON CLICKED IN CTRL_FRAG");
+                button_listener.onButtonPress(ProjectileType.MISSILE);
+                break;
 
             case R.id.button_c:
-                Log.d("button_b", "B BUTTON CLICKED IN CTRLFRAG");
+                Log.d("button_c", "C BUTTON CLICKED IN CTRL_FRAG");
+                button_listener.onButtonPress(ProjectileType.SHIELD);
+                break;
 
             case R.id.button_start:
-                Log.d("button_start", "START BUTTON CLICKED IN CTRLFRAG");
+                Log.d("button_start", "START BUTTON CLICKED IN CTRL_FRAG");
+                break;
         }
 
     }
@@ -72,6 +84,23 @@ public class ControllerFragment extends Fragment implements View.OnClickListener
     public void onSaveInstanceState(Bundle bundle)
     {
         super.onSaveInstanceState(bundle);
+    }
+
+    @Override
+    public void onAttach(Activity activity)
+    {
+        super.onAttach(activity);
+
+        try
+        {
+            button_listener = (OnControllerPress) activity;
+        }
+
+        catch (ClassCastException e)
+        {
+            throw new ClassCastException(activity.toString() + " must implement OnControllerPress");
+        }
+
     }
 
 }

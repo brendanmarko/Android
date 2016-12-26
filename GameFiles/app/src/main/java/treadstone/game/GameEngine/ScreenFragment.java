@@ -33,11 +33,6 @@ public class ScreenFragment extends Fragment
         Log.d("ScreenFragment", "ScreenFragment created!");
     }
 
-    public void run()
-    {
-        curr_screen.run();
-    }
-
     @Override
     public void onResume()
     {
@@ -56,6 +51,11 @@ public class ScreenFragment extends Fragment
     public void onStart()
     {
         super.onStart();
+    }
+
+    public void handleButtonPress(ControllerFragment.ProjectileType type)
+    {
+        Log.d("button_value", "Value of button " + type);
     }
 
 }

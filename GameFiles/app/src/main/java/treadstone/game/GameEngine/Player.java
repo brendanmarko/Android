@@ -4,7 +4,6 @@ import android.content.Context;
 
 public class Player extends MovableImage
 {
-
     private float spanX, spanY, spanZ;
 
     Player(Context context, String name, float x, float y)
@@ -15,7 +14,6 @@ public class Player extends MovableImage
 
     public void update()
     {
-
         if (isMoving())
         {
             boundsCheck(getX(), getY());
@@ -34,6 +32,11 @@ public class Player extends MovableImage
         div_factor = spanZ/getSpeed();
         setPosition(getX() + spanX/div_factor, getY() + spanY/div_factor);
         //System.out.println("new_pos: " + getX() + ", " + getY());
+    }
+
+    public void shootProjectile()
+    {
+
     }
 
 }
