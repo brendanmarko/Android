@@ -46,3 +46,15 @@ ScreenFragment now receives the button code for the button that was pressed
 	Build Projectile class
 	Build Player shooting functionality
 	Add functionality to the GameView to display Projectile changes
+
+Day 5 [Dec 27/12/16]
+Projectile class has been built and they shoot from the player properly.
+Adjusted some of the classes that extend Entity to have better Constructor parameters.
+Added hit-detection for Ships and Projectiles.
+
+	Problems
+	Concurrency issues exist when a Projectile is being deleted and we attempt to add a new one.
+	The Application is already using ListIterators, will investigate issue further today/tomorrow.
+
+	To do
+	Solve Concurrency issue(s)
