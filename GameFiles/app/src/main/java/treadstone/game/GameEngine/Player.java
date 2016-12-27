@@ -1,14 +1,19 @@
 package treadstone.game.GameEngine;
 
 import android.content.Context;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 public class Player extends MovableImage
 {
-    private float spanX, spanY, spanZ;
+    private float                       spanX, spanY, spanZ;
+    private ArrayList<Projectile>       projectiles;
 
     Player(Context context, String name, float x, float y)
     {
         super(context, name, x, y, 20, "bob");
+        projectiles = new ArrayList<>();
         setStatic();
     }
 
@@ -37,6 +42,31 @@ public class Player extends MovableImage
     public void shootProjectile()
     {
 
+    }
+
+    public void addProjectile(Projectile p)
+    {
+        projectiles.add(p);
+    }
+
+    public void viewProjectiles()
+    {
+
+        if (projectiles.isEmpty())
+        {
+        return;
+        }
+
+        for (Projectile p : projectiles)
+        {
+            p.toString();
+        }
+
+    }
+
+    public ArrayList<Projectile> getProjectiles()
+    {
+        return projectiles;
     }
 
 }

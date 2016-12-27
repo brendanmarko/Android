@@ -123,6 +123,7 @@ public class GameView extends SurfaceView implements Runnable
             // Draw Entities
             drawTarget(curr_player);
             drawEnemies();
+            drawProjectiles();
             drawBackgroundEffects();
             drawHitboxes();
             checkCollisions();
@@ -232,6 +233,21 @@ public class GameView extends SurfaceView implements Runnable
 
     }
 
+    public void drawProjectiles()
+    {
+
+        for (Projectile p : curr_player.getProjectiles())
+        {
+            drawProjectile(p);
+        }
+
+    }
+
+    public void drawProjectile(Projectile curr_target)
+    {
+        canvas.drawBitmap(curr_target.getImage(), curr_target.getX(), curr_target.getY(), paint);
+    }
+
     public void updateEnemies()
     {
         for (TestEnemy curr_enemy : enemy_list)
@@ -266,5 +282,13 @@ public class GameView extends SurfaceView implements Runnable
         }
 
     }
+
+    public void addProjectileToPlayer(Projectile p)
+    {
+        p.setPosition(curr_player.getPosition());
+        curr_player.addProjectile(p);
+    }
+
+
 
 }

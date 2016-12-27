@@ -27,4 +27,9 @@ public class Position
         position[1] = new_y;
     }
 
+    public String toString()
+    {
+    return position[0] + " , " + position[1];
+    }
+
 }

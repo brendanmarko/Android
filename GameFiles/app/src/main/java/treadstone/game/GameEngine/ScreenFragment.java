@@ -56,6 +56,8 @@ public class ScreenFragment extends Fragment
     public void handleButtonPress(ControllerFragment.ProjectileType type)
     {
         Log.d("button_value", "Value of button " + type);
+        Projectile new_projectile = new Projectile(this.getContext(), type);
+        curr_screen.addProjectileToPlayer(new_projectile);
     }
 
 }
