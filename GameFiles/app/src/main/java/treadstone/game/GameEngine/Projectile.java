@@ -39,8 +39,10 @@ public class Projectile extends MovableImage
 
     public void update()
     {
-        Log.d("proj_pos_update", "Updating Projectile position " + getX() + ", " + getY() + " with speed " + getSpeed());
+        // Log.d("proj_pos_update", "Updating Projectile position " + getX() + ", " + getY() + " with speed " + getSpeed());
         setPosition(getX() + getSpeed(), getY());
+        boundsCheck(getX(), getY());
+        getHitRect().updateHitbox((int) getX(), (int) getY(), getImage());
     }
 
     @Override

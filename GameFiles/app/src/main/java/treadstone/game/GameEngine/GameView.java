@@ -122,7 +122,7 @@ public class GameView extends SurfaceView implements Runnable
             drawEnemies();
             drawProjectiles();
             drawBackgroundEffects();
-            drawHitboxes();
+            drawHitBoxes();
             checkCollisions();
 
             // Unlock and draw
@@ -263,27 +263,35 @@ public class GameView extends SurfaceView implements Runnable
     {
         collision_check = new CollisionChecker(curr_player, enemy_list);
 
-        if (collision_check.hitCheck())
+        if (collision_check.shipCollisions())
         {
-            Log.d("collision_log", "Collision just occurred");
+            Log.d("collision_log", "Collision [Ship] just occurred");
             // handle collision here
         }
 
+        if (collision_check.projectileCollisions())
+        {
+            Log.d("collision_log", "Collision [Projectiles] just occurred!");
+        }
+
+        /*if (collision_check.projectileBoundary())
+        {
+            Log.d("collision_log", "Projectile out of bounds and being deleted!");
+        }*/
+
     }
 
-    public void drawHitboxes()
+    public void drawHitBoxes()
     {
         Rect curr_box;
         curr_box = curr_player.getHitRect().getHitbox();
         canvas.drawRect(curr_box.left, curr_box.top, curr_box.right, curr_box.bottom, paint);
 
-        /*
         for (Projectile p : curr_player.getProjectiles())
         {
-            curr_box = p.getHitBox().getHitbox();
+            curr_box = p.getHitRect().getHitbox();
             canvas.drawRect(curr_box.left, curr_box.top, curr_box.right, curr_box.bottom, paint);
         }
-        */
 
         for (TestEnemy curr_enemy : enemy_list)
         {
@@ -297,13 +305,10 @@ public class GameView extends SurfaceView implements Runnable
     {
         float speed;
 
-        Log.d("PROJECTILE_PASSED", p.toString());
-
-        // Assigns speed of Projectile
         switch (p)
         {
             case BULLET:
-                speed = 4.0f;
+                speed = 12.0f;
                 break;
 
             case MISSILE:
@@ -315,10 +320,7 @@ public class GameView extends SurfaceView implements Runnable
                 break;
         }
 
-        Log.d("speed_value", "Speed value: " + speed);
-
         Projectile new_p = new Projectile(getContext(), p, curr_player.getX(), curr_player.getY(), speed);
-        Log.d("test_proj", new_p.toString());
         curr_player.addProjectile(new_p);
     }
 
