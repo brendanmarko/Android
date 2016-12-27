@@ -4,12 +4,20 @@ This project is going to serve as the first stepping stone in game development. 
 # Goal
 To Design a game similiar to Space Invaders but with some fancy mechanical additions and clever AI to present a formidable challenge to the classic game.
 
-# Roadmap [To-do]
+# Roadmap [To-do/Done]
 [x] Display GameView within Fragment
 
 [x] Transfer all Views into Fragments for easier management
 
 [x] Send information between Fragments in real-time to register button clicks
 
-[ ] Dynamically use Fragments to display levels, controller, end level screen, menu etc...
+[x] Hit detection for Projectiles and Ships
+
+[ ] Concurrency issues when add/remove during gameplay
+
+[x] Utilize Fragments to Display Gameview/Controller
+
+[ ] Create menu for end of level(s)
+
+[ ] More to come....
 
