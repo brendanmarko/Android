@@ -8,7 +8,7 @@ public class BackgroundEffect extends MovableImage
 
     BackgroundEffect(Context context, String name, int x, int y, int speed)
     {
-        super(context, name, x, y, speed, name);
+        super(context, x, y, speed, name);
         setSpeed(speed);
     }
 

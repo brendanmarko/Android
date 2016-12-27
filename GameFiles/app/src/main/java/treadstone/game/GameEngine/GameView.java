@@ -48,7 +48,6 @@ public class GameView extends SurfaceView implements Runnable
         max_x = max.x;
         max_y = max.y;
         init();
-        Log.d("view_create", "GameView successfully created!");
     }
 
     public void init()
@@ -58,7 +57,7 @@ public class GameView extends SurfaceView implements Runnable
         curr_holder = getHolder();
 
         // Player added to Game
-        curr_player = new Player(getContext(), "Mini-Meep", 50, 50);
+        curr_player = new Player(getContext(), 50, 50);
         curr_player.setMaxBounds(max_x/3, max_y);
 
         // Test Enemy added to Map
@@ -102,15 +101,13 @@ public class GameView extends SurfaceView implements Runnable
     public void update()
     {
         curr_player.update();
+        updateProjectiles();
         updateEnemies();
         updateBackgroundEffects();
     }
 
     public void draw()
     {
-
-    // Log.d("draw_test", "Testing draw within GameView.draw()");
-
         if (curr_holder.getSurface().isValid())
         {
             // Lock Canvas
@@ -131,8 +128,6 @@ public class GameView extends SurfaceView implements Runnable
             // Unlock and draw
             curr_holder.unlockCanvasAndPost(canvas);
         }
-
-    // Log.d("draw_test", "Testing draw within GameView.draw() complete!");
 
     }
 
@@ -235,12 +230,19 @@ public class GameView extends SurfaceView implements Runnable
 
     public void drawProjectiles()
     {
-
         for (Projectile p : curr_player.getProjectiles())
         {
             drawProjectile(p);
         }
 
+    }
+
+    public void updateProjectiles()
+    {
+        for (Projectile p : curr_player.getProjectiles())
+        {
+            p.update();
+        }
     }
 
     public void drawProjectile(Projectile curr_target)
@@ -275,6 +277,14 @@ public class GameView extends SurfaceView implements Runnable
         curr_box = curr_player.getHitRect().getHitbox();
         canvas.drawRect(curr_box.left, curr_box.top, curr_box.right, curr_box.bottom, paint);
 
+        /*
+        for (Projectile p : curr_player.getProjectiles())
+        {
+            curr_box = p.getHitBox().getHitbox();
+            canvas.drawRect(curr_box.left, curr_box.top, curr_box.right, curr_box.bottom, paint);
+        }
+        */
+
         for (TestEnemy curr_enemy : enemy_list)
         {
             curr_box = curr_enemy.getHitRect().getHitbox();
@@ -283,12 +293,33 @@ public class GameView extends SurfaceView implements Runnable
 
     }
 
-    public void addProjectileToPlayer(Projectile p)
+    public void addProjectileToPlayer(ControllerFragment.ProjectileType p)
     {
-        p.setPosition(curr_player.getPosition());
-        curr_player.addProjectile(p);
+        float speed;
+
+        Log.d("PROJECTILE_PASSED", p.toString());
+
+        // Assigns speed of Projectile
+        switch (p)
+        {
+            case BULLET:
+                speed = 4.0f;
+                break;
+
+            case MISSILE:
+                speed = 8.0f;
+                break;
+
+            default:
+                speed = 0.0f;
+                break;
+        }
+
+        Log.d("speed_value", "Speed value: " + speed);
+
+        Projectile new_p = new Projectile(getContext(), p, curr_player.getX(), curr_player.getY(), speed);
+        Log.d("test_proj", new_p.toString());
+        curr_player.addProjectile(new_p);
     }
-
-
 
 }

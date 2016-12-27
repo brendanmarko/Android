@@ -7,7 +7,7 @@ public class TestEnemy extends MovableImage
 
     TestEnemy(Context context, String name, float x, float y)
     {
-        super(context, name, x, y, 15, name);
+        super(context, x, y, 15, name);
         setSpeed(10);
     }
 

@@ -53,11 +53,10 @@ public class ScreenFragment extends Fragment
         super.onStart();
     }
 
-    public void handleButtonPress(ControllerFragment.ProjectileType type)
+    public void handleButtonPress(ControllerFragment.ProjectileType p)
     {
-        Log.d("button_value", "Value of button " + type);
-        Projectile new_projectile = new Projectile(this.getContext(), type);
-        curr_screen.addProjectileToPlayer(new_projectile);
+        curr_screen.addProjectileToPlayer(p);
+        Log.d("button_value", "Value of button " + p);
     }
 
 }

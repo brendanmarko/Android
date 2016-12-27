@@ -11,11 +11,11 @@ public abstract class MovableImage extends MovableEntity
     private int                 image_id;
     private RectangleHitbox     hitbox;
 
-    MovableImage(Context context, String name, float x, float y, int speed, String image_name)
+    MovableImage(Context c, float x, float y, float speed, String n)
     {
-        super(name, x, y, speed);
-        image_id = context.getResources().getIdentifier(image_name, "drawable", context.getPackageName());
-        image = BitmapFactory.decodeResource(context.getResources(), image_id);
+        super(x, y, speed);
+        image_id = c.getResources().getIdentifier(n, "drawable", c.getPackageName());
+        image = BitmapFactory.decodeResource(c.getResources(), image_id);
         hitbox = new RectangleHitbox((int) x, (int) y, image);
     }
 

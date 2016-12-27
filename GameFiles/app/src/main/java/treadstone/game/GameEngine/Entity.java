@@ -4,22 +4,14 @@ import java.util.Random;
 
 public abstract class Entity
 {
-
-    private String          name;
     private Position        curr_pos;
     private float           max_x, max_y;
     private Position        start_pos;
 
-    Entity(String new_name, float x, float y)
+    Entity(float x, float y)
     {
-        name = new_name;
         start_pos = new Position(x, y);
         curr_pos = new Position(x, y);
-    }
-
-    public String getName()
-    {
-        return name;
     }
 
     public float getX()

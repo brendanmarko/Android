@@ -1,7 +1,6 @@
 package treadstone.game.GameEngine;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -10,9 +9,9 @@ public class Player extends MovableImage
     private float                       spanX, spanY, spanZ;
     private ArrayList<Projectile>       projectiles;
 
-    Player(Context context, String name, float x, float y)
+    Player(Context context, float x, float y)
     {
-        super(context, name, x, y, 20, "bob");
+        super(context, x, y, 20, "bob");
         projectiles = new ArrayList<>();
         setStatic();
     }

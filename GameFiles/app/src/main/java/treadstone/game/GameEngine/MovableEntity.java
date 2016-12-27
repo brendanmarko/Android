@@ -3,21 +3,21 @@ package treadstone.game.GameEngine;
 public abstract class MovableEntity extends Entity
 {
 
-    private int             speed, max_speed;
+    private float           speed, max_speed;
     private boolean         moving;
 
-    MovableEntity(String name, float x, float y, int speed)
+    MovableEntity(float x, float y, float speed)
     {
-        super(name, x, y);
+        super(x, y);
         max_speed = speed;
     }
 
-    public int getSpeed()
+    public float getSpeed()
     {
         return speed;
     }
 
-    public void setSpeed(int new_speed)
+    public void setSpeed(float new_speed)
     {
         speed = new_speed;
     }
@@ -26,6 +26,12 @@ public abstract class MovableEntity extends Entity
     {
         speed = 0;
         moving = false;
+    }
+
+    public void setMoving()
+    {
+        speed = max_speed;
+        moving = true;
     }
 
     public void boundsCheck(float x, float y)

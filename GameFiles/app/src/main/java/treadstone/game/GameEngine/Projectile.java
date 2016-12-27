@@ -1,42 +1,31 @@
 package treadstone.game.GameEngine;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
 
-import treadstone.game.R;
-
-public class Projectile
+public class Projectile extends MovableImage
 {
-    private float               speed;
     private float               damage;
-    private Bitmap              image;
-    private RectangleHitbox     hitbox;
-    private Position            position;
 
-    Projectile(Context context, ControllerFragment.ProjectileType projectile)
+    Projectile(Context c, ControllerFragment.ProjectileType p, float x, float y, float speed)
     {
-        switch (projectile)
+        super(c, x, y, speed, p.toString().toLowerCase());
+        setMoving();
+
+        switch (p)
         {
             case BULLET:
-            speed = 1.0f;
             damage = 1.0f;
-            image = BitmapFactory.decodeResource(context.getResources(), R.drawable.bullet);
             Log.d("bullet_created", "Bullet projectile created from Projectile!");
             break;
 
             case MISSILE:
-            speed = 1.5f;
             damage = 2.0f;
-            image = BitmapFactory.decodeResource(context.getResources(), R.drawable.missile);
             Log.d("missile_created", "Missile projectile created from Projectile!");
             break;
 
             case SHIELD:
-            speed = 0.0f;
-            damage = 3.0f;
-            image = BitmapFactory.decodeResource(context.getResources(), R.drawable.bullet);
+            damage = 5.0f;
             Log.d("shield_created", "Shield triggered from Projectile!");
             break;
         }
@@ -45,38 +34,44 @@ public class Projectile
 
     public String toString()
     {
-        return "Speed: " + speed + " Damage: " + damage  + "Position: " + position.toString() + ".\n";
+        return "Speed: " + getSpeed() + " Damage: " + damage  + "Position: " + getPosition().toString() + ".\n";
     }
 
-    public void setPosition(Position p)
+    public void update()
     {
-        position = p;
-        hitbox = new RectangleHitbox((int) p.getX(), (int) p.getY(), image);
+        Log.d("proj_pos_update", "Updating Projectile position " + getX() + ", " + getY() + " with speed " + getSpeed());
+        setPosition(getX() + getSpeed(), getY());
     }
 
-    public Position getPosition()
+    @Override
+    public void boundsCheck(float x, float y)
     {
-        return position;
-    }
 
-    public float getX()
-    {
-        return position.getX();
-    }
+        if (x < 0.0f)
+        {
+            Log.d("x < 0.0f", "Should be deleted for X < 0.0f");
+        }
 
-    public float getY()
-    {
-        return position.getY();
-    }
+        else if (x > getXMax())
+        {
+            Log.d("X > MAX", "Should be deleted for X > MAX");
+        }
 
-    public void moveProjectile()
-    {
-       position. setPosition(position.getX() + speed, position.getY() + speed);
-    }
+        else if (y < 0.0f)
+        {
+            Log.d("Y < 0.0f", "Should be reflected back");
+        }
 
-    public Bitmap getImage()
-    {
-        return image;
+        else if (y > getYMax())
+        {
+            Log.d("Y > MAX", "Should be reflected back");
+        }
+
+        else if (y + getImageHeight() > getYMax())
+        {
+            setPosition(getX(), getYMax() - getImageHeight());
+        }
+
     }
 
 }
