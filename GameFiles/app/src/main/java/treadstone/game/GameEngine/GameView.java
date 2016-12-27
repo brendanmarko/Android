@@ -3,6 +3,9 @@ package treadstone.game.GameEngine;
 import android.graphics.Point;
 import android.util.Log;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.ListIterator;
+
 import android.graphics.Rect;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -213,16 +216,22 @@ public class GameView extends SurfaceView implements Runnable
 
     public void drawEnemies()
     {
-        for (TestEnemy curr_enemy : enemy_list)
+        TestEnemy curr_enemy;
+
+        for (ListIterator<TestEnemy> iterator = enemy_list.listIterator(); iterator.hasNext();)
         {
+            curr_enemy = iterator.next();
             drawTarget(curr_enemy);
         }
     }
 
     public void updateBackgroundEffects()
     {
-        for (BackgroundEffect curr_item : background_visuals)
+        BackgroundEffect curr_item;
+
+        for (ListIterator<BackgroundEffect> iterator = background_visuals.listIterator(); iterator.hasNext();)
         {
+            curr_item = iterator.next();
             curr_item.update();
         }
 
@@ -230,8 +239,9 @@ public class GameView extends SurfaceView implements Runnable
 
     public void drawProjectiles()
     {
-        for (Projectile p : curr_player.getProjectiles())
+        for (Iterator<Projectile> iterator = curr_player.getProjectiles().iterator(); iterator.hasNext();)
         {
+            Projectile p = iterator.next();
             drawProjectile(p);
         }
 
@@ -239,8 +249,9 @@ public class GameView extends SurfaceView implements Runnable
 
     public void updateProjectiles()
     {
-        for (Projectile p : curr_player.getProjectiles())
+        for (Iterator<Projectile> iterator = curr_player.getProjectiles().iterator(); iterator.hasNext();)
         {
+            Projectile p = iterator.next();
             p.update();
         }
     }
@@ -252,9 +263,10 @@ public class GameView extends SurfaceView implements Runnable
 
     public void updateEnemies()
     {
-        for (TestEnemy curr_enemy : enemy_list)
+        for (Iterator<TestEnemy> iterator = enemy_list.iterator(); iterator.hasNext();)
         {
-            curr_enemy.update();
+            TestEnemy e = iterator.next();
+            e.update();
         }
 
     }
@@ -274,10 +286,10 @@ public class GameView extends SurfaceView implements Runnable
             Log.d("collision_log", "Collision [Projectiles] just occurred!");
         }
 
-        /*if (collision_check.projectileBoundary())
+        if (collision_check.projectileBoundary())
         {
             Log.d("collision_log", "Projectile out of bounds and being deleted!");
-        }*/
+        }
 
     }
 
@@ -287,14 +299,20 @@ public class GameView extends SurfaceView implements Runnable
         curr_box = curr_player.getHitRect().getHitbox();
         canvas.drawRect(curr_box.left, curr_box.top, curr_box.right, curr_box.bottom, paint);
 
-        for (Projectile p : curr_player.getProjectiles())
+        Projectile p;
+
+        for (ListIterator<Projectile> iterator = curr_player.getProjectiles().listIterator(); iterator.hasNext();)
         {
+            p = iterator.next();
             curr_box = p.getHitRect().getHitbox();
             canvas.drawRect(curr_box.left, curr_box.top, curr_box.right, curr_box.bottom, paint);
         }
 
-        for (TestEnemy curr_enemy : enemy_list)
+        TestEnemy curr_enemy;
+
+        for (Iterator<TestEnemy> iterator = enemy_list.iterator(); iterator.hasNext();)
         {
+            curr_enemy = iterator.next();
             curr_box = curr_enemy.getHitRect().getHitbox();
             canvas.drawRect(curr_box.left, curr_box.top, curr_box.right, curr_box.bottom, paint);
         }
@@ -321,7 +339,12 @@ public class GameView extends SurfaceView implements Runnable
         }
 
         Projectile new_p = new Projectile(getContext(), p, curr_player.getX(), curr_player.getY(), speed);
-        curr_player.addProjectile(new_p);
+        new_p.setMaxBounds(max_x - new_p.getImageHeight(), max_y);
+        // Try iterator add to Projectiles
+        ListIterator<Projectile> iterator = curr_player.getProjectiles().listIterator();
+        iterator.add(new_p);
+        //curr_player.addProjectile(new_p);
+
     }
 
 }

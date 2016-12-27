@@ -45,8 +45,8 @@
       <file leaf-file-name="GameView.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/GameView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="279" column="11" selection-start-line="279" selection-start-column="11" selection-end-line="279" selection-end-column="11" />
+            <state relative-caret-position="18">
+              <caret line="152" column="28" selection-start-line="152" selection-start-column="28" selection-end-line="152" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -55,8 +55,8 @@
       <file leaf-file-name="Projectile.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/Projectile.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="471">
-              <caret line="76" column="5" selection-start-line="76" selection-start-column="5" selection-end-line="76" selection-end-column="5" />
+            <state relative-caret-position="561">
+              <caret line="78" column="1" selection-start-line="78" selection-start-column="1" selection-end-line="78" selection-end-column="1" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -67,8 +67,8 @@
       <file leaf-file-name="RectangleHitbox.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/RectangleHitbox.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="17" column="22" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
+            <state relative-caret-position="306">
+              <caret line="18" column="5" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -77,8 +77,20 @@
       <file leaf-file-name="CollisionChecker.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/CollisionChecker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="543">
-              <caret line="69" column="6" selection-start-line="69" selection-start-column="6" selection-end-line="69" selection-end-column="6" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Entity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/Entity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="18">
+              <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -1839,7 +1851,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/OnControllerPress.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/GameActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/Position.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/Entity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/ScreenFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/TestEnemy.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/BackgroundEffect.java" />
@@ -1847,8 +1858,10 @@
         <option value="$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/Player.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/RectangleHitBox.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/MovableImage.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/GameView.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/Projectile.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/RectangleHitbox.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/Entity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/GameView.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/CollisionChecker.java" />
       </list>
     </option>
@@ -2765,14 +2778,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/Entity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/MovableImage.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="327">
@@ -2791,10 +2796,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/RectangleHitbox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="5" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/Entity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/Projectile.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="471">
-          <caret line="76" column="5" selection-start-line="76" selection-start-column="5" selection-end-line="76" selection-end-column="5" />
+        <state relative-caret-position="561">
+          <caret line="78" column="1" selection-start-line="78" selection-start-column="1" selection-end-line="78" selection-end-column="1" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -2803,25 +2824,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/GameView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="279" column="11" selection-start-line="279" selection-start-column="11" selection-end-line="279" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/RectangleHitbox.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="17" column="22" selection-start-line="17" selection-start-column="22" selection-end-line="17" selection-end-column="22" />
+        <state relative-caret-position="18">
+          <caret line="152" column="28" selection-start-line="152" selection-start-column="28" selection-end-line="152" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/treadstone/game/GameEngine/CollisionChecker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="543">
-          <caret line="69" column="6" selection-start-line="69" selection-start-column="6" selection-end-line="69" selection-end-column="6" />
-          <folding />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

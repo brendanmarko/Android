@@ -1,9 +1,9 @@
 package treadstone.game.GameEngine;
 
 import android.graphics.Rect;
-import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 public class CollisionChecker
 {
@@ -19,12 +19,15 @@ public class CollisionChecker
 
     public boolean shipCollisions()
     {
+        TestEnemy curr_enemy;
+
         // Checks for collisions between Player and Enemies
-        for (TestEnemy curr_enemy : target_list)
+        for (ListIterator<TestEnemy> iterator =  target_list.listIterator(); iterator.hasNext();)
         {
+            curr_enemy  = iterator.next();
             if (Rect.intersects(curr_player.getHitRect().getHitbox(), curr_enemy.getHitRect().getHitbox()))
             {
-                target_list.remove(curr_enemy);
+                iterator.remove();
                 return true;
             }
         }
@@ -34,15 +37,22 @@ public class CollisionChecker
 
     public boolean projectileCollisions()
     {
+        TestEnemy   e;
+        Projectile  p;
         // Checks Projectiles of Player for collisions
-        for (TestEnemy e : target_list)
+        for (ListIterator<TestEnemy> e_iterator = target_list.listIterator(); e_iterator.hasNext();)
         {
-            for (Projectile p : curr_player.getProjectiles())
+
+            e = e_iterator.next();
+
+            for (ListIterator<Projectile> p_iterator = curr_player.getProjectiles().listIterator(); p_iterator.hasNext();)
             {
+                p = p_iterator.next();
+
                 if (Rect.intersects(p.getHitRect().getHitbox(), e.getHitRect().getHitbox()))
                 {
-                    curr_player.getProjectiles().remove(p);
-                    target_list.remove(e);
+                    p_iterator.remove();
+                    e_iterator.remove();
                     return true;
                 }
             }
@@ -51,22 +61,22 @@ public class CollisionChecker
         return false;
     }
 
-    /*
     public boolean projectileBoundary()
     {
-        for (Projectile p : curr_player.getProjectiles())
+        Projectile p;
+        for (ListIterator<Projectile> iterator = curr_player.getProjectiles().listIterator(); iterator.hasNext();)
         {
-            if (p.outOfBoundsCheck(p.getX(), p.getY()))
+            p = iterator.next();
+            if (p.getX() > p.getXMax())
             {
-                curr_player.getProjectiles().remove(p);
-                Log.d("OB_proj", "Removing OB projectile from player.");
+                iterator.remove();
                 return true;
             }
+
         }
 
         return false;
 
     }
-    */
 
 }

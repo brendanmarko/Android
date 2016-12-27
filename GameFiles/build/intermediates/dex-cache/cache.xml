@@ -16,7 +16,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="61a05f742cd7fba22bc39f09718da9f94b71d174">
+        sha1="c6aaa00f05b594ea7ac7f6ee187a48a06abd9f4e">
         <dex dex="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_09de2752d41a430e412dbdca62569379d376fc07/classes.dex" />
     </item>
     <item
@@ -43,7 +43,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="57fc9aa8f160b3f44aa4f6e7137a38e239a6415e">
+        sha1="84d97d86e5ac7d8e0dc9a228fedef08f190ec4c6">
         <dex dex="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_67c84086e2a77a0a098b46600cec1a548c65ee8b/classes.dex" />
     </item>
     <item
