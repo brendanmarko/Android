@@ -30,6 +30,7 @@ public class GameView extends SurfaceView implements Runnable
     private SurfaceHolder           curr_holder;
 
     ArrayList<TestEnemy>            enemy_list = new ArrayList<>();
+    ArrayList<Projectile>           temp_buffer = new ArrayList<>();
     ArrayList<BackgroundEffect>     background_visuals = new ArrayList<>();
 
     BackgroundEffect                b1, b2, b3, b4;
@@ -74,6 +75,7 @@ public class GameView extends SurfaceView implements Runnable
         enemy_list.add(test_enemy1);
         enemy_list.add(test_enemy2);
         enemy_list.add(test_enemy3);
+
 
         // Background Effects
         b1 = new BackgroundEffect(getContext(), "star_yellow", 0, 0, 4);
@@ -143,7 +145,7 @@ public class GameView extends SurfaceView implements Runnable
 
         catch (InterruptedException e)
         {
-            System.out.println("Interrupt caught within control() [View]");
+            Log.d("CONTROL_CRASH", "Interrupt caught within control() [View]");
         }
 
     }
@@ -249,11 +251,17 @@ public class GameView extends SurfaceView implements Runnable
 
     public void updateProjectiles()
     {
+        // Add temp_buffer to Projectile List
+        curr_player.getProjectiles().addAll(temp_buffer);
+
         for (Iterator<Projectile> iterator = curr_player.getProjectiles().iterator(); iterator.hasNext();)
         {
             Projectile p = iterator.next();
             p.update();
         }
+
+        temp_buffer.removeAll(temp_buffer);
+
     }
 
     public void drawProjectile(Projectile curr_target)
@@ -340,11 +348,10 @@ public class GameView extends SurfaceView implements Runnable
 
         Projectile new_p = new Projectile(getContext(), p, curr_player.getX(), curr_player.getY(), speed);
         new_p.setMaxBounds(max_x - new_p.getImageHeight(), max_y);
-        // Try iterator add to Projectiles
-        ListIterator<Projectile> iterator = curr_player.getProjectiles().listIterator();
-        iterator.add(new_p);
-        //curr_player.addProjectile(new_p);
 
+        // Buffer for adding to Projectiles
+        ListIterator<Projectile> iterator = temp_buffer.listIterator();
+        iterator.add(new_p);
     }
 
 }

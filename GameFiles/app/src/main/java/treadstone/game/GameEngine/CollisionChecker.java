@@ -1,6 +1,7 @@
 package treadstone.game.GameEngine;
 
 import android.graphics.Rect;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.ListIterator;

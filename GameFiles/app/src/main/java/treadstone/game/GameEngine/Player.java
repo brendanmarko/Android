@@ -36,26 +36,6 @@ public class Player extends MovableImage
         setPosition(getX() + spanX/div_factor, getY() + spanY/div_factor);
     }
 
-    public void addProjectile(Projectile p)
-    {
-        projectiles.add(p);
-    }
-
-    public void viewProjectiles()
-    {
-
-        if (projectiles.isEmpty())
-        {
-        return;
-        }
-
-        for (Projectile p : projectiles)
-        {
-            p.toString();
-        }
-
-    }
-
     public ArrayList<Projectile> getProjectiles()
     {
         return projectiles;
