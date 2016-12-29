@@ -1,24 +1,43 @@
+---
+
 # Project Outline
-This project is going to serve as the first stepping stone in game development. Through the use of good design practices and some original ideas I am going to implement a game on the Android gaming platform.
+This project is going to serve as my first attempt at game development. Using the Android OS I am going to design, test and implement a Game while documentating all progress and difficulty using daily Logs when work is performed.
 
 ---
 
 # Goal
-To Design a game similiar to Space Invaders but with some fancy mechanical additions and clever AI to present a formidable challenge to the classic game.
+The ultimate goal of this project is to have a fully functioning game application that will loosely resemble Space Invaders with a more modern approach utilizing interesting levels, creative enemies with a challenging AI, a mission selection system and ship customization.
 
 ---
 
-# Roadmap  
-  ### Completed  
-  [x] Display GameView within Fragment  
-  [x] Transfer all Views into Fragments for easier management  
-  [x] Send information between Fragments in real-time to register button clicks  
-  [x] Hit detection for Projectiles and Ships  
-  [x] Concurrency issues when add/remove during gameplay  
+# Roadmap
+
+---
+
+### Completed
+
+---
+  
+  [x] Display GameView within Fragment
+  
+  [x] Transfer all Views into Fragments for easier management
+  
+  [x] Send information between Fragments in real-time to register button clicks
+  
+  [x] Hit detection for Projectiles and Ships
+  
+  [x] Concurrency issues when add/remove during gameplay
+  
   [x] Utilize Fragments to Display Gameview/Controller
   
-  ---
+---
   
-  ### To-do  
-  [ ] ViewPort class  
-  [ ] Level creation and design  
+### To-do  
+
+---
+  
+  [ ] ViewPort class
+  
+  [ ] Level creation and design
+  
+---
