@@ -1,9 +1,8 @@
 package treadstone.game.GameEngine;
 
-import android.graphics.Point;
 import android.util.Log;
+
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.ListIterator;
 
 import android.graphics.Rect;
@@ -12,7 +11,6 @@ import android.graphics.Paint;
 import android.content.Context;
 import android.graphics.Canvas;
 
-import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
@@ -23,7 +21,7 @@ public class GameView extends SurfaceView implements Runnable
     Thread                          game_thread = null;
     Player                          curr_player;
     TestEnemy                       test_enemy1, test_enemy2, test_enemy3;
-    private int                     max_x, max_y;
+    private Position                max_bounds;
 
     private Paint                   paint;
     private Canvas                  canvas;
@@ -36,21 +34,10 @@ public class GameView extends SurfaceView implements Runnable
     BackgroundEffect                b1, b2, b3, b4;
     CollisionChecker                collision_check;
 
-    public GameView(Context context, AttributeSet attrs)
-    {
-        super(context, attrs);
-    }
-
-    public GameView(Context context, AttributeSet attrs, int defStyle)
-    {
-        super(context, attrs, defStyle);
-    }
-
-    public GameView(Context curr_context, Point max)
+    public GameView(Context curr_context, Position max)
     {
         super(curr_context);
-        max_x = max.x;
-        max_y = max.y;
+        max_bounds  = max;
         init();
     }
 
@@ -61,34 +48,27 @@ public class GameView extends SurfaceView implements Runnable
         curr_holder = getHolder();
 
         // Player added to Game
-        curr_player = new Player(getContext(), 50, 50);
-        curr_player.setMaxBounds(max_x/3, max_y);
+        curr_player = new Player(getContext(), new Position(0, 1000), max_bounds, 'p');
 
         // Test Enemy added to Map
-        test_enemy1 = new TestEnemy(getContext(), "bob_evil", 2000, 50);
-        test_enemy1.setMaxBounds(max_x - test_enemy1.getImageHeight(), max_y);
-        test_enemy2 = new TestEnemy(getContext(), "bob_evil", 1000, 50);
-        test_enemy2.setMaxBounds(max_x - test_enemy2.getImageHeight(), max_y);
-        test_enemy3 = new TestEnemy(getContext(), "bob_evil", 1000,  max_y + 10);
-        test_enemy3.setMaxBounds(max_x - test_enemy2.getImageHeight(), max_y);
+        test_enemy1 = new TestEnemy(getContext(), new Position(2000, 50), max_bounds, 'e');
+        test_enemy2 = new TestEnemy(getContext(), new Position(1000, 50), max_bounds, 'e');
+        test_enemy3 = new TestEnemy(getContext(), new Position(750, 100), max_bounds, 'e');
 
         enemy_list.add(test_enemy1);
         enemy_list.add(test_enemy2);
         enemy_list.add(test_enemy3);
 
-
         // Background Effects
-        b1 = new BackgroundEffect(getContext(), "star_yellow", 0, 0, 4);
-        b2 = new BackgroundEffect(getContext(), "star_small", 0, 0, 10);
-        b3 = new BackgroundEffect(getContext(), "star_small", 0, 0, 8);
-        b4 = new BackgroundEffect(getContext(), "star_small", 0, 0, 6);
+        b1 = new BackgroundEffect(getContext(), new Position(0, 0), max_bounds, 'S');
+        b2 = new BackgroundEffect(getContext(), new Position(0, 0), max_bounds, 's');
+        b3 = new BackgroundEffect(getContext(), new Position(0, 0), max_bounds, 'S');
+        b4 = new BackgroundEffect(getContext(), new Position(0, 0), max_bounds, 's');
 
         background_visuals.add(b1);
         background_visuals.add(b2);
         background_visuals.add(b3);
         background_visuals.add(b4);
-
-        setBackgroundLimits(background_visuals);
     }
 
     @Override
@@ -124,8 +104,8 @@ public class GameView extends SurfaceView implements Runnable
 
             // Draw Entities
             drawTarget(curr_player);
-            drawEnemies();
             drawProjectiles();
+            drawEnemies();
             drawBackgroundEffects();
             drawHitBoxes();
             checkCollisions();
@@ -177,13 +157,12 @@ public class GameView extends SurfaceView implements Runnable
     {
         if (curr_motion.getAction() == MotionEvent.ACTION_UP)
         {
-            curr_player.toggleMoving(false);
+            curr_player.setUnmovable();
         }
 
         else if (curr_motion.getAction() == MotionEvent.ACTION_DOWN)
         {
-            curr_player.toggleMoving(true);
-            return true;
+            curr_player.setMovable();
         }
 
         else if (curr_motion.getAction() == MotionEvent.ACTION_MOVE)
@@ -194,23 +173,14 @@ public class GameView extends SurfaceView implements Runnable
         return true;
     }
 
-    public void drawTarget(MovableImage curr_target)
+    public void drawTarget(MovableEntity curr_target)
     {
         canvas.drawBitmap(curr_target.getImage(), curr_target.getX(), curr_target.getY(), paint);
     }
 
-    public void setBackgroundLimits(ArrayList<BackgroundEffect> curr_list)
-    {
-        for (BackgroundEffect curr_item : curr_list)
-        {
-            curr_item.setMaxBounds(max_x - curr_item.getImageHeight(), max_y);
-        }
-
-    }
-
     public void drawBackgroundEffects()
     {
-        for (MovableImage curr_item : background_visuals)
+        for (BackgroundEffect curr_item : background_visuals)
         {
             drawTarget(curr_item);
         }
@@ -218,13 +188,11 @@ public class GameView extends SurfaceView implements Runnable
 
     public void drawEnemies()
     {
-        TestEnemy curr_enemy;
-
-        for (ListIterator<TestEnemy> iterator = enemy_list.listIterator(); iterator.hasNext();)
+        for (TestEnemy e : enemy_list)
         {
-            curr_enemy = iterator.next();
-            drawTarget(curr_enemy);
+            canvas.drawBitmap(e.getImage(), e.getX(), e.getY(), paint);
         }
+
     }
 
     public void updateBackgroundEffects()
@@ -241,9 +209,8 @@ public class GameView extends SurfaceView implements Runnable
 
     public void drawProjectiles()
     {
-        for (Iterator<Projectile> iterator = curr_player.getProjectiles().iterator(); iterator.hasNext();)
+        for (Projectile p : curr_player.getProjectiles())
         {
-            Projectile p = iterator.next();
             drawProjectile(p);
         }
 
@@ -254,9 +221,8 @@ public class GameView extends SurfaceView implements Runnable
         // Add temp_buffer to Projectile List
         curr_player.getProjectiles().addAll(temp_buffer);
 
-        for (Iterator<Projectile> iterator = curr_player.getProjectiles().iterator(); iterator.hasNext();)
+        for (Projectile p : curr_player.getProjectiles())
         {
-            Projectile p = iterator.next();
             p.update();
         }
 
@@ -271,22 +237,20 @@ public class GameView extends SurfaceView implements Runnable
 
     public void updateEnemies()
     {
-        for (Iterator<TestEnemy> iterator = enemy_list.iterator(); iterator.hasNext();)
+        for (TestEnemy e : enemy_list)
         {
-            TestEnemy e = iterator.next();
             e.update();
         }
 
     }
 
-    public void checkCollisions() /** TO DO : Handle Collision **/
+    public void checkCollisions()
     {
         collision_check = new CollisionChecker(curr_player, enemy_list);
 
         if (collision_check.shipCollisions())
         {
             Log.d("collision_log", "Collision [Ship] just occurred");
-            // handle collision here
         }
 
         if (collision_check.projectileCollisions())
@@ -304,24 +268,18 @@ public class GameView extends SurfaceView implements Runnable
     public void drawHitBoxes()
     {
         Rect curr_box;
-        curr_box = curr_player.getHitRect().getHitbox();
+        curr_box = curr_player.getHitBox().getHitBox();
         canvas.drawRect(curr_box.left, curr_box.top, curr_box.right, curr_box.bottom, paint);
 
-        Projectile p;
-
-        for (ListIterator<Projectile> iterator = curr_player.getProjectiles().listIterator(); iterator.hasNext();)
+        for (Projectile p : curr_player.getProjectiles())
         {
-            p = iterator.next();
-            curr_box = p.getHitRect().getHitbox();
+            curr_box = p.getHitBox().getHitBox();
             canvas.drawRect(curr_box.left, curr_box.top, curr_box.right, curr_box.bottom, paint);
         }
 
-        TestEnemy curr_enemy;
-
-        for (Iterator<TestEnemy> iterator = enemy_list.iterator(); iterator.hasNext();)
+        for (TestEnemy e : enemy_list)
         {
-            curr_enemy = iterator.next();
-            curr_box = curr_enemy.getHitRect().getHitbox();
+            curr_box = e.getHitBox().getHitBox();
             canvas.drawRect(curr_box.left, curr_box.top, curr_box.right, curr_box.bottom, paint);
         }
 
@@ -329,29 +287,28 @@ public class GameView extends SurfaceView implements Runnable
 
     public void addProjectileToPlayer(ControllerFragment.ProjectileType p)
     {
-        float speed;
+        char type;
 
         switch (p)
         {
             case BULLET:
-                speed = 12.0f;
+                type = 'b';
                 break;
 
             case MISSILE:
-                speed = 8.0f;
+                type = 'm';
+                break;
+
+            case SHIELD:
+                type = 's';
                 break;
 
             default:
-                speed = 0.0f;
-                break;
+                type = '.';
         }
 
-        Projectile new_p = new Projectile(getContext(), p, curr_player.getX(), curr_player.getY(), speed);
-        new_p.setMaxBounds(max_x - new_p.getImageHeight(), max_y);
-
         // Buffer for adding to Projectiles
-        ListIterator<Projectile> iterator = temp_buffer.listIterator();
-        iterator.add(new_p);
+        temp_buffer.add(new Projectile(getContext(), new Position(curr_player.getX(), curr_player.getY()), max_bounds, type));
     }
 
 }

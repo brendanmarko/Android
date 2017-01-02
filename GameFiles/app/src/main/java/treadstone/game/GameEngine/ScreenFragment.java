@@ -3,14 +3,13 @@ package treadstone.game.GameEngine;
 import android.util.Log;
 import android.view.View;
 import android.os.Bundle;
-import android.graphics.Point;
 import android.support.v4.app.Fragment;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
 
 public class ScreenFragment extends Fragment
 {
-    private int             xMax, yMax;
+    private int             x_max, y_max;
     private GameView        curr_screen;
 
     public ScreenFragment()
@@ -21,9 +20,9 @@ public class ScreenFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle)
     {
-        xMax = getArguments().getInt("X_BOUND");
-        yMax = getArguments().getInt("Y_BOUND");
-        curr_screen = new GameView(this.getContext(), new Point(xMax, yMax));
+        x_max = getArguments().getInt("X_BOUND");
+        y_max = getArguments().getInt("Y_BOUND");
+        curr_screen = new GameView(this.getContext(), new Position(x_max, y_max));
         return curr_screen;
     }
 
@@ -56,7 +55,6 @@ public class ScreenFragment extends Fragment
     public void handleButtonPress(ControllerFragment.ProjectileType p)
     {
         curr_screen.addProjectileToPlayer(p);
-        Log.d("button_value", "Value of button " + p);
     }
 
 }

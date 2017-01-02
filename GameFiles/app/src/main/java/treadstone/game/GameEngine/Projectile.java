@@ -3,48 +3,24 @@ package treadstone.game.GameEngine;
 import android.content.Context;
 import android.util.Log;
 
-public class Projectile extends MovableImage
+public class Projectile extends MovableEntity
 {
-    private float               damage;
+    private int         damage;
 
-    Projectile(Context c, ControllerFragment.ProjectileType p, float x, float y, float speed)
+    public Projectile(Context c, Position s, Position m, char t)
     {
-        super(c, x, y, speed, p.toString().toLowerCase());
-        setMoving();
-
-        switch (p)
-        {
-            case BULLET:
-            damage = 1.0f;
-            Log.d("bullet_created", "Bullet projectile created from Projectile!");
-            break;
-
-            case MISSILE:
-            damage = 2.0f;
-            Log.d("missile_created", "Missile projectile created from Projectile!");
-            break;
-
-            case SHIELD:
-            damage = 5.0f;
-            Log.d("shield_created", "Shield triggered from Projectile!");
-            break;
-        }
-
-    }
-
-    public String toString()
-    {
-        return "Speed: " + getSpeed() + " Damage: " + damage  + "Position: " + getPosition().toString() + ".\n";
+        super(c, s, m, t);
+        setMovable();
     }
 
     public void update()
     {
         setPosition(getX() + getSpeed(), getY());
         boundsCheck(getX(), getY());
-        getHitRect().updateHitbox((int) getX(), (int) getY(), getImage());
+        getHitBox().update((int) getX(), (int) getY(), getImage());
+        toString();
     }
 
-    @Override
     public void boundsCheck(float x, float y)
     {
 
@@ -68,9 +44,9 @@ public class Projectile extends MovableImage
             Log.d("Y > MAX", "Should be reflected back");
         }
 
-        else if (y + getImageHeight() > getYMax())
+        else if (y + getHeight() > getYMax())
         {
-            setPosition(getX(), getYMax() - getImageHeight());
+            setPosition(getX(), getYMax() - getHeight());
         }
 
     }

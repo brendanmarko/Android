@@ -32,7 +32,7 @@ public class ViewPort
 
     public void setPixelsPerMetre()
     {
-        pixels_per_metre = new Position(screen_resolution.getX()/32, screen_resolution.getY()/18);
+        pixels_per_metre = new Position(screen_resolution.getX()/40, screen_resolution.getY()/20);
     }
 
     public float getScreenSizeX()
@@ -67,7 +67,7 @@ public class ViewPort
 
     public void setViewSize()
     {
-        viewSize = new Position(34.0f, 20.0f);
+        viewSize = new Position(40.0f, 20.0f);
     }
 
 }

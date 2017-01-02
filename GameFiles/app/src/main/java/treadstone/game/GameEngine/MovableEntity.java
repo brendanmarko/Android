@@ -1,99 +1,30 @@
 package treadstone.game.GameEngine;
 
+import android.content.Context;
+
 public abstract class MovableEntity extends Entity
 {
+    private RectangleHitBox hitbox;
 
-    private float           speed, max_speed;
-    private boolean         moving;
+    public abstract void update();
+    public abstract void boundsCheck(float x, float y);
 
-    MovableEntity(float x, float y, float speed)
+    public MovableEntity(Context c, Position s, Position m, char t)
     {
-        super(x, y);
-        max_speed = speed;
+        super(c, s, m, t);
+        setMovable();
+        setHitBox();
     }
 
-    public float getSpeed()
+    public void setHitBox()
     {
-        return speed;
+        hitbox = new RectangleHitBox((int) getWidth(), (int) getHeight(), getImage());
     }
 
-    public void setSpeed(float new_speed)
+
+    public RectangleHitBox getHitBox()
     {
-        speed = new_speed;
-    }
-
-    public void setStatic()
-    {
-        speed = 0;
-        moving = false;
-    }
-
-    public void setMoving()
-    {
-        speed = max_speed;
-        moving = true;
-    }
-
-    public void boundsCheck(float x, float y)
-    {
-
-        if (x < 0.0f)
-        {
-            setPosition(0.0f, getY());
-        }
-
-        if (x > getXMax())
-        {
-            setPosition(getXMax(), getY());
-        }
-
-        if (y < 0.0f)
-        {
-            setPosition(getX(), 0.0f);
-        }
-
-        if (y > getYMax())
-        {
-            setPosition(getX(), getYMax());
-        }
-
-    }
-
-    @Override
-    public void setPosition(float x, float y)
-    {
-
-        if (getX() == x && getY() == y)
-        {
-            moving = false;
-            return;
-        }
-
-        getPosition().setPosition(x, y);
-        moving = true;
-
-    }
-
-    public boolean isMoving()
-    {
-        return moving;
-    }
-
-    public void toggleMoving(boolean move)
-    {
-
-        moving = move;
-
-        if (moving)
-        {
-            speed = max_speed;
-        }
-
-        else
-        {
-            speed = 0;
-        }
-
+        return hitbox;
     }
 
 }

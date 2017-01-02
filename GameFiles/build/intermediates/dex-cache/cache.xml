@@ -3,156 +3,156 @@
 
     <item
         is-multidex="true"
-        jar="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.2.1/jars/classes.jar"
+        jar="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
-        <dex dex="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-24.2.1_117cfbbae0c8474120f1f0fee6107d7c63edd8e0/classes.dex" />
+        sha1="daa682f9ab77523559a942c6dbf693979e066d20">
+        <dex dex="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_792cd9405ae6c0376b9ed5ffcb5405eb494c5131\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="b8b7eb674212f82616168330e8b6c38ea1d57d60">
-        <dex dex="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_09de2752d41a430e412dbdca62569379d376fc07/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/brendan/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/24.2.1/support-annotations-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
-        <dex dex="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-24.2.1_1d23dcb084388647dbb9df7d83667de524b0452e/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
-        <dex dex="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-compat-24.2.1_602cd22ab05da87fad7fbcea58f493eaa432d919/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="303a6a6cb78e93058d515d00ff2140598e5915d4">
-        <dex dex="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_67c84086e2a77a0a098b46600cec1a548c65ee8b/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
-        <dex dex="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-24.2.1_2b6d1df6c898a6022666de5d8e3315c249e10cfe/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.1/jars/classes.jar"
+        jar="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="09b462bbcb77650284bd6614f1a32f360ef369f8">
-        <dex dex="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-media-compat-24.2.1_2b552b012969d8714936552f3d29d605d1c91828/classes.dex" />
+        <dex dex="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-media-compat-24.2.1_7e84644bd416bd36f7fd91f73cb970a13e2e3c23\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
-        <dex dex="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-fragment-24.2.1_d70994da459997cc9ac133b4ce08a367110b5622/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/exploded-aar/com.android.support/support-v4/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-24.2.1_37de1d9935fe3199771c69dbcd7b5a38d31796bc/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.1/jars/libs/internal_impl-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
-        <dex dex="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_542b23234dd3168307906a81b99a677be9cf9a43/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jar="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\libs\internal_impl-24.2.1.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="867dad63c33388ff8c7644b236579355036d075f">
-        <dex dex="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_00c49c74099bbd15165ef97d38e70ac6b4523034/classes.dex" />
+        <dex dex="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_a7547279ac96d066f124ea4f928734dac33db176\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/exploded-aar/com.android.support/support-fragment/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jar="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
-        <dex dex="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_da295654b45cd5d5610344ad713d8f54b3a7949a/classes.dex" />
+        sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
+        <dex dex="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-24.2.1_149e3d0f7f22f611073d76c4aceeebc70d4d674a\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
-        <dex dex="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-ui-24.2.1_f0d061fa081b61de9e41cad5f285542abfc93a92/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.1/jars/libs/internal_impl-24.2.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
-        <dex dex="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_347cbed533bdda702a30eccb75c232b774b87f54/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/24.2.1/jars/classes.jar"
+        jar="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="d5c731fc64c03dfe04d51134955b483551c35849">
-        <dex dex="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-24.2.1_d57162ad8aa03d5873d5a5889c63d7fda40920cb/classes.dex" />
+        <dex dex="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-24.2.1_f28da95956720b3e0da081d8b6cf50b8add0019d\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/24.2.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
-        <dex dex="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-utils-24.2.1_9d00030d55977d4cf66c5ab1e67cc5b9a7e98b43/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jar="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
         sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
-        <dex dex="/home/brendan/Desktop/AndroidGame/GameFiles/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-24.2.1_6ca582815f0e385f0d7cf30af4132003b1adc491/classes.dex" />
+        <dex dex="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_2e99bc0f38748cf67f6000dbc17695515523f4e9\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="d468dceb8f9abbff3cd95fbdf151cf3e9ba44c53">
+        <dex dex="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_c357854f15babadafef64e147e37d4022f36d7a9\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
+        <dex dex="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-24.2.1_1c54fccc674e37b524c847b6bb4f0d5bf91cc4c1\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
+        <dex dex="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-24.2.1_4cf3740b2793455a94f67da33bae9baa4f879128\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
+        <dex dex="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-24.2.1_5e020b8d800657187e3aa32dad3a087640a00661\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Users\brend\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\24.2.1\support-annotations-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
+        <dex dex="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-24.2.1_d9a77e0f6c88e70b0ee56dc3cc7ec75c7baad276\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\exploded-aar\com.android.support\support-v4\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-24.2.1_63f3b4f32d4381b9f75150c2cf374b2ffe9799b2\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
+        <dex dex="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-24.2.1_0c5c30aa891196ebe69a124d371489b5b798b42d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
+        <dex dex="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_ee1366ae0bf5299cbf7f837a166219657a94f7ec\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
+        <dex dex="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_ebcfdbcb37248bd9da80b433906ff6dba4375b29\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
+        <dex dex="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_4ad5039ffb9ee68a27354dbb6af80f373992cb2a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
+        <dex dex="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-24.2.1_853afaa77e46d7afbb096777e81488584bae1521\classes.dex" />
     </item>
 
 </items>

@@ -1,7 +1,6 @@
 package treadstone.game.GameEngine;
 
 import android.graphics.Rect;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -26,7 +25,7 @@ public class CollisionChecker
         for (ListIterator<TestEnemy> iterator =  target_list.listIterator(); iterator.hasNext();)
         {
             curr_enemy  = iterator.next();
-            if (Rect.intersects(curr_player.getHitRect().getHitbox(), curr_enemy.getHitRect().getHitbox()))
+            if (Rect.intersects(curr_player.getHitBox().getHitBox(), curr_enemy.getHitBox().getHitBox()))
             {
                 iterator.remove();
                 return true;
@@ -50,7 +49,7 @@ public class CollisionChecker
             {
                 p = p_iterator.next();
 
-                if (Rect.intersects(p.getHitRect().getHitbox(), e.getHitRect().getHitbox()))
+                if (Rect.intersects(p.getHitBox().getHitBox(), e.getHitBox().getHitBox()))
                 {
                     p_iterator.remove();
                     e_iterator.remove();

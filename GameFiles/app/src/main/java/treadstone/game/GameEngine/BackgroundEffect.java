@@ -3,13 +3,12 @@ package treadstone.game.GameEngine;
 
 import android.content.Context;
 
-public class BackgroundEffect extends MovableImage
+public class BackgroundEffect extends MovableEntity
 {
 
-    BackgroundEffect(Context context, String name, int x, int y, int speed)
+    BackgroundEffect(Context context, Position s, Position m, char t)
     {
-        super(context, x, y, speed, name);
-        setSpeed(speed);
+        super(context, s, m , t);
     }
 
     public void update()
