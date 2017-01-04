@@ -1,0 +1,24 @@
+Day 1 [04/01/17]
+Finally got the file layout to load from an external class!
+The addition of a new architecture to handle Levels, called LevelManager was also added
+Added comments to the most important functions using in Object creation
+
+	Completed:
+	LevelManager Class
+	ViewPort Class
+	LevelData Class
+
+	Problems:
+	Game crashes when I touch the screen, probably something to do with the stuff I commeneted out
+
+	To do:
+	Fix onTouchEvent crash to the ScreenFragment/GameView
+
+Day 2 [05/01/17]
+
+	Completed:
+
+	Problems:
+
+	To do:
+
