@@ -9,7 +9,7 @@ public class GameObject
     private int layer;
     private String image_name;
     private int animateFrameCount;
-    private Position dimensions;
+    private Position dimensions; // assigned as [Width, Height]
     private float speed;
 
     GameObject(char object_type)
@@ -22,6 +22,7 @@ public class GameObject
     {
         switch (type)
         {
+            // Player
             case ('p'):
             {
                 layer = 1;
@@ -32,16 +33,7 @@ public class GameObject
                 break;
             }
 
-            case ('e'):
-            {
-                layer = 1;
-                image_name = "bob_evil";
-                animateFrameCount = 1;
-                dimensions = new Position(3.0f, 6.0f);
-                speed = 10.0f;
-                break;
-            }
-
+            // Bullet
             case ('b'):
             {
                 layer = 1;
@@ -52,6 +44,29 @@ public class GameObject
                 break;
             }
 
+            // Debris
+            case ('d'):
+            {
+                layer = 1;
+                image_name = "debris";
+                animateFrameCount = 1;
+                dimensions = new Position(1.0f, 1.0f);
+                speed = 0.0f;
+                break;
+            }
+
+            // Enemy
+            case ('e'):
+            {
+                layer = 1;
+                image_name = "bob_evil";
+                animateFrameCount = 1;
+                dimensions = new Position(3.0f, 6.0f);
+                speed = 10.0f;
+                break;
+            }
+
+            //  Missile
             case ('m'):
             {
                 layer = 1;
@@ -62,6 +77,7 @@ public class GameObject
                 break;
             }
 
+            // Little Star
             case ('s'):
             {
                 layer = 0;
@@ -73,6 +89,7 @@ public class GameObject
                 break;
             }
 
+            // Big Star
             case ('S'):
             {
                 layer = 0;
@@ -116,6 +133,11 @@ public class GameObject
     public float getSpeed()
     {
         return speed;
+    }
+
+    public char getType()
+    {
+        return type;
     }
 
 }

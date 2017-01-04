@@ -1,11 +1,8 @@
 package treadstone.game.GameEngine;
 
+import android.graphics.Rect;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.ListIterator;
-
-import android.graphics.Rect;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.content.Context;
@@ -19,56 +16,39 @@ public class GameView extends SurfaceView implements Runnable
 {
     volatile boolean                view_active;
     Thread                          game_thread = null;
-    Player                          curr_player;
-    TestEnemy                       test_enemy1, test_enemy2, test_enemy3;
+    private Player                  curr_player;
     private Position                max_bounds;
+    private ViewPort                viewport;
+    private LevelManager            level_manager;
 
     private Paint                   paint;
     private Canvas                  canvas;
     private SurfaceHolder           curr_holder;
 
-    ArrayList<TestEnemy>            enemy_list = new ArrayList<>();
-    ArrayList<Projectile>           temp_buffer = new ArrayList<>();
-    ArrayList<BackgroundEffect>     background_visuals = new ArrayList<>();
-
-    BackgroundEffect                b1, b2, b3, b4;
     CollisionChecker                collision_check;
 
-    public GameView(Context curr_context, Position max)
+    public GameView(Context c, Position m)
     {
-        super(curr_context);
-        max_bounds  = max;
+        super(c);
+        max_bounds  = m;
         init();
+
+        viewport = new ViewPort(max_bounds);
+        loadLevel(c, "TestLevel", new Position(15.0f, 2.0f));
+        viewport.setCentre(level_manager.objectAt(level_manager.getPlayerIndex()).getPosition());
+        Log.d("+++ load/centre +++", "Successfully loaded level and setCentre");
     }
 
     public void init()
     {
-        // Initialize Surface Requirements
         paint = new Paint();
         curr_holder = getHolder();
+    }
 
-        // Player added to Game
-        curr_player = new Player(getContext(), new Position(0, 1000), max_bounds, 'p');
-
-        // Test Enemy added to Map
-        test_enemy1 = new TestEnemy(getContext(), new Position(2000, 50), max_bounds, 'e');
-        test_enemy2 = new TestEnemy(getContext(), new Position(1000, 50), max_bounds, 'e');
-        test_enemy3 = new TestEnemy(getContext(), new Position(750, 100), max_bounds, 'e');
-
-        enemy_list.add(test_enemy1);
-        enemy_list.add(test_enemy2);
-        enemy_list.add(test_enemy3);
-
-        // Background Effects
-        b1 = new BackgroundEffect(getContext(), new Position(0, 0), max_bounds, 'S');
-        b2 = new BackgroundEffect(getContext(), new Position(0, 0), max_bounds, 's');
-        b3 = new BackgroundEffect(getContext(), new Position(0, 0), max_bounds, 'S');
-        b4 = new BackgroundEffect(getContext(), new Position(0, 0), max_bounds, 's');
-
-        background_visuals.add(b1);
-        background_visuals.add(b2);
-        background_visuals.add(b3);
-        background_visuals.add(b4);
+    public void loadLevel(Context c, String n, Position s)
+    {
+        level_manager = null;
+        level_manager = new LevelManager(c, n, max_bounds, viewport.getPixelsPerMetre(), s);
     }
 
     @Override
@@ -83,16 +63,35 @@ public class GameView extends SurfaceView implements Runnable
 
     }
 
+    // update()
+    // This function is called once every iteration of the game loop and handles the changes in
+    // the game world objects within LevelManager.getGameOjbects()
     public void update()
     {
-        curr_player.update();
-        updateProjectiles();
-        updateEnemies();
-        updateBackgroundEffects();
+        for (Entity e : level_manager.getGameObjects())
+        {
+            if (e.isActive())
+            {
+                if (viewport.clipObjects(e.getPosition(), e.getType().getDimensions()))
+                {
+                    e.setVisible();
+                }
+
+            }
+
+            else
+            {
+                e.setInvisible();
+            }
+
+        }
+
     }
 
     public void draw()
     {
+        Rect new_target = new Rect();
+
         if (curr_holder.getSurface().isValid())
         {
             // Lock Canvas
@@ -103,12 +102,17 @@ public class GameView extends SurfaceView implements Runnable
             paint.setColor(Color.argb(255, 255, 0, 0));
 
             // Draw Entities
-            drawTarget(curr_player);
-            drawProjectiles();
-            drawEnemies();
-            drawBackgroundEffects();
-            drawHitBoxes();
-            checkCollisions();
+            for (int layer = -1; layer < 2; layer++)
+            {
+                for (Entity e : level_manager.getGameObjects())
+                {
+                    if (e.isVisible() && e.getLayer() == layer)
+                    {
+                        new_target.set(viewport.worldToScreen(e.getPosition(), e.getType().getDimensions()));
+                        canvas.drawBitmap(level_manager.getBitmap(e.getType().getType()), new_target.left, new_target.top ,paint);
+                    }
+                }
+            }
 
             // Unlock and draw
             curr_holder.unlockCanvasAndPost(canvas);
@@ -173,49 +177,7 @@ public class GameView extends SurfaceView implements Runnable
         return true;
     }
 
-    public void drawTarget(MovableEntity curr_target)
-    {
-        canvas.drawBitmap(curr_target.getImage(), curr_target.getX(), curr_target.getY(), paint);
-    }
-
-    public void drawBackgroundEffects()
-    {
-        for (BackgroundEffect curr_item : background_visuals)
-        {
-            drawTarget(curr_item);
-        }
-    }
-
-    public void drawEnemies()
-    {
-        for (TestEnemy e : enemy_list)
-        {
-            canvas.drawBitmap(e.getImage(), e.getX(), e.getY(), paint);
-        }
-
-    }
-
-    public void updateBackgroundEffects()
-    {
-        BackgroundEffect curr_item;
-
-        for (ListIterator<BackgroundEffect> iterator = background_visuals.listIterator(); iterator.hasNext();)
-        {
-            curr_item = iterator.next();
-            curr_item.update();
-        }
-
-    }
-
-    public void drawProjectiles()
-    {
-        for (Projectile p : curr_player.getProjectiles())
-        {
-            drawProjectile(p);
-        }
-
-    }
-
+    /*
     public void updateProjectiles()
     {
         // Add temp_buffer to Projectile List
@@ -233,15 +195,6 @@ public class GameView extends SurfaceView implements Runnable
     public void drawProjectile(Projectile curr_target)
     {
         canvas.drawBitmap(curr_target.getImage(), curr_target.getX(), curr_target.getY(), paint);
-    }
-
-    public void updateEnemies()
-    {
-        for (TestEnemy e : enemy_list)
-        {
-            e.update();
-        }
-
     }
 
     public void checkCollisions()
@@ -265,6 +218,7 @@ public class GameView extends SurfaceView implements Runnable
 
     }
 
+
     public void drawHitBoxes()
     {
         Rect curr_box;
@@ -284,6 +238,7 @@ public class GameView extends SurfaceView implements Runnable
         }
 
     }
+
 
     public void addProjectileToPlayer(ControllerFragment.ProjectileType p)
     {
@@ -310,5 +265,8 @@ public class GameView extends SurfaceView implements Runnable
         // Buffer for adding to Projectiles
         temp_buffer.add(new Projectile(getContext(), new Position(curr_player.getX(), curr_player.getY()), max_bounds, type));
     }
+
+     */
+
 
 }

@@ -1,6 +1,7 @@
 package treadstone.game.GameEngine;
 
 import android.content.Context;
+import android.util.Log;
 
 public abstract class MovableEntity extends Entity
 {
@@ -13,12 +14,14 @@ public abstract class MovableEntity extends Entity
     {
         super(c, s, m, t);
         setMovable();
+        Log.d("player_test_object+++", "Setting hitbox");
         setHitBox();
     }
 
     public void setHitBox()
     {
-        hitbox = new RectangleHitBox((int) getWidth(), (int) getHeight(), getImage());
+        Log.d("player_test_object+++", "Entering setHitBox");
+        // hitbox = new RectangleHitBox((int) getType().getDimensions().getX(), (int) getType().getDimensions().getY(), getImage());
     }
 
 

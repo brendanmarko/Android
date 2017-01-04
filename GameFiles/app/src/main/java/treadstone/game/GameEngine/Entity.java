@@ -21,6 +21,7 @@ public abstract class Entity
     private boolean         visible;
     private boolean         moving;
     private float           speed;
+    private boolean         active;
 
     Entity(Context c, Position s, Position max, char t)
     {
@@ -34,17 +35,23 @@ public abstract class Entity
         type = new GameObject(t);
         speed = type.getSpeed();
         layer_num = type.getLayer();
-        visible = true;
+
+        // Try it both TRUE and FALSE
+        visible = false;
+
+        Log.d("setting_w/h", "testing values of w/h: " + width + ", " + height);
         width = type.getDimensions().getX();
         height = type.getDimensions().getY();
-        createBitmap(c, type.getImageName());
+        Log.d("setting_w/h", "testing values of w/h: " + width + ", " + height);
+        active = true;
     }
 
-    public void createBitmap(Context c, String s)
+    public Bitmap createBitmap(Context c, String s)
     {
         int id = c.getResources().getIdentifier(s, "drawable", c.getPackageName());
         image = BitmapFactory.decodeResource(c.getResources(), id);
-        image = Bitmap.createScaledBitmap(image, (int) (getWidth() * type.getAnimateFrameCount()), (int) (getHeight() * type.getAnimateFrameCount()), false);
+        image = Bitmap.createScaledBitmap(image, (int) (width * ppm_x * type.getAnimateFrameCount()), (int) (height * ppm_y * type.getAnimateFrameCount()), false);
+        return image;
     }
 
     public int getLayer()
@@ -89,19 +96,20 @@ public abstract class Entity
 
     public float getHeight()
     {
-        return height * ppm_y;
+        return height;
     }
 
     public float getWidth()
     {
-        return width * ppm_x;
+        Log.d("calling_w/h", "testing values of w/h [type]: " + width + ", " + height + "[" + type.getType() + "]");
+        return width;
     }
 
     public void random_spawn()
     {
         Random generator = new Random();
-        int random_factor = generator.nextInt(20);
-        curr_pos.setAs(max_bounds.getX(), (max_bounds.getY() * random_factor)/20);
+        int random_factor = generator.nextInt(ppm_y);
+        curr_pos.setAs(max_bounds.getX(), (max_bounds.getY() * random_factor)/ppm_y);
     }
 
     public void respawn()
@@ -112,6 +120,11 @@ public abstract class Entity
     public Bitmap getImage()
     {
         return image;
+    }
+
+    public String getImageName()
+    {
+        return type.getImageName();
     }
 
     public boolean isVisible()
@@ -147,6 +160,16 @@ public abstract class Entity
     public float getSpeed()
     {
         return speed;
+    }
+
+    public boolean isActive()
+    {
+        return active;
+    }
+
+    public GameObject getType()
+    {
+        return type;
     }
 
     public String toString()

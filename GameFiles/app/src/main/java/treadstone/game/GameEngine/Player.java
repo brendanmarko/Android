@@ -13,7 +13,7 @@ public class Player extends MovableEntity
     {
         super(context, s, m, t);
         projectiles = new ArrayList<>();
-        setMovable();
+        // setMovable();
     }
 
     public void update()
