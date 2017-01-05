@@ -28,7 +28,7 @@ public class GameObject
                 layer = 1;
                 image_name = "bob";
                 animateFrameCount = 1;
-                dimensions = new Position(3.0f, 6.0f);
+                dimensions = new Position(3.0f, 3.0f);
                 speed = 13.0f;
                 break;
             }
@@ -61,7 +61,7 @@ public class GameObject
                 layer = 1;
                 image_name = "bob_evil";
                 animateFrameCount = 1;
-                dimensions = new Position(3.0f, 6.0f);
+                dimensions = new Position(3.0f, 3.0f);
                 speed = 10.0f;
                 break;
             }

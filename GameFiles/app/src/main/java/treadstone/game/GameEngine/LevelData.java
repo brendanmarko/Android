@@ -1,5 +1,7 @@
 package treadstone.game.GameEngine;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 public class LevelData
@@ -19,6 +21,29 @@ public class LevelData
     public void setTiles(ArrayList<String> a)
     {
         tiles = a;
+    }
+
+    public String toString()
+    {
+        Log.d("size_of_tiles+++", "Size of getTiles() currently: " + getTiles().size());
+        return "getTilesSize() = " + getTiles().size();
+    }
+
+    public void printTiles()
+    {
+        String temp = "";
+
+        for (int i = 0; i < tiles.size(); i++)
+        {
+            for (int j = 0; j < tiles.get(i).length(); j++)
+            {
+                    temp += tiles.get(i).charAt(j);
+            } // end : inner for
+
+            Log.d("ROW_PRINT +++", temp);
+            temp = "";
+        }
+
     }
 
 }

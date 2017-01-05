@@ -33,6 +33,11 @@ public class LevelManager
                 level_data = new TestLevel();
         }
 
+        Log.d("level_data_render", "level_data info: " + level_data.toString());
+
+        // Test list contents
+        level_data.printTiles();
+
         // Initialize Bitmap/Game object storage
         game_objects = new ArrayList<Entity>();
         bitmaps = new Bitmap[20];
@@ -96,16 +101,17 @@ public class LevelManager
         map_h = level_data.getTiles().size();
         map_w = level_data.getTiles().get(0).length();
 
+        Log.d("width_height_test", map_w + ", " + map_h);
+
         // Reads in the Level layout file
-        for (int i = 0; i < map_h; i++)
+        for (int y = 0; y < map_h; y++)
         {
+            Log.d("enter_row", "Entering ROW #" + y);
 
-            Log.d("enter_row", "Entering ROW #" + i);
-
-            for (int j = 0; j < level_data.getTiles().get(i).length(); j++)
+            for (int x = 0; x < level_data.getTiles().get(y).length(); x++)
             {
-                Log.d("enter_col", "Entering COL #" + j);
-                objectCreate(c, i, j, level_data.getTiles().get(i).charAt(j));
+                Log.d("enter_col", "Entering COL #" + x);
+                objectCreate(c, new Position(x, y), level_data.getTiles().get(y).charAt(x));
             }
         }
 
@@ -131,7 +137,7 @@ public class LevelManager
 
     // objectCreate(char)
     // This function takes a char as input and creates an object based upon the type letter passed
-    public void objectCreate(Context c, int i, int j, char d)
+    public void objectCreate(Context c, Position p, char d)
     {
         if (d == '.')
         {
@@ -150,7 +156,7 @@ public class LevelManager
             {
                 case 'p':
                     Log.d("player_test_object+++", "Creating player...");
-                    temp = new Player(c, new Position(i, j), level_max, d);
+                    temp = new Player(c, p, level_max, d);
                     Log.d("player_test_object+++", "Player created!");
                     player = (Player) temp;
                     Log.d("player_test_object+++", player.toString());
@@ -160,13 +166,13 @@ public class LevelManager
                     break;
 
                 case 'e':
-                    temp = new TestEnemy(c, new Position(i, j), level_max, d);
+                    temp = new TestEnemy(c, p, level_max, d);
                     game_objects.add(temp);
                     checkBitmap(c, temp, d);
                     break;
 
                 case 'd':
-                    temp = new Debris(c, new Position(i, j), level_max, d);
+                    temp = new Debris(c, p, level_max, d);
                     game_objects.add(temp);
                     checkBitmap(c, temp, d);
                     break;
@@ -175,16 +181,6 @@ public class LevelManager
         }
 
     }
-
-    /*
-    // scaleLocation(Position)
-    // Given a Position this function will scale the Layout file co-ordinates into Game locations
-    public Position scaleLocation(Position p)
-    {
-        Log.d("scaleLocation return", p.getX() * pixelSize.getX() + ", " + p.getY() * pixelSize.getY());
-        return new Position(p.getX() * pixelSize.getX(), p.getY() * pixelSize.getY());
-    }
-    */
 
     public String getLevelName()
     {
@@ -224,6 +220,11 @@ public class LevelManager
     public Bitmap bitmapAt(int i)
     {
         return bitmaps[i];
+    }
+
+    public Player getPlayer()
+    {
+        return player;
     }
 
 }

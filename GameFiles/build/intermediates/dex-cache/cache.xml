@@ -7,7 +7,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="daa682f9ab77523559a942c6dbf693979e066d20">
+        sha1="9214abea1bf985cafb4897147901b2d3a94399a6">
         <dex dex="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_792cd9405ae6c0376b9ed5ffcb5405eb494c5131\classes.dex" />
     </item>
     <item
@@ -61,7 +61,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="d468dceb8f9abbff3cd95fbdf151cf3e9ba44c53">
+        sha1="6710309314aca393a7b070731edca902078b2f69">
         <dex dex="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_c357854f15babadafef64e147e37d4022f36d7a9\classes.dex" />
     </item>
     <item

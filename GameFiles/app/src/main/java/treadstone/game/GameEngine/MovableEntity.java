@@ -15,13 +15,13 @@ public abstract class MovableEntity extends Entity
         super(c, s, m, t);
         setMovable();
         Log.d("player_test_object+++", "Setting hitbox");
-        setHitBox();
+        // setHitBox();
     }
 
     public void setHitBox()
     {
         Log.d("player_test_object+++", "Entering setHitBox");
-        // hitbox = new RectangleHitBox((int) getType().getDimensions().getX(), (int) getType().getDimensions().getY(), getImage());
+        hitbox = new RectangleHitBox((int) getType().getDimensions().getX(), (int) getType().getDimensions().getY(), getImage());
     }
 
 

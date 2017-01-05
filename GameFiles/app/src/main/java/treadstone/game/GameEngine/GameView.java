@@ -1,8 +1,8 @@
 package treadstone.game.GameEngine;
 
-import android.graphics.Rect;
 import android.util.Log;
 
+import android.graphics.Rect;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.content.Context;
@@ -35,8 +35,15 @@ public class GameView extends SurfaceView implements Runnable
 
         viewport = new ViewPort(max_bounds);
         loadLevel(c, "TestLevel", new Position(15.0f, 2.0f));
+
+        // Test Player info here for proper map layout co-ordinates
+        Log.d("player_location+++" , "Testiing location passed to setCentre: " + level_manager.objectAt(level_manager.getPlayerIndex()).getPosition().toString());
+
         viewport.setCentre(level_manager.objectAt(level_manager.getPlayerIndex()).getPosition());
-        Log.d("+++ load/centre +++", "Successfully loaded level and setCentre");
+        curr_player = level_manager.getPlayer();
+
+        // Testing Player contents
+        Log.d("player_info_test", curr_player.toString());
     }
 
     public void init()
@@ -109,7 +116,7 @@ public class GameView extends SurfaceView implements Runnable
                     if (e.isVisible() && e.getLayer() == layer)
                     {
                         new_target.set(viewport.worldToScreen(e.getPosition(), e.getType().getDimensions()));
-                        canvas.drawBitmap(level_manager.getBitmap(e.getType().getType()), new_target.left, new_target.top ,paint);
+                        canvas.drawBitmap(level_manager.getBitmap(e.getType().getType()), new_target.left, new_target.top, paint);
                     }
                 }
             }
@@ -159,6 +166,8 @@ public class GameView extends SurfaceView implements Runnable
 
     public boolean onTouchEvent(MotionEvent curr_motion)
     {
+        Log.d("on_touch_event+++", "GameView onTouch called!");
+
         if (curr_motion.getAction() == MotionEvent.ACTION_UP)
         {
             curr_player.setUnmovable();
@@ -171,7 +180,8 @@ public class GameView extends SurfaceView implements Runnable
 
         else if (curr_motion.getAction() == MotionEvent.ACTION_MOVE)
         {
-            curr_player.processMovement(curr_motion.getRawX(), curr_motion.getRawY());
+            Log.d("entering_action_move", "ProcessMovement to be called...");
+            // curr_player.processMovement(curr_motion.getRawX(), curr_motion.getRawY());
         }
 
         return true;

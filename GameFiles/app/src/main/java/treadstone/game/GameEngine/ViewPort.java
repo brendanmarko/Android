@@ -1,6 +1,7 @@
 package treadstone.game.GameEngine;
 
 import android.graphics.Rect;
+import android.util.Log;
 
 public class ViewPort
 {
@@ -19,8 +20,9 @@ public class ViewPort
 
     public void init()
     {
-        setPixelsPerMetre(32.0f, 18.0f);
-        setViewSize(34.0f, 20.0f);
+        // Set the number of Pixels [x, y]
+        setPixelsPerMetre(50.0f, 35.0f);
+        setViewSize(pixels_per_metre);
         scaled_view_space = new Rect();
         clipped_num = 0;
     }
@@ -148,9 +150,9 @@ public class ViewPort
         return viewSize.getY();
     }
 
-    public void setViewSize(float x, float y)
+    public void setViewSize(Position p)
     {
-        viewSize = new Position(x, y);
+        viewSize = new Position(screen_resolution.getX()/pixels_per_metre.getX(), screen_resolution.getY()/pixels_per_metre.getY());
     }
 
 }

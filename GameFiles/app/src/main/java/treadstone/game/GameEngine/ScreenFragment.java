@@ -22,6 +22,7 @@ public class ScreenFragment extends Fragment
     {
         x_max = getArguments().getInt("X_BOUND");
         y_max = getArguments().getInt("Y_BOUND");
+        Log.d("MAX_BOUNDS_CHECK +++" , "BOUNDS CHECK: " + x_max + ", " + y_max);
         curr_screen = new GameView(this.getContext(), new Position(x_max, y_max));
         return curr_screen;
     }

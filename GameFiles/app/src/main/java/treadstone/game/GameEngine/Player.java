@@ -1,6 +1,7 @@
 package treadstone.game.GameEngine;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -21,13 +22,14 @@ public class Player extends MovableEntity
         if (isMoving())
         {
             boundsCheck(getX(), getY());
-            getHitBox().update((int) getX(), (int) getY(), getImage());
+            // getHitBox().update((int) getX(), (int) getY(), getImage());
         }
 
     }
 
     public void processMovement(float x_location, float y_location)
     {
+        Log.d("target_location", x_location + ", " + y_location);
         float div_factor;
         spanX = x_location - getX();
         spanY = y_location - getY();
