@@ -17,14 +17,22 @@ Added comments to the most important functions using in Object creation
 Day 2 [05/01/17]
 
 	Completed:
-    No longer crashes when I touch the screen!
-    Fixed the implementation of the Level creator, had some loop counters mixed up causing it to render sideways!
-    Made some adjustments to code and added a lot of Log.d() calls for future debugging (added toString() to some objects)
+	No longer crashes when I touch the screen!
+	Fixed the implementation of the Level creator, had some loop counters mixed up causing it to render sideways!
+	Made some adjustments to code and added a lot of Log.d() calls for future debugging (added toString() to some objects)
 
 	Problems:
-    Now that world creation has begun working properly it is time to handle player movement with previously written code
-        : hopefully a smooth integration (please)
+	Now that world creation has begun working properly it is time to handle player movement with previously written code
+		: hopefully a smooth integration (please)
 
 	To do:
-    Fix player movement
-    Have camera follow player and draw updates properly with world layout
+	Fix player movement
+	Have camera follow player and draw updates properly with world layout
+	
+Day 3 [06/01/17]
+
+	Completed:
+	
+	Problems:
+	
+	To do:
