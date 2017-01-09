@@ -30,7 +30,6 @@ Day 2 [05/01/17]
 		: hopefully a smooth integration (please)
 
 	To do:
-<<<<<<< HEAD
     Fix player movement
     Have camera follow player and draw updates properly with world layout
     
@@ -54,15 +53,3 @@ Day 3 [09/01/17]
 
 --> /TLDR
     : ViewPort and Gameview now mesh well together, fixed up variables and functions to allow this
-=======
-	Fix player movement
-	Have camera follow player and draw updates properly with world layout
-	
-Day 3 [06/01/17]
-
-	Completed:
-	
-	Problems:
-	
-	To do:
->>>>>>> 7739d7e8264165919613eda20ed8bcf657ec5ec7
