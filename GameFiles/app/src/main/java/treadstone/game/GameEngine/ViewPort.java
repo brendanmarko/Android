@@ -5,12 +5,14 @@ import android.util.Log;
 
 public class ViewPort
 {
-    private int             clipped_num;
-    private Rect            scaled_view_space;
-    private Position        pixels_per_metre;
-    private Position        screen_resolution;
-    private Position        screen_centre;
-    private Position        viewSize;
+    private Position screen_resolution;
+    private Position screen_centre;
+    private Position pixels_per_metre;
+    private Position viewable_size;
+    private Position viewport_centre;
+
+    private int clipped_num;
+    private Rect scaled_view_space;
 
     ViewPort(Position resolution)
     {
@@ -20,9 +22,9 @@ public class ViewPort
 
     public void init()
     {
-        // Set the number of Pixels [x, y]
+        initializeCentre(screen_resolution);
         setPixelsPerMetre(50.0f, 35.0f);
-        setViewSize(pixels_per_metre);
+        setViewSize(new Position(50.0f, 37.0f));
         scaled_view_space = new Rect();
         clipped_num = 0;
     }
@@ -32,15 +34,22 @@ public class ViewPort
     // 1) p = Position of World co-ordinates
     // 2) d = Position of Entity dimensions [Width, Height]
     // Purpose of function is finding left, right, bottom, and top dimensions of a Rect
-    //   -> returns Rect after being set with (l, t, r, b)
+    // Returns Rect with (l, t, r, b)
     public Rect worldToScreen(Position p, Position d)
     {
-        int l, t, r, b;
-        l = (int) (screen_centre.getX() - (screen_centre.getX() - p.getX() * pixels_per_metre.getX()));
-        t = (int) (screen_centre.getY() - (screen_centre.getY() - p.getY() * pixels_per_metre.getY()));
-        r = (int) (l + (d.getX() * p.getX()));
-        b = (int) (t + (d.getY() * p.getY()));
+        Log.d("WorldToScreen/WTS", "Current viewport_centre: " + viewport_centre.getX() + ", " + viewport_centre.getY());
+        Log.d("WorldToScreen/WTS", "Current p.position = " + p.toString());
+        Log.d("WorldToScreen/WTS", "Current d.position = " + d.toString());
+        Log.d("WorldToScreen/WTS", "Screen Centre: " + screen_centre.toString());
+        Log.d("WorldToScreen/WTS", "PPM Values: " + pixels_per_metre.toString());
 
+        int l, t, r, b;
+        l = (int) (screen_centre.getX() - ((viewport_centre.getX() - p.getX()) * pixels_per_metre.getX()));
+        t = (int) (screen_centre.getY() - ((viewport_centre.getY() - p.getY()) * pixels_per_metre.getY()));
+        r = (int) (l + (d.getX() * pixels_per_metre.getX()));
+        b = (int) (t + (d.getY() * pixels_per_metre.getY()));
+
+        Log.d("WorldToScreen/WTS", "Testing 4 ints [" + l + ", " + t + ", " + r + ", " + b + "]");
         scaled_view_space.set(l, t, r, b);
         return scaled_view_space;
     }
@@ -48,31 +57,31 @@ public class ViewPort
     // clipObjects(Position, Position)
     // This function takes the 2 same Positions as above and test them to see if an object has to be
     // clipped or not from the view.
-    public boolean clipObjects(Position p, Position d)
+    public boolean clipObject(Position p, Position d)
     {
-        if (p.getX() - d.getX() < screen_centre.getX() + (viewSize.getX()/2))
+        if (p.getX() < viewport_centre.getX() - viewable_size.getX())
         {
-            if (p.getX() + d.getX() < screen_centre.getX() - (viewSize.getX()/2))
-            {
-                if  (p.getY() - d.getY() < screen_centre.getY() + (viewSize.getY()/2))
-                {
-                    if  (p.getY() + d.getY() < screen_centre.getY() - (viewSize.getY()/2))
-                    {
-                        return false;
-                    }
 
-                }
-
-            }
-
+            return true;
         }
 
-        return true;
-    }
+        if (p.getY() > viewport_centre.getY() + viewable_size.getY())
+        {
+            return true;
+        }
 
-    public void setCentre(Position p)
-    {
-        screen_centre = new Position(p.getX(), p.getY());
+        if (p.getX() > viewport_centre.getX() + viewable_size.getX() + d.getX())
+        {
+            return true;
+        }
+
+        if (p.getY() < viewport_centre.getY() - viewable_size.getY() - d.getY())
+        {
+            return true;
+        }
+
+        Log.d("ViewPort/clipObjects", "Current object appears in Viewport, NOT clipped.");
+        return false;
     }
 
     public void resetClipped()
@@ -95,14 +104,10 @@ public class ViewPort
         return clipped_num;
     }
 
-    public void setCentre()
-    {
-        screen_centre = new Position(screen_resolution.getX()/2, screen_resolution.getY()/2);
-    }
 
     public void setPixelsPerMetre(float x, float y)
     {
-        pixels_per_metre = new Position(screen_resolution.getX()/x, screen_resolution.getY()/y);
+        pixels_per_metre = new Position(x, y);
     }
 
     public Position getPixelsPerMetre()
@@ -110,49 +115,39 @@ public class ViewPort
         return pixels_per_metre;
     }
 
-    public float getScreenSizeX()
+    public Position getResolution()
     {
-        return screen_resolution.getX();
+        return screen_resolution;
     }
 
-    public float getScreenSizeY()
+    public Position getCentre()
     {
-        return screen_resolution.getY();
+        return screen_centre;
     }
 
-    public float getCentreX()
+    public Position getViewableSize()
     {
-        return screen_resolution.getX();
-    }
-
-    public float getCentreY()
-    {
-        return screen_resolution.getY();
-    }
-
-    public float getPixelsPerMetreX()
-    {
-        return pixels_per_metre.getX();
-    }
-
-    public float getPixelsPerMetreY()
-    {
-        return pixels_per_metre.getY();
-    }
-
-    public float getSizeX()
-    {
-        return viewSize.getX();
-    }
-
-    public float getSizeY()
-    {
-        return viewSize.getY();
+        return viewable_size;
     }
 
     public void setViewSize(Position p)
     {
-        viewSize = new Position(screen_resolution.getX()/pixels_per_metre.getX(), screen_resolution.getY()/pixels_per_metre.getY());
+        viewable_size = new Position(p.getX(), p.getY());
+    }
+
+    public Rect getViewSpace()
+    {
+        return scaled_view_space;
+    }
+
+    public void initializeCentre(Position r)
+    {
+        screen_centre = new Position(r.getX()/5, r.getY()/2);
+    }
+
+    public void setViewPortCentre(Position p)
+    {
+        viewport_centre = p;
     }
 
 }

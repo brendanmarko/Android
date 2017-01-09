@@ -30,12 +30,14 @@ public class Player extends MovableEntity
     public void processMovement(float x_location, float y_location)
     {
         Log.d("target_location", x_location + ", " + y_location);
+        Log.d("converted_location", "Adjusted values: " + x_location/50 + ", " + y_location/35);
         float div_factor;
-        spanX = x_location - getX();
-        spanY = y_location - getY();
+        spanX = x_location/40 - getX();
+        spanY = y_location/ - getY();
         spanZ = (float) Math.sqrt((spanX * spanX) + (spanY * spanY));
         div_factor = spanZ/getSpeed();
         setPosition(getX() + spanX/div_factor, getY() + spanY/div_factor);
+        Log.d("new_location", getPosition().toString());
     }
 
     public void boundsCheck(float x, float y)

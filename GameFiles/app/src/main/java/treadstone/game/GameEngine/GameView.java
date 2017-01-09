@@ -34,16 +34,12 @@ public class GameView extends SurfaceView implements Runnable
         init();
 
         viewport = new ViewPort(max_bounds);
-        loadLevel(c, "TestLevel", new Position(15.0f, 2.0f));
+        loadLevel(c, "TestLevel", new Position(0.0f, 0.0f));
 
-        // Test Player info here for proper map layout co-ordinates
-        Log.d("player_location+++" , "Testiing location passed to setCentre: " + level_manager.objectAt(level_manager.getPlayerIndex()).getPosition().toString());
-
-        viewport.setCentre(level_manager.objectAt(level_manager.getPlayerIndex()).getPosition());
         curr_player = level_manager.getPlayer();
 
-        // Testing Player contents
-        Log.d("player_info_test", curr_player.toString());
+        viewport.setViewPortCentre(level_manager.getPlayer().getPosition());
+        Log.d("GameView/CTOR", "Testing centre init value: " + viewport.getCentre().toString());
     }
 
     public void init()
@@ -79,7 +75,7 @@ public class GameView extends SurfaceView implements Runnable
         {
             if (e.isActive())
             {
-                if (viewport.clipObjects(e.getPosition(), e.getType().getDimensions()))
+                if (!viewport.clipObject(e.getPosition(), e.getType().getDimensions()))
                 {
                     e.setVisible();
                 }
@@ -106,7 +102,7 @@ public class GameView extends SurfaceView implements Runnable
             canvas.drawColor(Color.argb(255, 0, 0, 0));
 
             // Paint Colour
-            paint.setColor(Color.argb(255, 255, 0, 0));
+            paint.setColor(Color.argb(255, 0, 0, 0));
 
             // Draw Entities
             for (int layer = -1; layer < 2; layer++)
@@ -115,6 +111,7 @@ public class GameView extends SurfaceView implements Runnable
                 {
                     if (e.isVisible() && e.getLayer() == layer)
                     {
+                        Log.d("GameView/draw", "Object is visible and being drawn!");
                         new_target.set(viewport.worldToScreen(e.getPosition(), e.getType().getDimensions()));
                         canvas.drawBitmap(level_manager.getBitmap(e.getType().getType()), new_target.left, new_target.top, paint);
                     }

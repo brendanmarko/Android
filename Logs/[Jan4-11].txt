@@ -1,4 +1,5 @@
 Day 1 [04/01/17]
+Note:
 Finally got the file layout to load from an external class!
 The addition of a new architecture to handle Levels, called LevelManager was also added
 Added comments to the most important functions using in Object creation
@@ -14,6 +15,9 @@ Added comments to the most important functions using in Object creation
 	To do:
 	Fix onTouchEvent crash to the ScreenFragment/GameView
 
+--> /TLDR
+    : Level layout files stored in external classes can now be processed and handled
+
 Day 2 [05/01/17]
 
 	Completed:
@@ -28,3 +32,24 @@ Day 2 [05/01/17]
 	To do:
     Fix player movement
     Have camera follow player and draw updates properly with world layout
+    
+--> /TLDR
+    : Game properly renders now but does NOT centre on the Player as desired
+    
+Day 3 [09/01/17]
+
+    Completed:
+    : After having to re-do a bunch of the functions inside ViewPort, which is what I dreaded, turned out to be helpful.
+    : Made optimizations to clipObjects() and A LOT of viewport related data fixes
+    : Equipped with much better understanding the application now outputs level layouts, centered on the Player in the
+      initial screen position on the left side!
+    
+    Problems:
+    : None
+    
+    To do:
+    : Add player movement 
+    : Make sure camera follows player [in theory it should do this now!]
+
+--> /TLDR
+    : ViewPort and Gameview now mesh well together, fixed up variables and functions to allow this

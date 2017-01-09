@@ -26,8 +26,8 @@ public abstract class Entity
     Entity(Context c, Position s, Position max, char t)
     {
         // temp ppm
-        ppm_x = 40;
-        ppm_y = 20;
+        ppm_x = 48;
+        ppm_y = 43;
 
         curr_pos = s;
         start_pos = s;
@@ -39,10 +39,8 @@ public abstract class Entity
         // Try it both TRUE and FALSE
         visible = false;
 
-        Log.d("setting_w/h", "testing values of w/h: " + width + ", " + height);
         width = type.getDimensions().getX();
         height = type.getDimensions().getY();
-        Log.d("setting_w/h", "testing values of w/h: " + width + ", " + height);
         active = true;
     }
 
@@ -101,7 +99,6 @@ public abstract class Entity
 
     public float getWidth()
     {
-        Log.d("calling_w/h", "testing values of w/h [type]: " + width + ", " + height + "[" + type.getType() + "]");
         return width;
     }
 

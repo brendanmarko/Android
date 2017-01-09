@@ -14,7 +14,7 @@ public class TestEnemy extends MovableEntity
     {
         setPosition(getX()-getSpeed(), getY());
         boundsCheck(getX(), getY());
-        getHitBox().update((int) getX(), (int) getY(), getImage());
+        // getHitBox().update((int) getX(), (int) getY(), getImage());
     }
 
     public void boundsCheck(float x, float y)

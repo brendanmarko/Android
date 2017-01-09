@@ -101,16 +101,11 @@ public class LevelManager
         map_h = level_data.getTiles().size();
         map_w = level_data.getTiles().get(0).length();
 
-        Log.d("width_height_test", map_w + ", " + map_h);
-
         // Reads in the Level layout file
         for (int y = 0; y < map_h; y++)
         {
-            Log.d("enter_row", "Entering ROW #" + y);
-
             for (int x = 0; x < level_data.getTiles().get(y).length(); x++)
             {
-                Log.d("enter_col", "Entering COL #" + x);
                 objectCreate(c, new Position(x, y), level_data.getTiles().get(y).charAt(x));
             }
         }
@@ -146,9 +141,7 @@ public class LevelManager
 
         else
         {
-            Log.d("curr_index_pre++", "curr_index_pre++ = " + curr_index);
             curr_index++;
-            Log.d("curr_index_post++", "curr_index_post++ = " + curr_index);
 
             Entity temp;
 

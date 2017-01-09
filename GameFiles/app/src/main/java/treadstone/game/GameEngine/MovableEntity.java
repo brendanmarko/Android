@@ -14,7 +14,7 @@ public abstract class MovableEntity extends Entity
     {
         super(c, s, m, t);
         setMovable();
-        Log.d("player_test_object+++", "Setting hitbox");
+        // Log.d("player_test_object+++", "Setting hitbox");
         // setHitBox();
     }
 

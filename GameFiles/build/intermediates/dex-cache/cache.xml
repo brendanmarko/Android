@@ -7,7 +7,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="9214abea1bf985cafb4897147901b2d3a94399a6">
+        sha1="cca4ba3193cc5a8834f7cc2ab7d44e1204739926">
         <dex dex="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_792cd9405ae6c0376b9ed5ffcb5405eb494c5131\classes.dex" />
     </item>
     <item
@@ -61,17 +61,8 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="6710309314aca393a7b070731edca902078b2f69">
+        sha1="823108bd239d6efb95b24407ee4b57023a283f17">
         <dex dex="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_c357854f15babadafef64e147e37d4022f36d7a9\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
-        <dex dex="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-24.2.1_1c54fccc674e37b524c847b6bb4f0d5bf91cc4c1\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -81,6 +72,15 @@
         revision="24.0.2"
         sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
         <dex dex="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-24.2.1_4cf3740b2793455a94f67da33bae9baa4f879128\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
+        <dex dex="D:\Linux\AndroidGame\GameFiles\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-24.2.1_1c54fccc674e37b524c847b6bb4f0d5bf91cc4c1\classes.dex" />
     </item>
     <item
         is-multidex="true"

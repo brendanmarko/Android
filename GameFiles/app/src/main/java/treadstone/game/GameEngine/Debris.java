@@ -9,7 +9,6 @@ public class Debris extends Entity
     public Debris(Context c, Position s, Position m, char t)
     {
         super(c, s, m, t);
-        Log.d("Debris_created", "Debris created.");
     }
 
 }
