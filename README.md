@@ -11,9 +11,6 @@ The ultimate goal of this project is to have a fully functioning game applicatio
 ---
 
 # Roadmap
-
----
-
 ### Completed
 
 ---
@@ -30,14 +27,18 @@ The ultimate goal of this project is to have a fully functioning game applicatio
   
   [x] Utilize Fragments to Display Gameview/Controller
   
+  [x] ViewPort class
+  
+  [x] Level creation from external class
+  
 ---
   
 ### To-do  
 
 ---
   
-  [ ] ViewPort class
+  [ ] Update player/camera movement
   
-  [ ] Level creation and design
+  [ ] Create multiple levels
   
 ---
