@@ -53,3 +53,20 @@ Day 3 [09/01/17]
 
 --> /TLDR
     : ViewPort and Gameview now mesh well together, fixed up variables and functions to allow this
+
+Day 4 [10/01/17]
+
+	Completed:
+	: Added Player movement to coincide with the viewpoint shifting during movement
+	: Changed all the measurements of bitmap placement to deal with px values, not a mixed mess of Position/px
+	: Added functions to Player.java as well as tidied up a lot in ViewPort.java
+
+	Problems:
+	: Player does not move beyond given max_bounds, will have to update max_bounds in turn with the level_max_bounds 
+
+	To do:
+	: More ViewPort.java changes are needed wrt to camera movement 
+	: Allow Player movement up until the bounds of the level
+
+--> /TLDR
+	: Player now moves throughout the level as it renders dynamically wrt Player position changes
