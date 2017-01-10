@@ -23,7 +23,7 @@ public class BackgroundEffect extends MovableEntity
 
         if (x < 0.0f)
         {
-            random_spawn();
+            //random_spawn();
         }
 
         if (x > getXMax())
@@ -33,7 +33,7 @@ public class BackgroundEffect extends MovableEntity
 
         if (y < 0.0f)
         {
-            random_spawn();
+            //random_spawn();
         }
 
         if (y > getYMax())

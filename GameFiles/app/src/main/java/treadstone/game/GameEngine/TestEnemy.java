@@ -22,7 +22,7 @@ public class TestEnemy extends MovableEntity
 
         if (x < 0)
         {
-            random_spawn();
+            // random_spawn()
         }
 
         else if (x > getXMax())

@@ -22,9 +22,9 @@ public class ViewPort
 
     public void init()
     {
-        initializeCentre(screen_resolution);
+        initializeCentres(screen_resolution);
         setPixelsPerMetre(50.0f, 35.0f);
-        setViewSize(new Position(50.0f, 37.0f));
+        setViewSize(new Position(25.0f, 15.0f));
         scaled_view_space = new Rect();
         clipped_num = 0;
     }
@@ -37,19 +37,21 @@ public class ViewPort
     // Returns Rect with (l, t, r, b)
     public Rect worldToScreen(Position p, Position d)
     {
+        /*
         Log.d("WorldToScreen/WTS", "Current viewport_centre: " + viewport_centre.getX() + ", " + viewport_centre.getY());
         Log.d("WorldToScreen/WTS", "Current p.position = " + p.toString());
         Log.d("WorldToScreen/WTS", "Current d.position = " + d.toString());
         Log.d("WorldToScreen/WTS", "Screen Centre: " + screen_centre.toString());
         Log.d("WorldToScreen/WTS", "PPM Values: " + pixels_per_metre.toString());
+        */
 
         int l, t, r, b;
-        l = (int) (screen_centre.getX() - ((viewport_centre.getX() - p.getX()) * pixels_per_metre.getX()));
-        t = (int) (screen_centre.getY() - ((viewport_centre.getY() - p.getY()) * pixels_per_metre.getY()));
-        r = (int) (l + (d.getX() * pixels_per_metre.getX()));
-        b = (int) (t + (d.getY() * pixels_per_metre.getY()));
+        l = (int) (screen_centre.getX() - ((viewport_centre.getX() - p.getX())));
+        t = (int) (screen_centre.getY() - ((viewport_centre.getY() - p.getY())));
+        r = (int) (l + (d.getX()));
+        b = (int) (t + (d.getY()));
 
-        Log.d("WorldToScreen/WTS", "Testing 4 ints [" + l + ", " + t + ", " + r + ", " + b + "]");
+        // Log.d("WorldToScreen/WTS", "Testing 4 ints [" + l + ", " + t + ", " + r + ", " + b + "]");
         scaled_view_space.set(l, t, r, b);
         return scaled_view_space;
     }
@@ -61,7 +63,6 @@ public class ViewPort
     {
         if (p.getX() < viewport_centre.getX() - viewable_size.getX())
         {
-
             return true;
         }
 
@@ -80,7 +81,7 @@ public class ViewPort
             return true;
         }
 
-        Log.d("ViewPort/clipObjects", "Current object appears in Viewport, NOT clipped.");
+        // Log.d("ViewPort/clipObjects", "Current object appears in Viewport, NOT clipped.");
         return false;
     }
 
@@ -104,7 +105,6 @@ public class ViewPort
         return clipped_num;
     }
 
-
     public void setPixelsPerMetre(float x, float y)
     {
         pixels_per_metre = new Position(x, y);
@@ -115,34 +115,25 @@ public class ViewPort
         return pixels_per_metre;
     }
 
-    public Position getResolution()
-    {
-        return screen_resolution;
-    }
-
     public Position getCentre()
     {
         return screen_centre;
     }
 
-    public Position getViewableSize()
+    public Position getViewPortCentre()
     {
-        return viewable_size;
+        return viewport_centre;
     }
 
     public void setViewSize(Position p)
     {
-        viewable_size = new Position(p.getX(), p.getY());
+        viewable_size = new Position(p.getX() * pixels_per_metre.getX(), p.getY() * pixels_per_metre.getY());
     }
 
-    public Rect getViewSpace()
-    {
-        return scaled_view_space;
-    }
-
-    public void initializeCentre(Position r)
+    public void initializeCentres(Position r)
     {
         screen_centre = new Position(r.getX()/5, r.getY()/2);
+        viewport_centre = new Position(r.getX()/5, r.getY()/2);
     }
 
     public void setViewPortCentre(Position p)

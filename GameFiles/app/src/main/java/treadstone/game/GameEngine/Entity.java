@@ -11,7 +11,7 @@ public abstract class Entity
 {
     private Position        curr_pos;
     private Position        max_bounds;
-    private Position        start_pos;
+
     private int             layer_num;
     private Bitmap          image;
     private GameObject      type;
@@ -29,8 +29,7 @@ public abstract class Entity
         ppm_x = 48;
         ppm_y = 43;
 
-        curr_pos = s;
-        start_pos = s;
+        curr_pos = scaleToPixel(s);
         max_bounds = max;
         type = new GameObject(t);
         speed = type.getSpeed();
@@ -50,6 +49,11 @@ public abstract class Entity
         image = BitmapFactory.decodeResource(c.getResources(), id);
         image = Bitmap.createScaledBitmap(image, (int) (width * ppm_x * type.getAnimateFrameCount()), (int) (height * ppm_y * type.getAnimateFrameCount()), false);
         return image;
+    }
+
+    public Position scaleToPixel(Position p)
+    {
+        return new Position(p.getX() * ppm_x, p.getY() * ppm_y);
     }
 
     public int getLayer()
@@ -72,14 +76,11 @@ public abstract class Entity
         return curr_pos;
     }
 
+    // setPosition(float, float)
+    // This function takes 2 float inputs and saves them as pixel (x,y) co-ordinates for later use
     public void setPosition(float x, float y)
     {
-        curr_pos.setAs(x, y);
-    }
-
-    public Position getMax()
-    {
-        return max_bounds;
+        curr_pos = new Position(x, y);
     }
 
     public float getXMax()
@@ -100,18 +101,6 @@ public abstract class Entity
     public float getWidth()
     {
         return width;
-    }
-
-    public void random_spawn()
-    {
-        Random generator = new Random();
-        int random_factor = generator.nextInt(ppm_y);
-        curr_pos.setAs(max_bounds.getX(), (max_bounds.getY() * random_factor)/ppm_y);
-    }
-
-    public void respawn()
-    {
-        curr_pos.setAs(start_pos.getX(), start_pos.getY());
     }
 
     public Bitmap getImage()

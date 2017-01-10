@@ -37,9 +37,9 @@ public class GameView extends SurfaceView implements Runnable
         loadLevel(c, "TestLevel", new Position(0.0f, 0.0f));
 
         curr_player = level_manager.getPlayer();
-
-        viewport.setViewPortCentre(level_manager.getPlayer().getPosition());
-        Log.d("GameView/CTOR", "Testing centre init value: " + viewport.getCentre().toString());
+        curr_player.setPosition(viewport.getCentre().getX(), viewport.getCentre().getY());
+        Log.d("GameView/CTOR", "Testing centre init value: " + viewport.getViewPortCentre().toString());
+        Log.d("GameView/CTOR", "Testing centre init value: " + curr_player.getX() + ", " + curr_player.getY());
     }
 
     public void init()
@@ -75,16 +75,14 @@ public class GameView extends SurfaceView implements Runnable
         {
             if (e.isActive())
             {
-                if (!viewport.clipObject(e.getPosition(), e.getType().getDimensions()))
-                {
+                if (viewport.clipObject(e.getPosition(), e.getType().getDimensions())) {
+                    e.setInvisible();
+                }
+
+                else {
                     e.setVisible();
                 }
 
-            }
-
-            else
-            {
-                e.setInvisible();
             }
 
         }
@@ -109,9 +107,8 @@ public class GameView extends SurfaceView implements Runnable
             {
                 for (Entity e : level_manager.getGameObjects())
                 {
-                    if (e.isVisible() && e.getLayer() == layer)
-                    {
-                        Log.d("GameView/draw", "Object is visible and being drawn!");
+                    if (e.isVisible() && e.getLayer() == layer) {
+                        // Log.d("GameView/draw", "Object is visible and being drawn!");
                         new_target.set(viewport.worldToScreen(e.getPosition(), e.getType().getDimensions()));
                         canvas.drawBitmap(level_manager.getBitmap(e.getType().getType()), new_target.left, new_target.top, paint);
                     }
@@ -128,7 +125,7 @@ public class GameView extends SurfaceView implements Runnable
     {
         try
         {
-            game_thread.sleep(20);
+            game_thread.sleep(17);
         }
 
         catch (InterruptedException e)
@@ -178,7 +175,8 @@ public class GameView extends SurfaceView implements Runnable
         else if (curr_motion.getAction() == MotionEvent.ACTION_MOVE)
         {
             Log.d("entering_action_move", "ProcessMovement to be called...");
-            // curr_player.processMovement(curr_motion.getRawX(), curr_motion.getRawY());
+            curr_player.processMovement(curr_motion.getRawX(), curr_motion.getRawY());
+            viewport.setViewPortCentre(curr_player.getPosition());
         }
 
         return true;

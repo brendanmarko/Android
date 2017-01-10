@@ -21,12 +21,6 @@ public class Position
         return position[1];
     }
 
-    public void setAs(float new_x, float new_y)
-    {
-        position[0] = new_x;
-        position[1] = new_y;
-    }
-
     public String toString()
     {
     return position[0] + " , " + position[1];
