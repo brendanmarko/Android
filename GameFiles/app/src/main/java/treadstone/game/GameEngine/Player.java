@@ -40,8 +40,7 @@ public class Player extends MovableEntity
         Log.d("Player/processMove", "Testing span values: " + spanX + ", " + spanY + ", " + spanZ + "(" + div_factor + ")");
         Log.d("Player/processMove", "New location: " + getX() + ", " + getY());
 
-        float resultX = 0.0f;
-        float resultY = 0.0f;
+        float resultX, resultY;
 
         if (getX() > x_location)
         {
@@ -65,13 +64,11 @@ public class Player extends MovableEntity
         {
             resultY = getY() - spanY/div_factor;
 
-            if (getX() > x_location)
-            {
+            if (getX() > x_location) {
                 resultX = getX() - spanX/div_factor;
             }
 
-            else
-            {
+            else {
                 resultX = getX() + spanX/div_factor;
             }
 

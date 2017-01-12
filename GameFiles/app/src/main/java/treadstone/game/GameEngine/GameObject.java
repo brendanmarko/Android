@@ -29,7 +29,7 @@ public class GameObject
                 image_name = "bob";
                 animateFrameCount = 1;
                 dimensions = new Position(3.0f, 3.0f);
-                speed = 15.0f;
+                speed = 12.0f;
                 break;
             }
 
@@ -59,7 +59,7 @@ public class GameObject
             case ('e'):
             {
                 layer = 1;
-                image_name = "bob";
+                image_name = "bob_evil";
                 animateFrameCount = 1;
                 dimensions = new Position(3.0f, 3.0f);
                 speed = 10.0f;

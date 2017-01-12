@@ -1,7 +1,5 @@
 package treadstone.game.GameEngine;
 
-import java.util.Random;
-
 import android.util.Log;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -26,11 +24,23 @@ public abstract class Entity
     Entity(Context c, Position s, Position max, char t)
     {
         // temp ppm
-        ppm_x = 48;
-        ppm_y = 43;
+        ppm_x = 50;
+        ppm_y = 35;
 
         curr_pos = scaleToPixel(s);
+
+        if (t == 't')
+        {
+            Log.d("Entity/PlayerDims", "Player max location = " + max.toString());
+        }
+
         max_bounds = max;
+
+        if (t == 't')
+        {
+            Log.d("Entity/PlayerDims", "Player max location = " + max_bounds.toString());
+        }
+
         type = new GameObject(t);
         speed = type.getSpeed();
         layer_num = type.getLayer();

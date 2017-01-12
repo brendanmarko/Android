@@ -30,7 +30,7 @@ public class GameView extends SurfaceView implements Runnable
     public GameView(Context c, Position m)
     {
         super(c);
-        max_bounds  = m;
+        max_bounds = m;
         init();
 
         viewport = new ViewPort(max_bounds);
@@ -175,7 +175,7 @@ public class GameView extends SurfaceView implements Runnable
         else if (curr_motion.getAction() == MotionEvent.ACTION_MOVE)
         {
             Log.d("entering_action_move", "ProcessMovement to be called...");
-            curr_player.processMovement(curr_motion.getRawX(), curr_motion.getRawY());
+            curr_player.processMovement(curr_motion.getX(), curr_motion.getY());
             viewport.setViewPortCentre(curr_player.getPosition());
         }
 

@@ -18,6 +18,7 @@ public class LevelManager
     private Position                pixelSize;
     private boolean                 playing;
     private float                   map_h, map_w;
+    private Position                boundaries;
 
     public LevelManager(Context c, String level_name, Position m, Position ppm, Position player_start)
     {
@@ -101,6 +102,9 @@ public class LevelManager
         map_h = level_data.getTiles().size();
         map_w = level_data.getTiles().get(0).length();
 
+        // Set the max boundaries in which GameObjects can move
+        setBoundaries();
+
         // Reads in the Level layout file
         for (int y = 0; y < map_h; y++)
         {
@@ -149,7 +153,8 @@ public class LevelManager
             {
                 case 'p':
                     Log.d("player_test_object+++", "Creating player...");
-                    temp = new Player(c, p, level_max, d);
+                    temp = new Player(c, p, new Position(boundaries.getX(), boundaries.getY()), d);
+                    Log.d("LevelManager/objCrt", "Max for Player: " + temp.getXMax() + ", " + temp.getYMax());
                     Log.d("player_test_object+++", "Player created!");
                     player = (Player) temp;
                     Log.d("player_test_object+++", player.toString());
@@ -159,13 +164,13 @@ public class LevelManager
                     break;
 
                 case 'e':
-                    temp = new TestEnemy(c, p, level_max, d);
+                    temp = new TestEnemy(c, p, new Position(boundaries.getX(), boundaries.getY()), d);
                     game_objects.add(temp);
                     checkBitmap(c, temp, d);
                     break;
 
                 case 'd':
-                    temp = new Debris(c, p, level_max, d);
+                    temp = new Debris(c, p, new Position(boundaries.getX(), boundaries.getY()), d);
                     game_objects.add(temp);
                     checkBitmap(c, temp, d);
                     break;
@@ -218,6 +223,11 @@ public class LevelManager
     public Player getPlayer()
     {
         return player;
+    }
+
+    public void setBoundaries()
+    {
+        boundaries = new Position(map_w * pixelSize.getX(), map_h * pixelSize.getY());
     }
 
 }
