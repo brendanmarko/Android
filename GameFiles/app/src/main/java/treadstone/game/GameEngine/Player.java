@@ -9,6 +9,9 @@ public class Player extends MovableEntity
 {
     private float                       spanX, spanY, spanZ;
     private ArrayList<Projectile>       projectiles;
+    private Position                    center;
+    private float                       angle_of_movement;
+    private double                      radian_handler;
 
     Player(Context context, Position s, Position m, char t)
     {
@@ -25,75 +28,34 @@ public class Player extends MovableEntity
 
     }
 
+    public void initCenter(Position p)
+    {
+        center = p;
+        setPosition(p.getX(), p.getY());
+    }
+
     public void processMovement(float x_location, float y_location)
     {
         Log.d("Player/processMove", "Target location: " + x_location + ", " + y_location);
-        Log.d("Player/processMove", "Current Player location: " + getX() + ", " + getY());
+        //Log.d("Player/processMove", "Current Player location: " + getX() + ", " + getY());
 
-        float div_factor;
-        spanX = directionHandler(x_location, getX());
-        spanY = directionHandler(y_location, getY());
+        // Get lengths of sides
+        spanX = x_location - center.getX();
+        spanY = y_location - center.getY();
         spanZ = (float) Math.sqrt((spanX * spanX) + (spanY * spanY));
-        div_factor = spanZ * (getSpeed()/100);
+        Log.d("player.spans", "Span values: " + spanX + ", " + spanY + ", " + spanZ + ", spanY/spanZ = " + spanY/spanZ);
 
-        // Variable check
-        Log.d("Player/processMove", "Testing span values: " + spanX + ", " + spanY + ", " + spanZ + "(" + div_factor + ")");
-        Log.d("Player/processMove", "New location: " + getX() + ", " + getY());
+        // Find angle for movement
+        radian_handler = Math.toDegrees(Math.asin(Math.abs(getRadians(spanX, spanY, spanZ))));
+        Log.d("player.movement", "Angle: " + radian_handler);
 
-        float resultX, resultY;
+        // Adjust angle wrt Cartesian Plain
+        angle_of_movement = adjustAngle((float) radian_handler);
+        Log.d("Player.processMove", "Current angle_of_movement: " + angle_of_movement);
 
-        if (getX() > x_location)
-        {
-            resultX = getX() - spanX/div_factor;
 
-            if (getY() > y_location)
-            {
-                resultY = getY() - spanY/div_factor;
-            }
 
-            else
-            {
-                resultY = getY() + spanY/div_factor;
-            }
 
-            setPosition(resultX, resultY);
-
-        }
-
-        else if (getY() > y_location)
-        {
-            resultY = getY() - spanY/div_factor;
-
-            if (getX() > x_location) {
-                resultX = getX() - spanX/div_factor;
-            }
-
-            else {
-                resultX = getX() + spanX/div_factor;
-            }
-
-            setPosition(resultX, resultY);
-
-        }
-
-        else
-        {
-            resultX = getX() + spanX/div_factor;
-            resultY = getY() + spanY/div_factor;
-            setPosition(resultX, resultY);
-        }
-
-        Log.d("Player/processMove", "New location: " + getPosition().toString());
-        Log.d("Player/processMove", "Current Player location: " + getX() + ", " + getY());
-    }
-
-    public float directionHandler(float target, float centre)
-    {
-        if (target > centre)
-            return target - centre;
-
-        else
-            return centre - target;
     }
 
     public void boundsCheck(float x, float y)
@@ -119,9 +81,91 @@ public class Player extends MovableEntity
         }
     }
 
+    public double getRadians(float x, float y, float z)
+    {
+        double radians = 0.0d;
+
+            if (x >= y)
+            {
+                radians = y/z;
+                Log.d("Player.adjustAngle", "X >= Y, radian value : " + radians);
+            }
+
+            else if (x < y)
+            {
+                radians = x/z;
+                Log.d("Player.adjustAngle", "X < Y, radian value : " + radians);
+            }
+
+        return radians;
+    }
+
     public ArrayList<Projectile> getProjectiles()
     {
         return projectiles;
+    }
+
+    private float adjustAngle(float f)
+    {
+        if (spanX >= 0 && spanY <= 0)
+        {
+            Log.d("Player.procMove", "Tapped into Q1");
+            f += 0.0f;
+        }
+
+        else if (spanX < 0 && spanY < 0)
+        {
+            Log.d("Player.procMove", "Tapped into Q2");
+            if (Math.abs(spanX) < Math.abs(spanY))
+            {
+                Log.d("Player.adjustAngle", "X < Y, angle needs to be adjusted from : " + f);
+                f = 180.0f - f;
+                Log.d("===", "New angle: " + f);
+            }
+
+            else
+            {
+                Log.d("Player.adjustAngle", "X >= Y, angle does not have to be adjusted from : " + f);
+                f = 90.0f + f;
+            }
+        }
+
+        else if (spanX <= 0 && spanY >= 0)
+        {
+            Log.d("Player.procMove", "Tapped into Q3");
+            if (Math.abs(spanX) < Math.abs(spanY))
+            {
+                Log.d("Player.adjustAngle", "X < Y, angle needs to be adjusted from : " + f);
+                f = 270.0f - f;
+                Log.d("===", "New angle: " + f);
+            }
+
+            else
+            {
+                Log.d("Player.adjustAngle", "X >= Y, angle does not have to be adjusted from : " + f);
+                f = 180.0f + f;
+            }
+        }
+
+        else if (spanX > 0 & spanY > 0)
+        {
+            Log.d("Player.procMove", "Tapped into Q4");
+            if (Math.abs(spanX) < Math.abs(spanY))
+            {
+                Log.d("Player.adjustAngle", "X < Y, angle needs to be adjusted from : " + f);
+                f = 270.0f + f;
+                Log.d("===", "New angle: " + f);
+            }
+
+            else
+            {
+                Log.d("Player.adjustAngle", "X >= Y, angle does not have to be adjusted from : " + f);
+                f = 360.0f - f;
+            }
+        }
+
+        return f;
+
     }
 
 }

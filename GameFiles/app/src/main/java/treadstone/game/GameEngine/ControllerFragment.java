@@ -2,7 +2,6 @@ package treadstone.game.GameEngine;
 
 import android.app.Activity;
 import android.util.Log;
-import treadstone.game.R;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;

@@ -1,31 +1,27 @@
 package treadstone.game.GameEngine;
 
-import android.util.Log;
-
-import android.graphics.Rect;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.content.Context;
 import android.graphics.Canvas;
-
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.util.Log;
 import android.view.MotionEvent;
-import android.view.SurfaceView;
 import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 
 public class GameView extends SurfaceView implements Runnable
 {
-    volatile boolean                view_active;
-    Thread                          game_thread = null;
-    private Player                  curr_player;
-    private Position                max_bounds;
-    private ViewPort                viewport;
-    private LevelManager            level_manager;
+    volatile boolean                        view_active;
+    Thread game_thread = null;
+    private Player                          curr_player;
+    private Position                        max_bounds;
+    private ViewPort                        viewport;
+    private LevelManager                    level_manager;
 
-    private Paint                   paint;
-    private Canvas                  canvas;
-    private SurfaceHolder           curr_holder;
-
-    CollisionChecker                collision_check;
+    private Paint paint;
+    private Canvas canvas;
+    private SurfaceHolder curr_holder;
 
     public GameView(Context c, Position m)
     {
@@ -33,13 +29,18 @@ public class GameView extends SurfaceView implements Runnable
         max_bounds = m;
         init();
 
-        viewport = new ViewPort(max_bounds);
+        // Initialize Viewport
+        viewport = new ViewPort(m);
+
+        // Initialize LevelManager
         loadLevel(c, "TestLevel", new Position(0.0f, 0.0f));
 
+        // Initialize Player
         curr_player = level_manager.getPlayer();
-        curr_player.setPosition(viewport.getCentre().getX(), viewport.getCentre().getY());
-        Log.d("GameView/CTOR", "Testing centre init value: " + viewport.getViewPortCentre().toString());
-        Log.d("GameView/CTOR", "Testing centre init value: " + curr_player.getX() + ", " + curr_player.getY());
+        curr_player.initCenter(viewport.getCentre());
+
+        // Pass ViewPort max pixel dimensions
+        viewport.setMapDimens(new Position(level_manager.getMapWidth(), level_manager.getMapHeight()));
     }
 
     public void init()
@@ -75,11 +76,13 @@ public class GameView extends SurfaceView implements Runnable
         {
             if (e.isActive())
             {
-                if (viewport.clipObject(e.getPosition(), e.getType().getDimensions())) {
+                if (viewport.clipObject(e.getPosition(), e.getType().getDimensions()))
+                {
                     e.setInvisible();
                 }
 
-                else {
+                else
+                {
                     e.setVisible();
                 }
 
@@ -103,12 +106,12 @@ public class GameView extends SurfaceView implements Runnable
             paint.setColor(Color.argb(255, 0, 0, 0));
 
             // Draw Entities
-            for (int layer = -1; layer < 2; layer++)
+            for (int layer = -1; layer < 3; layer++)
             {
                 for (Entity e : level_manager.getGameObjects())
                 {
-                    if (e.isVisible() && e.getLayer() == layer) {
-                        // Log.d("GameView/draw", "Object is visible and being drawn!");
+                    if (e.isVisible() && e.getLayer() == layer)
+                    {
                         new_target.set(viewport.worldToScreen(e.getPosition(), e.getType().getDimensions()));
                         canvas.drawBitmap(level_manager.getBitmap(e.getType().getType()), new_target.left, new_target.top, paint);
                     }
@@ -177,6 +180,7 @@ public class GameView extends SurfaceView implements Runnable
             Log.d("entering_action_move", "ProcessMovement to be called...");
             curr_player.processMovement(curr_motion.getX(), curr_motion.getY());
             viewport.setViewPortCentre(curr_player.getPosition());
+            Log.d("GameView.onTouch", "Current Centre: " + viewport.getViewPortCentre().toString());
         }
 
         return true;
@@ -272,6 +276,5 @@ public class GameView extends SurfaceView implements Runnable
     }
 
      */
-
-
+    
 }

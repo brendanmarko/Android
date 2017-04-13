@@ -25,11 +25,11 @@ public class GameObject
             // Player
             case ('p'):
             {
-                layer = 1;
+                layer = 2;
                 image_name = "bob";
                 animateFrameCount = 1;
-                dimensions = new Position(3.0f, 3.0f);
-                speed = 12.0f;
+                dimensions = new Position(2.0f, 3.0f);
+                speed = 10.0f;
                 break;
             }
 
@@ -61,7 +61,7 @@ public class GameObject
                 layer = 1;
                 image_name = "bob_evil";
                 animateFrameCount = 1;
-                dimensions = new Position(3.0f, 3.0f);
+                dimensions = new Position(2.0f, 3.0f);
                 speed = 10.0f;
                 break;
             }

@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.support.v4.app.FragmentActivity;
 
-import treadstone.game.R;
-
 public class MenuActivity extends FragmentActivity
 {
     private Button      button_start;

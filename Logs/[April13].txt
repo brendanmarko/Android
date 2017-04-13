@@ -1,0 +1,16 @@
+April 13th:
+I have been super busy with other stuff lately and this game really took a seat on the backburner, huge bummer.
+BUT, that said... I have come back to it and have been doing a lot of work on it.
+The last few days have been adding the camera feature where it doesn't scroll OB past map bounds/rendering.
+This was not particularly easy and was mainly the reason I slowly stopped workng on this!
+
+	Changes
+	= camera will not scroll outside of map bounds anymore! (know more about ViewPort then I ever wanted to)
+	= completely rebuilding the way the character would move and respond to touch events for movement
+		= moving away from the finger dragging for movement
+			= implemented a Cartesian Plain setup to determine the angle to propel our ship at
+	= tidied up the Player and ViewPort classes
+	
+	To do
+	= now that we have the theta at which our player will be moving, have to propel ship in that direction
+

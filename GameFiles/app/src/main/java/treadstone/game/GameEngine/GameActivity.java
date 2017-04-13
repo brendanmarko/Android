@@ -1,7 +1,5 @@
 package treadstone.game.GameEngine;
 
-import treadstone.game.R;
-
 import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.FragmentTransaction;

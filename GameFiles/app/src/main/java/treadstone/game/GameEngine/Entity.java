@@ -1,9 +1,9 @@
 package treadstone.game.GameEngine;
 
-import android.util.Log;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 public abstract class Entity
 {
@@ -11,7 +11,7 @@ public abstract class Entity
     private Position        max_bounds;
 
     private int             layer_num;
-    private Bitmap          image;
+    private Bitmap image;
     private GameObject      type;
     private float           height;
     private float           width;
