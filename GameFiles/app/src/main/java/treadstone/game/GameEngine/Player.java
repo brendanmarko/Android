@@ -10,8 +10,8 @@ public class Player extends MovableEntity
     private float                       spanX, spanY, spanZ;
     private ArrayList<Projectile>       projectiles;
     private Position                    center;
-    private float                       angle_of_movement;
-    private double                      radian_handler;
+    private double                      angle_of_movement;
+    private int                         curr_qaudrant;
 
     Player(Context context, Position s, Position m, char t)
     {
@@ -43,19 +43,27 @@ public class Player extends MovableEntity
         spanX = x_location - center.getX();
         spanY = y_location - center.getY();
         spanZ = (float) Math.sqrt((spanX * spanX) + (spanY * spanY));
-        Log.d("player.spans", "Span values: " + spanX + ", " + spanY + ", " + spanZ + ", spanY/spanZ = " + spanY/spanZ);
 
         // Find angle for movement
-        radian_handler = Math.toDegrees(Math.asin(Math.abs(getRadians(spanX, spanY, spanZ))));
-        Log.d("player.movement", "Angle: " + radian_handler);
+        angle_of_movement = adjustAngle(Math.toDegrees(Math.asin(Math.abs(getRadians(spanX, spanY, spanZ)))));
+        Log.d("player.movement", "Angle: " + angle_of_movement);
 
-        // Adjust angle wrt Cartesian Plain
-        angle_of_movement = adjustAngle((float) radian_handler);
-        Log.d("Player.processMove", "Current angle_of_movement: " + angle_of_movement);
+        // Apply to Object using move speed
+        calcDisplacement(spanX, spanY, spanZ, angle_of_movement);
+    }
 
+    public void calcDisplacement(float x, float y, float z, double angle)
+    {
+        float x_dir, y_dir;
+        x_dir = (float) Math.sin(angle) * z;
+        y_dir = (float) Math.sqrt(((z * z) - (x_dir * x_dir)));
 
+        // Factor in directions of x/y span
+        x_dir = Math.copySign(x_dir, x);
+        y_dir = Math.copySign(y_dir, y);
 
-
+        // Change position
+        setPosition(getPosition().getX() + x_dir, getPosition().getY() + y_dir);
     }
 
     public void boundsCheck(float x, float y)
@@ -88,13 +96,11 @@ public class Player extends MovableEntity
             if (x >= y)
             {
                 radians = y/z;
-                Log.d("Player.adjustAngle", "X >= Y, radian value : " + radians);
             }
 
             else if (x < y)
             {
                 radians = x/z;
-                Log.d("Player.adjustAngle", "X < Y, radian value : " + radians);
             }
 
         return radians;
@@ -105,67 +111,55 @@ public class Player extends MovableEntity
         return projectiles;
     }
 
-    private float adjustAngle(float f)
+    private double adjustAngle(double f)
     {
         if (spanX >= 0 && spanY <= 0)
         {
             Log.d("Player.procMove", "Tapped into Q1");
+            curr_qaudrant = 1;
             f += 0.0f;
         }
 
         else if (spanX < 0 && spanY < 0)
         {
             Log.d("Player.procMove", "Tapped into Q2");
+            curr_qaudrant = 2;
             if (Math.abs(spanX) < Math.abs(spanY))
-            {
-                Log.d("Player.adjustAngle", "X < Y, angle needs to be adjusted from : " + f);
                 f = 180.0f - f;
-                Log.d("===", "New angle: " + f);
-            }
 
             else
-            {
-                Log.d("Player.adjustAngle", "X >= Y, angle does not have to be adjusted from : " + f);
                 f = 90.0f + f;
-            }
         }
 
         else if (spanX <= 0 && spanY >= 0)
         {
             Log.d("Player.procMove", "Tapped into Q3");
+            curr_qaudrant = 3;
             if (Math.abs(spanX) < Math.abs(spanY))
-            {
-                Log.d("Player.adjustAngle", "X < Y, angle needs to be adjusted from : " + f);
                 f = 270.0f - f;
-                Log.d("===", "New angle: " + f);
-            }
 
             else
-            {
-                Log.d("Player.adjustAngle", "X >= Y, angle does not have to be adjusted from : " + f);
                 f = 180.0f + f;
-            }
         }
 
         else if (spanX > 0 & spanY > 0)
         {
             Log.d("Player.procMove", "Tapped into Q4");
+            curr_qaudrant = 4;
             if (Math.abs(spanX) < Math.abs(spanY))
-            {
-                Log.d("Player.adjustAngle", "X < Y, angle needs to be adjusted from : " + f);
                 f = 270.0f + f;
-                Log.d("===", "New angle: " + f);
-            }
 
             else
-            {
-                Log.d("Player.adjustAngle", "X >= Y, angle does not have to be adjusted from : " + f);
                 f = 360.0f - f;
-            }
         }
 
         return f;
 
+    }
+
+    public int getCurrQuadrant()
+    {
+        return curr_qaudrant;
     }
 
 }
