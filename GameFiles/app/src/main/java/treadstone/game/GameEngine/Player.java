@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Player extends MovableEntity
 {
-    private float                       spanX, spanY, spanZ;
+    private float                       spanX, spanY, spanZ, x_dir, y_dir;
     private ArrayList<Projectile>       projectiles;
     private Position                    center;
     private double                      angle_of_movement;
@@ -23,7 +23,8 @@ public class Player extends MovableEntity
     {
         if (isMoving())
         {
-            // boundsCheck(getX(), getY());
+            Log.d("Player.update", "inside update and continueMovement");
+            continueMovement();
         }
 
     }
@@ -37,7 +38,10 @@ public class Player extends MovableEntity
     public void processMovement(float x_location, float y_location)
     {
         Log.d("Player/processMove", "Target location: " + x_location + ", " + y_location);
-        //Log.d("Player/processMove", "Current Player location: " + getX() + ", " + getY());
+        Log.d("Player/processMove", "Current Player location: " + getX() + ", " + getY());
+
+        // Set Player to moving
+        setMovable();
 
         // Get lengths of sides
         spanX = x_location - center.getX();
@@ -49,14 +53,19 @@ public class Player extends MovableEntity
         Log.d("player.movement", "Angle: " + angle_of_movement);
 
         // Apply to Object using move speed
-        calcDisplacement(spanX, spanY, spanZ, angle_of_movement);
+        calcDisplacement(spanX, spanY, angle_of_movement);
+        boundsCheck(getX(), getY());
     }
 
-    public void calcDisplacement(float x, float y, float z, double angle)
+    public void continueMovement()
     {
-        float x_dir, y_dir;
-        x_dir = (float) Math.sin(angle) * z;
-        y_dir = (float) Math.sqrt(((z * z) - (x_dir * x_dir)));
+        setPosition(getPosition().getX() + x_dir, getPosition().getY() + y_dir);
+    }
+
+    public void calcDisplacement(float x, float y, double angle)
+    {
+        x_dir = (float) Math.sin(angle) * getSpeed();
+        y_dir = (float) Math.sqrt(((getSpeed() * getSpeed()) - (x_dir * x_dir)));
 
         // Factor in directions of x/y span
         x_dir = Math.copySign(x_dir, x);
@@ -68,23 +77,28 @@ public class Player extends MovableEntity
 
     public void boundsCheck(float x, float y)
     {
+        Log.d("Player.boundsCheck", "Checking bounds for Player");
         if (x < 0.0f)
         {
+            Log.d("Player.boundsCheck", "X < 0");
             setPosition(0.0f, y);
         }
 
         if (y < 0.0f)
         {
+            Log.d("Player.boundsCheck", "Y < 0");
             setPosition(x, 0.0f);
         }
 
         if (y + getHeight() > getYMax())
         {
+            Log.d("Player.boundsCheck", "Y > max");
             setPosition(x, getYMax() - getHeight());
         }
 
         if (x > getXMax())
         {
+            Log.d("Player.boundsCheck", "X > max");
             setPosition(getXMax() - getWidth(), y);
         }
     }

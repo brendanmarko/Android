@@ -29,7 +29,7 @@ public class GameObject
                 image_name = "bob";
                 animateFrameCount = 1;
                 dimensions = new Position(2.0f, 3.0f);
-                speed = 10.0f;
+                speed = 15.0f;
                 break;
             }
 
