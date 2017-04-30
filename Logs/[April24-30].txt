@@ -1,0 +1,45 @@
+April24-30:
+I spent a lot (and I mean a lot) of time this week trying to map out things with the ViewPort having a separate size from the Screen Size.
+The idea seemed simple enough, have a ViewPort size of 960x540 and have it blown up to fit the screen, which was 1920x1080 in this test case.
+I thought okay, if I just calculate the distance from a Position p to the ViewPort centre on the the global plain:
+
+	(p.getX() - VPC.getX()) 	<-- 	gives co-ordinates in Game World co-ordinates
+
+And apply the factor at which the ViewPort size would emulate the full-screen co-ordinates wrt to both axises s.t.
+
+	(p.getX() - VPC.getX() * factor.getX()) && (p.getY() - VPC.getY() * factor.getY()) 
+
+In a way like some sort of transpose, but not really since it has to factor screen_centre in as well.
+
+What had seemed simple, devolved into a nightmare quite honestly. The unorthdox position I wanted the screen centre was causing problems due to
+the Viewport being centre at x/2, y/2 and the screen centre being a different ratio... so.. yeah, that had to go. After some evaluation I decided
+to centre the Viewport AND Screen to the same positions s.t.
+
+	VPC(x/4, y/2)  && SC(x/4, y/2) 		<-- 	for Viewport and Screen centres respectively.
+
+After doing this I had a much easier time with graphics starting to show up the way I want them to, but not quite perfect in every instance. By
+changing the way the ViewPort edges were established, which now used the same ratio between ViewPort and Screen centres, they now reflect the proper
+scaling to fill the phone screen! This was a huge step to getting the camera to properly recognize when it is touching the edge of the Game World 
+boundaries.
+
+Seemingly forever has been spent on the ViewPort to get it to function exactly the way I have wanted, where there was always something else not 
+working once I thought I fixed the root problem. Getting the ViewPort edges to act as a check for the Game World bounds allows my to lock the camera
+at a fixed point s.t none of the co-ordinates outside of the Game World will ever be checked. This gives the Player the feedback that they have reached
+a boundary and cannot go any further in that direction by not showing anything that would be unaccessible or they cannot interact with.
+
+With the ViewPort firmly on the ropes I have gained immense insight into how it works, at the expense of many sheets of paper! Upon initially reading about
+the ViewPort I had underestimated just how important it is in the functioning of your Game World. It allows you to manipulate what you display to the 
+Player, not only how much of the Game World, but how they interact with how much the ViewPort shows as well. I intend to add some sort of functionality
+where hitting an edge changes the Player's Character to change direction in a predictable manner rather than just bump into the boundary (lame)!
+
+Summary:
+Viewport Edges are properly calculated to match the bounds of the ViewPort within the Game World and the Player cannot go beyond Max Game World bounds!
+
+To do:
+Player movement in regards to touchEvents. I had initally wanted to do movement based upon the angle at which the Player touched near the Character but
+a simple 8 direction system for movement will definitely be sufficient for planned movement of the Character s.t.
+
+	[N, NE, E, SE, E, SW, W, NW] 	<-- 	represent the 8 possible movement directions
+
+Can't wait to get started on make the projectiles work again and creating enemy AI. Reflecting, all this back-tracking on the ViewPort was not the most 
+enjoyable thing to do but I felt at its core it was extremely necessary and will provide dividends for how smooth it makes gameplay!

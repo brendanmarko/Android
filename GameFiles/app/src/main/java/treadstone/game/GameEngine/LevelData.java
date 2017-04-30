@@ -8,6 +8,11 @@ public class LevelData
 {
     private ArrayList<String>           tiles;
 
+    public Position getMapDimens()
+    {
+        return new Position(tiles.get(0).length(), tiles.size());
+    }
+
     public LevelData()
     {
         tiles = new ArrayList<String>();

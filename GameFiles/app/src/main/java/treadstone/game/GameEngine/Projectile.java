@@ -7,9 +7,9 @@ public class Projectile extends MovableEntity
 {
     private int         damage;
 
-    public Projectile(Context c, Position s, Position m, char t)
+    public Projectile(Context c, Position s, Position m, Position ppm, char t)
     {
-        super(c, s, m, t);
+        super(c, s, m, ppm, t);
         setMovable();
     }
 

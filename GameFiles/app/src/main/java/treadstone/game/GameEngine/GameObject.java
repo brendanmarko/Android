@@ -1,16 +1,15 @@
 package treadstone.game.GameEngine;
 
-
 import java.util.Random;
 
 public class GameObject
 {
-    private char type;
-    private int layer;
-    private String image_name;
-    private int animateFrameCount;
-    private Position dimensions; // assigned as [Width, Height]
-    private float speed;
+    private char            type;
+    private int             layer;
+    private String          image_name;
+    private int             animateFrameCount;
+    private Position        dimensions; // assigned as [Width, Height]
+    private float           speed;
 
     GameObject(char object_type)
     {
@@ -29,7 +28,7 @@ public class GameObject
                 image_name = "bob";
                 animateFrameCount = 1;
                 dimensions = new Position(2.0f, 3.0f);
-                speed = 15.0f;
+                speed = 10.0f;
                 break;
             }
 

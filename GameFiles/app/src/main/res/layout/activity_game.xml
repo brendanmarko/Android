@@ -9,13 +9,15 @@
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="9"
+        android:layout_weight="10"
         android:id="@+id/game_screen"/>
 
+    <!--
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:id="@+id/controller_screen"/>
+    -->
 
 </LinearLayout>

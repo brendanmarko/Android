@@ -11,45 +11,44 @@ public abstract class Entity
     private Position        max_bounds;
 
     private int             layer_num;
-    private Bitmap image;
-    private GameObject      type;
+    private Bitmap          image;
+    private GameObject      object_type;
     private float           height;
     private float           width;
-    private int             ppm_x, ppm_y;
+    private float           ppm_x, ppm_y;
     private boolean         visible;
     private boolean         moving;
     private float           speed;
     private boolean         active;
+    private boolean         movable;
 
-    Entity(Context c, Position s, Position max, char t)
+    public abstract void update();
+
+    Entity(Context c, Position s, Position max, Position ppm, char t)
     {
         // temp ppm
-        ppm_x = 50;
-        ppm_y = 35;
+        ppm_x = ppm.getX();
+        ppm_y = ppm.getY();
 
+        // Allows Entity to move to the edge of the map
+        max_bounds = new Position((max.getX() * ppm_x), (max.getY() * ppm_y));
+        Log.d("Entity/max", "Max bounds from Entity: " + max_bounds.toString());
         curr_pos = scaleToPixel(s);
 
-        if (t == 't')
+        if (t == 'p')
         {
             Log.d("Entity/PlayerDims", "Player max location = " + max.toString());
         }
 
-        max_bounds = max;
+        object_type = new GameObject(t);
+        speed = object_type.getSpeed();
+        layer_num = object_type.getLayer();
 
-        if (t == 't')
-        {
-            Log.d("Entity/PlayerDims", "Player max location = " + max_bounds.toString());
-        }
-
-        type = new GameObject(t);
-        speed = type.getSpeed();
-        layer_num = type.getLayer();
-
-        // Try it both TRUE and FALSE
         visible = false;
+        movable = false;
 
-        width = type.getDimensions().getX();
-        height = type.getDimensions().getY();
+        width = object_type.getDimensions().getX() * ppm_x;
+        height = object_type.getDimensions().getY() * ppm_y;
         active = true;
     }
 
@@ -57,7 +56,7 @@ public abstract class Entity
     {
         int id = c.getResources().getIdentifier(s, "drawable", c.getPackageName());
         image = BitmapFactory.decodeResource(c.getResources(), id);
-        image = Bitmap.createScaledBitmap(image, (int) (width * ppm_x * type.getAnimateFrameCount()), (int) (height * ppm_y * type.getAnimateFrameCount()), false);
+        image = Bitmap.createScaledBitmap(image, (int) (width * object_type.getAnimateFrameCount()), (int) (height * object_type.getAnimateFrameCount()), false);
         return image;
     }
 
@@ -120,7 +119,7 @@ public abstract class Entity
 
     public String getImageName()
     {
-        return type.getImageName();
+        return object_type.getImageName();
     }
 
     public boolean isVisible()
@@ -138,19 +137,9 @@ public abstract class Entity
         visible = true;
     }
 
-    public boolean isMoving()
-    {
-        return moving;
-    }
-
     public void setMovable()
     {
-        moving = true;
-    }
-
-    public void setUnmovable()
-    {
-        moving = false;
+        movable = true;
     }
 
     public float getSpeed()
@@ -163,15 +152,15 @@ public abstract class Entity
         return active;
     }
 
-    public GameObject getType()
+    public GameObject getGameObject()
     {
-        return type;
+        return object_type;
     }
 
     public String toString()
     {
-        Log.d("entity_to_string", "CURR_POS: " + curr_pos.toString() + " SPEED: " + getSpeed() + " TYPE: " + type.getDimensions() + " isMoving: " + moving);
-        return "CURR_POS: " + curr_pos.toString() + " SPEED: " + getSpeed() + " TYPE: " + type.getDimensions() + " isMoving: " + moving;
+        Log.d("entity_to_string", "CURR_POS: " + curr_pos.toString() + " SPEED: " + getSpeed() + " TYPE: " + object_type.getDimensions() + " isMoving: " + moving);
+        return "CURR_POS: " + curr_pos.toString() + " SPEED: " + getSpeed() + " TYPE: " + object_type.getDimensions() + " isMoving: " + moving;
     }
 
 }

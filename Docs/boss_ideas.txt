@@ -1,0 +1,9 @@
+Today I was asking Patrick what he thought makes for a tough or interesting boss fight; just going to jot those and my thoughts down:
+	= fair fight (obviously!)
+	= lots of aoe
+		= stuff that is challenging to dodge, but rewarding to do so
+	= larger scale for boss
+	= having more than a few simple, repititive options to challenge players
+		= multiple moves/tricks to keep player guessing
+		= have audible/visual queues that a move might be happening
+			= reduce time for these as difficulty scales

@@ -5,11 +5,12 @@ import android.content.Context;
 public class TestEnemy extends MovableEntity
 {
 
-    TestEnemy(Context context, Position s, Position m, char t)
+    TestEnemy(Context context, Position s, Position m, Position ppm, char t)
     {
-        super(context, s, m, t);
+        super(context, s, m, ppm, t);
     }
 
+    @Override
     public void update()
     {
         setPosition(getX()-getSpeed(), getY());

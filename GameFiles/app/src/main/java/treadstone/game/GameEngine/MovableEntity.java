@@ -7,12 +7,11 @@ public abstract class MovableEntity extends Entity
 {
     private RectangleHitBox hitbox;
 
-    public abstract void update();
     public abstract void boundsCheck(float x, float y);
 
-    public MovableEntity(Context c, Position s, Position m, char t)
+    public MovableEntity(Context c, Position s, Position m, Position ppm, char t)
     {
-        super(c, s, m, t);
+        super(c, s, m, ppm, t);
         setMovable();
         // Log.d("player_test_object+++", "Setting hitbox");
         // setHitBox();
@@ -21,7 +20,7 @@ public abstract class MovableEntity extends Entity
     public void setHitBox()
     {
         Log.d("player_test_object+++", "Entering setHitBox");
-        hitbox = new RectangleHitBox((int) getType().getDimensions().getX(), (int) getType().getDimensions().getY(), getImage());
+        hitbox = new RectangleHitBox((int) getGameObject().getDimensions().getX(), (int) getGameObject().getDimensions().getY(), getImage());
     }
 
 

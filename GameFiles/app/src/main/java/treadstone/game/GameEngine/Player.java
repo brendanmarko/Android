@@ -13,20 +13,10 @@ public class Player extends MovableEntity
     private double                      angle_of_movement;
     private int                         curr_qaudrant;
 
-    Player(Context context, Position s, Position m, char t)
+    Player(Context context, Position s, Position m, Position ppm, char t)
     {
-        super(context, s, m, t);
+        super(context, s, m, ppm, t);
         projectiles = new ArrayList<>();
-    }
-
-    public void update()
-    {
-        if (isMoving())
-        {
-            Log.d("Player.update", "inside update and continueMovement");
-            continueMovement();
-        }
-
     }
 
     public void initCenter(Position p)
@@ -37,8 +27,8 @@ public class Player extends MovableEntity
 
     public void processMovement(float x_location, float y_location)
     {
-        Log.d("Player/processMove", "Target location: " + x_location + ", " + y_location);
-        Log.d("Player/processMove", "Current Player location: " + getX() + ", " + getY());
+        //Log.d("Player/processMove", "Target location: " + x_location + ", " + y_location);
+        //Log.d("Player/processMove", "Current Player location: " + getX() + ", " + getY());
 
         // Set Player to moving
         setMovable();
@@ -57,9 +47,12 @@ public class Player extends MovableEntity
         boundsCheck(getX(), getY());
     }
 
-    public void continueMovement()
+    @Override
+    public void update()
     {
+        //Log.d("Player_update", "update() called in Player");
         setPosition(getPosition().getX() + x_dir, getPosition().getY() + y_dir);
+        boundsCheck(getX(), getY());
     }
 
     public void calcDisplacement(float x, float y, double angle)
@@ -78,29 +71,45 @@ public class Player extends MovableEntity
     public void boundsCheck(float x, float y)
     {
         Log.d("Player.boundsCheck", "Checking bounds for Player");
+        float new_x = 0.0f;
+        float new_y = 0.0f;
+
         if (x < 0.0f)
         {
             Log.d("Player.boundsCheck", "X < 0");
-            setPosition(0.0f, y);
+            new_x = getWidth();
         }
 
         if (y < 0.0f)
         {
             Log.d("Player.boundsCheck", "Y < 0");
-            setPosition(x, 0.0f);
+            new_y = getHeight();
         }
 
         if (y + getHeight() > getYMax())
         {
             Log.d("Player.boundsCheck", "Y > max");
-            setPosition(x, getYMax() - getHeight());
+            new_y = getYMax() - getHeight();
         }
 
-        if (x > getXMax())
+        if (x + getWidth() > getXMax())
         {
             Log.d("Player.boundsCheck", "X > max");
-            setPosition(getXMax() - getWidth(), y);
+            new_x = getXMax() - getWidth();
         }
+
+        if (new_x == 0.0f)
+        {
+            new_x = x;
+        }
+
+        if (new_y == 0.0f)
+        {
+            new_y = y;
+        }
+
+        setPosition(new_x, new_y);
+
     }
 
     public double getRadians(float x, float y, float z)
@@ -169,11 +178,6 @@ public class Player extends MovableEntity
 
         return f;
 
-    }
-
-    public int getCurrQuadrant()
-    {
-        return curr_qaudrant;
     }
 
 }

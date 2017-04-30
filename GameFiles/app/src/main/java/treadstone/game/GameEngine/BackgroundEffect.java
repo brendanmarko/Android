@@ -6,9 +6,9 @@ import android.content.Context;
 public class BackgroundEffect extends MovableEntity
 {
 
-    BackgroundEffect(Context context, Position s, Position m, char t)
+    BackgroundEffect(Context context, Position s, Position m, Position ppm, char t)
     {
-        super(context, s, m , t);
+        super(context, s, m , ppm, t);
     }
 
     public void update()

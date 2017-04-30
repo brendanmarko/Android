@@ -7,6 +7,11 @@ public class RectangleHitBox
 {
     private Rect hitbox;
 
+    public RectangleHitBox(int x, int y, Position p)
+    {
+        hitbox = new Rect(x, y, (int) p.getX(), (int) p.getY());
+    }
+
     public RectangleHitBox(int x, int y, Bitmap curr_bitmap)
     {
         hitbox = new Rect(x, y, curr_bitmap.getWidth(), curr_bitmap.getHeight());

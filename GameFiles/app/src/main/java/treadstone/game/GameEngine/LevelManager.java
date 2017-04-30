@@ -10,21 +10,19 @@ public class LevelManager
 {
     private int                     curr_index, player_index;
     private Player                  player;
-    private String level;
+    private String                  level;
     private Position                level_max;
     private LevelData               level_data;
-    private ArrayList<Entity> game_objects;
+    private ArrayList<Entity>       game_objects;
     private Bitmap[]                bitmaps;
-    private Position                pixelSize;
+    private Position                pixels_per_metre;
     private boolean                 playing;
-    private float                   map_h, map_w;
 
-    public LevelManager(Context c, String level_name, Position m, Position ppm, Position player_start)
+    public LevelManager(Context c, String level_name, Position ppm, Position player_start)
     {
         // Gather parameters
         level = level_name;
-        level_max = m;
-        pixelSize = ppm;
+        pixels_per_metre = ppm;
 
         // Initialize level
         switch (level_name)
@@ -33,10 +31,9 @@ public class LevelManager
                 level_data = new TestLevel();
         }
 
-        Log.d("level_data_render", "level_data info: " + level_data.toString());
-
-        // Test list contents
+        // Show LevelData contents and Dimensions
         level_data.printTiles();
+        level_max = level_data.getMapDimens();
 
         // Initialize Bitmap/Game object storage
         game_objects = new ArrayList<Entity>();
@@ -45,6 +42,7 @@ public class LevelManager
         // Load the map
         loadMapData(c, ppm, player_start);
         playing = true;
+
     }
 
     public Bitmap getBitmap(char c)
@@ -98,11 +96,9 @@ public class LevelManager
     private void loadMapData(Context c, Position ppm, Position player_start)
     {
         curr_index = -1;
-        map_h = level_data.getTiles().size();
-        map_w = level_data.getTiles().get(0).length();
 
         // Reads in the Level layout file
-        for (int y = 0; y < map_h; y++)
+        for (int y = 0; y < level_data.getTiles().size(); y++)
         {
             for (int x = 0; x < level_data.getTiles().get(y).length(); x++)
             {
@@ -110,7 +106,6 @@ public class LevelManager
             }
         }
 
-        Log.d("success_loadmapdata", "Success +++ loaded map data!");
     }
 
     // checkBitmap()
@@ -149,8 +144,7 @@ public class LevelManager
             {
                 case 'p':
                     Log.d("player_test_object+++", "Creating player...");
-                    temp = new Player(c, p, level_max, d);
-                    Log.d("LevelManager/objCrt", "Max for Player: " + temp.getXMax() + ", " + temp.getYMax());
+                    temp = new Player(c, p, level_max, pixels_per_metre, d);
                     Log.d("player_test_object+++", "Player created!");
                     player = (Player) temp;
                     Log.d("player_test_object+++", player.toString());
@@ -160,13 +154,13 @@ public class LevelManager
                     break;
 
                 case 'e':
-                    temp = new TestEnemy(c, p, level_max, d);
+                    temp = new TestEnemy(c, p, level_max, pixels_per_metre, d);
                     game_objects.add(temp);
                     checkBitmap(c, temp, d);
                     break;
 
                 case 'd':
-                    temp = new Debris(c, p, level_max, d);
+                    temp = new Debris(c, p, level_max, pixels_per_metre, d);
                     game_objects.add(temp);
                     checkBitmap(c, temp, d);
                     break;
@@ -221,14 +215,9 @@ public class LevelManager
         return player;
     }
 
-    public float getMapWidth()
+    public Position getMapDimens()
     {
-        return map_w;
-    }
-
-    public float getMapHeight()
-    {
-        return map_h;
+        return level_max;
     }
 
 }

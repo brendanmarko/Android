@@ -13,20 +13,20 @@ import android.view.SurfaceView;
 public class GameView extends SurfaceView implements Runnable
 {
     volatile boolean                        view_active;
-    Thread game_thread = null;
+    Thread                                  game_thread = null;
     private Player                          curr_player;
-    private Position                        max_bounds;
+    private Position                        screen_size;
     private ViewPort                        viewport;
     private LevelManager                    level_manager;
 
-    private Paint paint;
-    private Canvas canvas;
-    private SurfaceHolder curr_holder;
+    private Paint                           paint;
+    private Canvas                          canvas;
+    private SurfaceHolder                   curr_holder;
 
     public GameView(Context c, Position m)
     {
         super(c);
-        max_bounds = m;
+        screen_size = m;
         init();
 
         // Initialize Viewport
@@ -35,12 +35,12 @@ public class GameView extends SurfaceView implements Runnable
         // Initialize LevelManager
         loadLevel(c, "TestLevel", new Position(0.0f, 0.0f));
 
-        // Initialize Player
+        // Initialize Player Info
         curr_player = level_manager.getPlayer();
         curr_player.initCenter(viewport.getCentre());
 
         // Pass ViewPort max pixel dimensions
-        viewport.setMapDimens(new Position(level_manager.getMapWidth(), level_manager.getMapHeight()));
+        viewport.setMapDimens(level_manager.getMapDimens());
     }
 
     public void init()
@@ -52,7 +52,7 @@ public class GameView extends SurfaceView implements Runnable
     public void loadLevel(Context c, String n, Position s)
     {
         level_manager = null;
-        level_manager = new LevelManager(c, n, max_bounds, viewport.getPixelsPerMetre(), s);
+        level_manager = new LevelManager(c, n, viewport.getPixelsPerMetre(), s);
     }
 
     @Override
@@ -62,6 +62,7 @@ public class GameView extends SurfaceView implements Runnable
         {
             update();
             draw();
+            // drawViewPort();
             control();
         }
 
@@ -76,7 +77,7 @@ public class GameView extends SurfaceView implements Runnable
         {
             if (e.isActive())
             {
-                if (viewport.clipObject(e.getPosition(), e.getType().getDimensions()))
+                if (viewport.clipObject(e.getPosition()))
                 {
                     e.setInvisible();
                 }
@@ -84,6 +85,19 @@ public class GameView extends SurfaceView implements Runnable
                 else
                 {
                     e.setVisible();
+
+                    if (e.getSpeed() > 0.0f)
+                    {
+                        MovableEntity m = (MovableEntity) e;
+                        m.update();
+
+                        if (m.getGameObject().getType() == 'p')
+                        {
+                            //Log.d("GameView/update", "Viewport shifting to: " + curr_player.getPosition().toString());
+                            viewport.setViewPortCentre(curr_player.getPosition());
+                        }
+                    }
+
                 }
 
             }
@@ -112,8 +126,8 @@ public class GameView extends SurfaceView implements Runnable
                 {
                     if (e.isVisible() && e.getLayer() == layer)
                     {
-                        new_target.set(viewport.worldToScreen(e.getPosition(), e.getType().getDimensions()));
-                        canvas.drawBitmap(level_manager.getBitmap(e.getType().getType()), new_target.left, new_target.top, paint);
+                        new_target.set(viewport.worldToScreen(e.getPosition(), e.getGameObject().getDimensions()));
+                        canvas.drawBitmap(level_manager.getBitmap(e.getGameObject().getType()), new_target.left, new_target.top, paint);
                     }
                 }
             }
@@ -168,12 +182,10 @@ public class GameView extends SurfaceView implements Runnable
         if (curr_motion.getAction() == MotionEvent.ACTION_UP)
         {
             Log.d("GV.onTouch", "Touch ended!");
-
         }
 
         else if (curr_motion.getAction() == MotionEvent.ACTION_DOWN)
         {
-            curr_player.setMovable();
             Log.d("entering_action_move", "ProcessMovement to be called...");
             curr_player.processMovement(curr_motion.getX(), curr_motion.getY());
             viewport.setViewPortCentre(curr_player.getPosition());
