@@ -1,0 +1,10 @@
+May 1:
+Today was a pretty relaxed day wrt to coding, just changed around some of the movement stuff that will need a bit of fine tuning.
+Probably working about 75% the way I would like, likely finish it up tomorrow.
+Organized the 'Log Files' into a better folder system better for archiving.
+
+Completed:
+Fixed the bound check function to stop jittery movements and made some adjustments to the Player movement and how it calculates the direction
+
+To do:
+Refine the movement system wrt the angle a bit more!

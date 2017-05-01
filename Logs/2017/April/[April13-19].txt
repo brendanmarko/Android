@@ -1,0 +1,50 @@
+April 13th:
+I have been super busy with other stuff lately and this game really took a seat on the backburner, huge bummer.
+BUT, that said... I have come back to it and have been doing a lot of work on it.
+The last few days have been adding the camera feature where it doesn't scroll OB past map bounds/rendering.
+This was not particularly easy and was mainly the reason I slowly stopped workng on this!
+
+	Changes
+	= camera will not scroll outside of map bounds anymore! (know more about ViewPort then I ever wanted to)
+	= completely rebuilding the way the character would move and respond to touch events for movement
+		= moving away from the finger dragging for movement
+			= implemented a Cartesian Plain setup to determine the angle to propel our ship at
+	= tidied up the Player and ViewPort classes
+	
+	To do
+	= now that we have the theta at which our player will be moving, have to propel ship in that direction
+
+April 14th:
+Applied some changes to the player movement functions and have functioning movement...
+Definitely needs some work to fine tune it, but I'll sit down with that over the next few sessions.
+
+	Changes
+	= Player moves
+
+	To do
+	= Fine tune movement
+		= Way too jittery, fast and unsmooth
+
+April 18th:
+Made changes to the screen touches, for now tapping will only move the Player
+
+	Changes
+	= regarding onTouch events I changed the ACTION_MOVE event into the ACTION_DOWN
+
+	To do
+	= Add way to update each Entity that is able to move in each frame
+	= Will have to apply to all MovableEntity Objects (re-use!)
+		= Player, Ships, Projectiles etc...
+
+
+April 19th:
+Made some edits to the ViewPort class that were affecting how the edges of the ViewPort were calculated.
+After mapping out the co-ordinates (countless times on my fridge calendar!) the values have been adjusted properly now.
+
+	Changes
+	= ViewPort edge calcuation
+	= other minor changes in ViewPort
+
+	To do
+	= suspicions that the world2Screen() is not properly showing the ViewPort scaled to fit the full screen
+		= properly draw out and map them on paper to make sure they are correct
