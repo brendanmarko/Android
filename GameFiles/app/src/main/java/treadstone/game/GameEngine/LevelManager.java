@@ -17,6 +17,7 @@ public class LevelManager
     private Bitmap[]                bitmaps;
     private Position                pixels_per_metre;
     private boolean                 playing;
+    private int                     DEBUG = 0;
 
     public LevelManager(Context c, String level_name, Position ppm, Position player_start)
     {
@@ -143,11 +144,19 @@ public class LevelManager
             switch (d)
             {
                 case 'p':
-                    Log.d("player_test_object+++", "Creating player...");
+
+                    if (DEBUG == 1)
+                        Log.d("player_test_object+++", "Creating player...");
+
                     temp = new Player(c, p, level_max, pixels_per_metre, d);
-                    Log.d("player_test_object+++", "Player created!");
+                    if (DEBUG == 1)
+                        Log.d("player_test_object+++", "Player created!");
+
                     player = (Player) temp;
-                    Log.d("player_test_object+++", player.toString());
+
+                    if (DEBUG == 1)
+                        Log.d("player_test_object+++", player.toString());
+
                     player_index = curr_index;
                     game_objects.add(player);
                     checkBitmap(c, temp, d);
