@@ -35,8 +35,8 @@ public class GameActivity extends FragmentActivity implements OnControllerPress
 
         // Add Fragment [Controller]
         FragmentTransaction transaction = manager.beginTransaction();
-        // controller = new ControllerFragment();
-        // transaction.replace(R.id.controller_screen, controller, "controller_screen");
+        controller = new ControllerFragment();
+        transaction.replace(R.id.controller_screen, controller, "controller_screen");
 
         // Add Fragment [GameView]
         screen = new ScreenFragment();

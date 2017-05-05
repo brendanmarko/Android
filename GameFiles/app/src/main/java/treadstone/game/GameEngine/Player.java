@@ -37,7 +37,7 @@ public class Player extends MovableEntity
 
         // Get lengths of sides
         spanX = x_location - getX();
-        spanY = y_location - getY() + (0.5fb * getHeight());
+        spanY = y_location - getY() + (0.5f * getHeight());
         spanZ = (float) Math.sqrt((spanX * spanX) + (spanY * spanY));
 
         // Find angle for movement
