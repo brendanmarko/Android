@@ -79,8 +79,6 @@ public class ViewPort
         int l, t, r, b;
         l = (int) calcScaledLeft(p);
         t = (int) calcScaledTop(p);
-        //l = (int) (screen_centre.getX() - (viewport_centre.getX() - p.getX()));
-        //t = (int) (screen_centre.getY() - (viewport_centre.getY() - p.getY()));
         r = (int) (l + (pixels_per_metre.getX() * d.getX()));
         b = (int) (t + (pixels_per_metre.getY() * d.getY()));
         Log.d("ViewPort/W2S", "Values of worldToScreen: " + l + ", " + t + ", " + r + ", " + b);
@@ -328,6 +326,11 @@ public class ViewPort
     public Position getFactor()
     {
         return factor;
+    }
+
+    public Position getMaxBounds()
+    {
+        return max_view_bounds;
     }
 
 }

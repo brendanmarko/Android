@@ -35,7 +35,7 @@ public class GameObject
             // Bullet
             case ('b'):
             {
-                layer = 1;
+                layer = 2;
                 image_name = "bullet";
                 animateFrameCount = 1;
                 dimensions = new Position(1.0f, 1.0f);
@@ -68,7 +68,7 @@ public class GameObject
             //  Missile
             case ('m'):
             {
-                layer = 1;
+                layer = 2;
                 image_name = "missile";
                 animateFrameCount = 1;
                 dimensions = new Position(2.0f, 2.0f);

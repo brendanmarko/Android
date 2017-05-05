@@ -10,6 +10,8 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.util.ArrayList;
+
 public class GameView extends SurfaceView implements Runnable
 {
     volatile boolean                        view_active;
@@ -23,14 +25,21 @@ public class GameView extends SurfaceView implements Runnable
     private Canvas                          canvas;
     private SurfaceHolder                   curr_holder;
 
+    private int                             DEBUG = 0;
+
+    private ArrayList<Projectile>           projectiles;
+    private ArrayList<Projectile>           temp_buffer;
+
     public GameView(Context c, Position m)
     {
         super(c);
         screen_size = m;
         init();
+        temp_buffer = new ArrayList<>();
 
         // Initialize Viewport
-        viewport = new ViewPort(m);
+        // viewport = new ViewPort(m);
+        viewport = new ViewPort(new Position(m.getX() * 0.9f, m.getY()));
 
         // Initialize LevelManager
         loadLevel(c, "TestLevel", new Position(0.0f, 0.0f));
@@ -62,7 +71,6 @@ public class GameView extends SurfaceView implements Runnable
         {
             update();
             draw();
-            // drawViewPort();
             control();
         }
 
@@ -78,9 +86,7 @@ public class GameView extends SurfaceView implements Runnable
             if (e.isActive())
             {
                 if (viewport.clipObject(e.getPosition()))
-                {
                     e.setInvisible();
-                }
 
                 else
                 {
@@ -92,10 +98,7 @@ public class GameView extends SurfaceView implements Runnable
                         m.update();
 
                         if (m.getGameObject().getType() == 'p')
-                        {
-                            //Log.d("GameView/update", "Viewport shifting to: " + curr_player.getPosition().toString());
                             viewport.setViewPortCentre(curr_player.getPosition());
-                        }
                     }
 
                 }
@@ -177,19 +180,26 @@ public class GameView extends SurfaceView implements Runnable
 
     public boolean onTouchEvent(MotionEvent curr_motion)
     {
-        Log.d("on_touch_event+++", "GameView onTouch called!");
+        if (DEBUG == 1)
+            Log.d("on_touch_event+++", "GameView onTouch called!");
 
         if (curr_motion.getAction() == MotionEvent.ACTION_UP)
         {
-            Log.d("GV.onTouch", "Touch ended!");
+            if (DEBUG == 1)
+                Log.d("GV.onTouch", "Touch ended!");
         }
 
         else if (curr_motion.getAction() == MotionEvent.ACTION_DOWN)
         {
-            Log.d("entering_action_move", "ProcessMovement to be called...");
+            if (DEBUG == 1)
+                Log.d("entering_action_move", "ProcessMovement to be called...");
+
             curr_player.processMovement(curr_motion.getX(), curr_motion.getY());
             viewport.setViewPortCentre(curr_player.getPosition());
-            Log.d("GameView.onTouch", "Current Centre: " + viewport.getViewPortCentre().toString());
+
+            if (DEBUG == 1)
+                Log.d("GameView.onTouch", "Current Centre: " + viewport.getViewPortCentre().toString());
+
         }
 
         else if (curr_motion.getAction() == MotionEvent.ACTION_MOVE)
@@ -200,7 +210,6 @@ public class GameView extends SurfaceView implements Runnable
         return true;
     }
 
-    /*
     public void updateProjectiles()
     {
         // Add temp_buffer to Projectile List
@@ -220,6 +229,7 @@ public class GameView extends SurfaceView implements Runnable
         canvas.drawBitmap(curr_target.getImage(), curr_target.getX(), curr_target.getY(), paint);
     }
 
+    /*
     public void checkCollisions()
     {
         collision_check = new CollisionChecker(curr_player, enemy_list);
@@ -262,6 +272,7 @@ public class GameView extends SurfaceView implements Runnable
 
     }
 
+    */
 
     public void addProjectileToPlayer(ControllerFragment.ProjectileType p)
     {
@@ -286,9 +297,7 @@ public class GameView extends SurfaceView implements Runnable
         }
 
         // Buffer for adding to Projectiles
-        temp_buffer.add(new Projectile(getContext(), new Position(curr_player.getX(), curr_player.getY()), max_bounds, type));
+        temp_buffer.add(new Projectile(getContext(), new Position(curr_player.getX(), curr_player.getY()), viewport.getMaxBounds(), viewport.getPixelsPerMetre(), type));
     }
 
-     */
-    
 }
