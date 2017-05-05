@@ -27,6 +27,7 @@ public class GameView extends SurfaceView implements Runnable
 
     private int                             DEBUG = 0;
 
+    private ArrayList<Projectile>           projectiles;
     private ArrayList<Projectile>           temp_buffer;
 
     public GameView(Context c, Position m)
@@ -85,9 +86,7 @@ public class GameView extends SurfaceView implements Runnable
             if (e.isActive())
             {
                 if (viewport.clipObject(e.getPosition()))
-                {
                     e.setInvisible();
-                }
 
                 else
                 {
@@ -99,9 +98,7 @@ public class GameView extends SurfaceView implements Runnable
                         m.update();
 
                         if (m.getGameObject().getType() == 'p')
-                        {
                             viewport.setViewPortCentre(curr_player.getPosition());
-                        }
                     }
 
                 }
