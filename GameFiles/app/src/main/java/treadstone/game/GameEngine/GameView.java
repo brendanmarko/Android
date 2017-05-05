@@ -140,12 +140,9 @@ public class GameView extends SurfaceView implements Runnable
             Rect new_target = new Rect();
 
             for (Projectile p : projectiles)
-            {
-                new_target.set(viewport.worldToScreen(p.getPosition(), p.getGameObject().getDimensions()));
-                canvas.drawBitmap(level_manager.getBitmap(p.getGameObject().getType()), new_target.left, new_target.top, paint);
-            }
+                drawProjectile(p);
         }
-    } // end : drawProjectiles
+    }
 
     public void control()
     {
