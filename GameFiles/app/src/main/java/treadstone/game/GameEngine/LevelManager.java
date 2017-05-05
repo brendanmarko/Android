@@ -115,15 +115,10 @@ public class LevelManager
     public void checkBitmap(Context c, Entity e, char d)
     {
         if (bitmaps[getIndex(d)] != null)
-        {
             return;
-        }
 
         else
-        {
             bitmaps[getIndex(d)] = e.createBitmap(c, e.getImageName());
-        }
-
     }
 
     // objectCreate(char)
@@ -131,9 +126,7 @@ public class LevelManager
     public void objectCreate(Context c, Position p, char d)
     {
         if (d == '.')
-        {
             return;
-        }
 
         else
         {

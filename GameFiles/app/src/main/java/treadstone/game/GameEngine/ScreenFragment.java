@@ -55,7 +55,7 @@ public class ScreenFragment extends Fragment
 
     public void handleButtonPress(ControllerFragment.ProjectileType p)
     {
-        //curr_screen.addProjectileToPlayer(p);
+        curr_screen.addProjectileToPlayer(p);
     }
 
 }

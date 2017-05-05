@@ -6,18 +6,22 @@ import android.util.Log;
 public class Projectile extends MovableEntity
 {
     private int         damage;
+    private int         DEBUG = 1;
 
     public Projectile(Context c, Position s, Position m, Position ppm, char t)
     {
-        super(c, s, m, ppm, t);
+        super(c, new Position(s.getX()/ppm.getX(), s.getY()/ppm.getY()), new Position(m.getX()/ppm.getX(), m.getY()/ppm.getY()), ppm, t);
         setMovable();
     }
 
     public void update()
     {
+        if (DEBUG == 1)
+            Log.d("Projectile/CTOR", "Inside Projectile update()");
+
         setPosition(getX() + getSpeed(), getY());
         boundsCheck(getX(), getY());
-        getHitBox().update((int) getX(), (int) getY(), getImage());
+        // getHitBox().update((int) getX(), (int) getY(), getImage());
         toString();
     }
 

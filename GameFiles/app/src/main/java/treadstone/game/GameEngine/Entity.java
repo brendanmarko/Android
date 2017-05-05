@@ -36,9 +36,7 @@ public abstract class Entity
         curr_pos = scaleToPixel(s);
 
         if (t == 'p')
-        {
             Log.d("Entity/PlayerDims", "Player max location = " + max.toString());
-        }
 
         object_type = new GameObject(t);
         speed = object_type.getSpeed();

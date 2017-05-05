@@ -10,7 +10,6 @@ public class Player extends MovableEntity
     private float                       spanX, spanY, spanZ, x_dir, y_dir;
     private ArrayList<Projectile>       projectiles;
     private double                      angle_of_movement;
-
     private int                         DEBUG = 0;
 
     Player(Context context, Position s, Position m, Position ppm, char t)

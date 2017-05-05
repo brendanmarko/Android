@@ -5,7 +5,8 @@ import android.util.Log;
 
 public abstract class MovableEntity extends Entity
 {
-    private RectangleHitBox hitbox;
+    private RectangleHitBox         hitbox;
+    private int                     DEBUG = 1;
 
     public abstract void boundsCheck(float x, float y);
 
@@ -13,13 +14,14 @@ public abstract class MovableEntity extends Entity
     {
         super(c, s, m, ppm, t);
         setMovable();
-        // Log.d("player_test_object+++", "Setting hitbox");
-        // setHitBox();
+        //setHitBox();
     }
 
     public void setHitBox()
     {
-        Log.d("player_test_object+++", "Entering setHitBox");
+        if (DEBUG == 1)
+            Log.d("player_test_object+++", "Entering setHitBox");
+
         hitbox = new RectangleHitBox((int) getGameObject().getDimensions().getX(), (int) getGameObject().getDimensions().getY(), getImage());
     }
 

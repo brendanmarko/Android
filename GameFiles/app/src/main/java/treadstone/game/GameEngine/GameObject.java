@@ -57,7 +57,7 @@ public class GameObject
             // Enemy
             case ('e'):
             {
-                layer = 1;
+                layer = 2;
                 image_name = "bob_evil";
                 animateFrameCount = 1;
                 dimensions = new Position(2.0f, 3.0f);

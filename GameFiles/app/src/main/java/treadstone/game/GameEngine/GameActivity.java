@@ -11,8 +11,8 @@ import android.support.v4.app.FragmentActivity;
 public class GameActivity extends FragmentActivity implements OnControllerPress
 {
 
-    private ScreenFragment screen;
-    private ControllerFragment controller;
+    private ScreenFragment          screen;
+    private ControllerFragment      controller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)

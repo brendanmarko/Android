@@ -23,6 +23,8 @@ public class ViewPort
 
     private boolean     locked_t, locked_r, locked_b, locked_l;
 
+    private int         DEBUG = 0;
+
     ViewPort(Position resolution)
     {
         screen_resolution = resolution;
@@ -57,12 +59,16 @@ public class ViewPort
 
     public void buildViewportEdges(Position p)
     {
-        Log.d("viewport.bvpe","Position passed: " + p.toString() + ", viewport dimens: " + viewable_size.toString());
+        if (DEBUG == 1)
+            Log.d("viewport.bvpe","Position passed: " + p.toString() + ", viewport dimens: " + viewable_size.toString());
+
         view_t = p.getY() - viewable_size.getY()/2;
         view_b = p.getY() + viewable_size.getY()/2;
         view_l = p.getX() - viewable_size.getX()/4;
         view_r = view_l + viewable_size.getX();
-        Log.d("viewport.bvpe", "4 corners: [(" + view_l + " -> , " + view_r + "), (" + view_t + " -> " + view_b + ")]");
+
+        if (DEBUG == 1)
+         Log.d("viewport.bvpe", "4 corners: [(" + view_l + " -> , " + view_r + "), (" + view_t + " -> " + view_b + ")]");
     }
 
     // worldToScreen(Position, Position)
@@ -73,16 +79,24 @@ public class ViewPort
     // Returns Rect with (l, t, r, b)
     public Rect worldToScreen(Position p, Position d)
     {
-        Log.d("Viewport/W2S", "Position passed into W2S: " + p.toString() + " with ppm: " + pixels_per_metre.toString());
-        Log.d("Viewport/W2S", "Viewport centre: " + viewport_centre.toString());
-        Log.d("Viewport/W2S", "Screen centre: " + screen_centre.toString());
+        if (DEBUG == 1)
+        {
+            Log.d("Viewport/W2S", "Position passed into W2S: " + p.toString() + " with ppm: " + pixels_per_metre.toString());
+            Log.d("Viewport/W2S", "Viewport centre: " + viewport_centre.toString());
+            Log.d("Viewport/W2S", "Screen centre: " + screen_centre.toString());
+        }
+
         int l, t, r, b;
         l = (int) calcScaledLeft(p);
         t = (int) calcScaledTop(p);
         r = (int) (l + (pixels_per_metre.getX() * d.getX()));
         b = (int) (t + (pixels_per_metre.getY() * d.getY()));
-        Log.d("ViewPort/W2S", "Values of worldToScreen: " + l + ", " + t + ", " + r + ", " + b);
-        Log.d("Viewport/W2S", "===========================================================================================");
+
+        if (DEBUG == 1)
+        {
+            Log.d("ViewPort/W2S", "Values of worldToScreen: " + l + ", " + t + ", " + r + ", " + b);
+            Log.d("Viewport/W2S", "===========================================================================================");
+        }
 
         scaled_view_space.set(l, t, r, b);
         return scaled_view_space;
@@ -90,15 +104,23 @@ public class ViewPort
 
     private float calcScaledLeft(Position p)
     {
-        Log.d("ViewPort/CalcScaledL", "Values within calcScaled: [p.getX() = " + p.getX() + "], VPC.getX() = " + viewport_centre.getX() + ", screen_centre.getX() " + screen_centre.getX());
-        Log.d("ViewPort/CalcScaledL", "Result: " + (screen_centre.getX() + (p.getX() - viewport_centre.getX())));
+        if (DEBUG == 1)
+        {
+            Log.d("ViewPort/CalcScaledL", "Values within calcScaled: [p.getX() = " + p.getX() + "], VPC.getX() = " + viewport_centre.getX() + ", screen_centre.getX() " + screen_centre.getX());
+            Log.d("ViewPort/CalcScaledL", "Result: " + (screen_centre.getX() + (p.getX() - viewport_centre.getX())));
+        }
+
         return (screen_centre.getX() + (p.getX() - viewport_centre.getX()));
     }
 
     private float calcScaledTop(Position p)
     {
-        Log.d("ViewPort/CalcScaledL", "Values within calcScaled: [p.getY() = " + p.getY() + "], VPC.getY() = " + viewport_centre.getY() + ", screen_centre.getY() " + screen_centre.getY());
-        Log.d("ViewPort/CalcScaledL", "Result: " + (screen_centre.getY() + (p.getY() - viewport_centre.getY())));
+        if (DEBUG == 1)
+        {
+            Log.d("ViewPort/CalcScaledL", "Values within calcScaled: [p.getY() = " + p.getY() + "], VPC.getY() = " + viewport_centre.getY() + ", screen_centre.getY() " + screen_centre.getY());
+            Log.d("ViewPort/CalcScaledL", "Result: " + (screen_centre.getY() + (p.getY() - viewport_centre.getY())));
+        }
+
         return (screen_centre.getY() + (p.getY() - viewport_centre.getY()));
     }
     public Position getCentre()
@@ -155,36 +177,38 @@ public class ViewPort
 
         if (edgeCheck(p))
         {
-            Log.d("viewport.svpc", "edgeCheck passed TRUE");
+            if (DEBUG == 1)
+                Log.d("viewport.svpc", "edgeCheck passed TRUE");
+
             viewport_centre = adjustViewportCentre(p);
         }
 
         else
-        {
             viewport_centre = p;
-        }
 
     }
 
     public void setMapDimens(Position b)
     {
         max_view_bounds = new Position(b.getX() * pixels_per_metre.getX(), b.getY() * pixels_per_metre.getY());
-        // Log.d("vp.setmapdim", "Max dimens: " + max_view_bounds.toString());
+
+        if (DEBUG == 1)
+            Log.d("vp.setmapdim", "Max dimens: " + max_view_bounds.toString());
     }
 
     // checkT()
     // This functions checks the TOP value of the ViewPort
     private boolean checkT()
     {
-        Log.d("viewport.checkt", "value of view_t: " + view_t);
+        if (DEBUG == 1)
+            Log.d("viewport.checkt", "value of view_t: " + view_t);
+
         if (view_t <= 0.0f)
         {
             locked_t = true;
 
             if (checkL() || checkR())
-            {
                 return true;
-            }
 
             return true;
         }
@@ -199,15 +223,15 @@ public class ViewPort
 
     private boolean checkB()
     {
-        Log.d("viewport.checkb", "value of view_b: " + view_b);
+        if (DEBUG == 1)
+            Log.d("viewport.checkb", "value of view_b: " + view_b);
+
         if (view_b > max_view_bounds.getY())
         {
             locked_b = true;
 
             if (checkL() || checkR())
-            {
                 return true;
-            }
 
             return true;
         }
@@ -221,12 +245,13 @@ public class ViewPort
 
     private boolean checkL()
     {
-        Log.d("viewport.checkl", "value of view_l: " + view_l);
+        if (DEBUG == 1)
+            Log.d("viewport.checkl", "value of view_l: " + view_l);
+
         if (view_l < 0)
         {
             locked_l = true;
             return true;
-
         }
 
         else
@@ -238,7 +263,9 @@ public class ViewPort
 
     private boolean checkR()
     {
-        Log.d("viewport.checkr", "value of view_r: " + view_r);
+        if (DEBUG == 1)
+            Log.d("viewport.checkr", "value of view_r: " + view_r);
+
         if (view_r > max_view_bounds.getX())
         {
             locked_r = true;
@@ -256,7 +283,9 @@ public class ViewPort
     // This function checks if any of the ViewPort edges violate boundary constraints
     public boolean edgeCheck(Position p)
     {
-        Log.d("Viewport.edgeC", "Position passed into edgeCheck: " + p.toString());
+        if (DEBUG == 1)
+            Log.d("Viewport.edgeC", "Position passed into edgeCheck: " + p.toString());
+
         if (checkT() || checkB() || checkL() || checkR())
             return true;
 
@@ -273,47 +302,66 @@ public class ViewPort
         float x = 0.0f;
         float y = 0.0f;
 
-        Log.d("vp.adjustEdges", "Viewport Centre before adjust: " + p.toString());
+        if (DEBUG == 1)
+            Log.d("vp.adjustEdges", "Viewport Centre before adjust: " + p.toString());
 
         if (locked_t)
         {
-            Log.d("Viewport.ave", "Locked top found!");
+            if (DEBUG == 1)
+                Log.d("Viewport.ave", "Locked top found!");
+
             y = viewable_size.getY()/2;
         }
 
         else if (locked_b)
         {
-            Log.d("Viewport.ave", "Locked bot found!");
+            if (DEBUG == 1)
+                Log.d("Viewport.ave", "Locked bot found!");
+
             y = max_view_bounds.getY() - viewable_size.getY()/2;
         }
 
         if (locked_l)
         {
-            Log.d("Viewport.ave", "Locked left found!");
+            if (DEBUG == 1)
+                Log.d("Viewport.ave", "Locked left found!");
+
             x = screen_centre.getX();
-            Log.d("viewport.avpe", "X co-ordinate: " + x);
+
+            if (DEBUG == 1)
+                Log.d("viewport.avpe", "X co-ordinate: " + x);
         }
 
         else if (locked_r)
         {
-            Log.d("Viewport.ave", "Locked right found!");
+            if (DEBUG == 1)
+                Log.d("Viewport.ave", "Locked right found!");
+
             x = screen_centre.getX() + max_view_bounds.getX() - viewable_size.getX();
-            Log.d("viewport.avpe", "X co-ordinate: " + x);
+
+            if (DEBUG == 1)
+                Log.d("viewport.avpe", "X co-ordinate: " + x);
         }
 
         if (x == 0.0f)
         {
-            Log.d("Viewport.ave", "Default X used");
+            if (DEBUG == 1)
+                Log.d("Viewport.ave", "Default X used");
+
             x = p.getX();
         }
 
         if (y == 0.0f)
         {
-            Log.d("Viewport.ave", "Default Y used");
+            if (DEBUG == 1)
+                Log.d("Viewport.ave", "Default Y used");
+
             y = p.getY();
         }
 
-        Log.d("Viewport.ave", "Checking position values: " + x + ", " + y);
+        if (DEBUG == 1)
+            Log.d("Viewport.ave", "Checking position values: " + x + ", " + y);
+
         return new Position(x, y);
 
     }
@@ -321,11 +369,6 @@ public class ViewPort
     private void setScreenViewPortFactor()
     {
         factor = new Position(screen_resolution.getX()/viewable_size.getX(), screen_resolution.getY()/viewable_size.getY());
-    }
-
-    public Position getFactor()
-    {
-        return factor;
     }
 
     public Position getMaxBounds()

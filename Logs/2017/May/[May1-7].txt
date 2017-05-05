@@ -1,10 +1,36 @@
-May 1:
+May 1
+=====
 Today was a pretty relaxed day wrt to coding, just changed around some of the movement stuff that will need a bit of fine tuning.
 Probably working about 75% the way I would like, likely finish it up tomorrow.
 Organized the 'Log Files' into a better folder system better for archiving.
 
-Completed:
+Completed
+=========
 Fixed the bound check function to stop jittery movements and made some adjustments to the Player movement and how it calculates the direction
 
-To do:
+To do
+=====
 Refine the movement system wrt the angle a bit more!
+
+May 5
+=====
+Well, it feels good to write about what I got done after looking back to May 1st!
+Player movement is way less clunky now and the GameView/ViewPort and ControllerFragment all came together nice.
+
+	Completed
+	=========
+	1. Changed player movement to 8 cardianl directions instead of using the angle for anything other than finding the appropriate direction
+	  ie) N, NE, NW, S, SE, SW, W, E
+	2. Added the ControllerFragment back and scaling the playable screen to use a fraction of the screen.
+	   The problem before has been the GameView was being drawn to full size and the ControllerFragment on top, cutting off part of the GameView
+	3. ControllerFragment is back within GameActivity
+
+
+To-do [Critical]
+=====
+1. There is an issue with touching the screen beyond the initial max_bounds, I think I need to be adding a displacement value or something similar.
+
+To-do [Secondary]
+=====
+1. Get Projectiles working again for the Player
+2. Get Collisions/Hitboxes to register again

@@ -25,21 +25,27 @@ public class GameView extends SurfaceView implements Runnable
     private Canvas                          canvas;
     private SurfaceHolder                   curr_holder;
 
-    private int                             DEBUG = 0;
+    private int                             DEBUG = 1;
+    private Position                        ppm;
 
     private ArrayList<Projectile>           projectiles;
     private ArrayList<Projectile>           temp_buffer;
+
+    private float                           displacementX, displacementY;
 
     public GameView(Context c, Position m)
     {
         super(c);
         screen_size = m;
         init();
-        temp_buffer = new ArrayList<>();
+
+        // Controls Projectiles
+        projectiles = new ArrayList<Projectile>();
+        temp_buffer = new ArrayList<Projectile>();
 
         // Initialize Viewport
-        // viewport = new ViewPort(m);
         viewport = new ViewPort(new Position(m.getX() * 0.9f, m.getY()));
+        ppm = viewport.getPixelsPerMetre();
 
         // Initialize LevelManager
         loadLevel(c, "TestLevel", new Position(0.0f, 0.0f));
@@ -69,6 +75,7 @@ public class GameView extends SurfaceView implements Runnable
     {
         while (view_active)
         {
+            calcDisplacement();
             update();
             draw();
             control();
@@ -81,38 +88,12 @@ public class GameView extends SurfaceView implements Runnable
     // the game world objects within LevelManager.getGameOjbects()
     public void update()
     {
-        for (Entity e : level_manager.getGameObjects())
-        {
-            if (e.isActive())
-            {
-                if (viewport.clipObject(e.getPosition()))
-                    e.setInvisible();
-
-                else
-                {
-                    e.setVisible();
-
-                    if (e.getSpeed() > 0.0f)
-                    {
-                        MovableEntity m = (MovableEntity) e;
-                        m.update();
-
-                        if (m.getGameObject().getType() == 'p')
-                            viewport.setViewPortCentre(curr_player.getPosition());
-                    }
-
-                }
-
-            }
-
-        }
-
+        updateEntities();
+        updateProjectiles();
     }
 
     public void draw()
     {
-        Rect new_target = new Rect();
-
         if (curr_holder.getSurface().isValid())
         {
             // Lock Canvas
@@ -122,24 +103,49 @@ public class GameView extends SurfaceView implements Runnable
             // Paint Colour
             paint.setColor(Color.argb(255, 0, 0, 0));
 
-            // Draw Entities
-            for (int layer = -1; layer < 3; layer++)
-            {
-                for (Entity e : level_manager.getGameObjects())
-                {
-                    if (e.isVisible() && e.getLayer() == layer)
-                    {
-                        new_target.set(viewport.worldToScreen(e.getPosition(), e.getGameObject().getDimensions()));
-                        canvas.drawBitmap(level_manager.getBitmap(e.getGameObject().getType()), new_target.left, new_target.top, paint);
-                    }
-                }
-            }
+            // Draw to Screen
+            drawEntities();
+            drawProjectiles();
 
             // Unlock and draw
             curr_holder.unlockCanvasAndPost(canvas);
         }
 
     }
+
+    public void drawEntities()
+    {
+        Rect new_target = new Rect();
+
+        for (int layer = -1; layer < 3; layer++)
+        {
+            for (Entity e : level_manager.getGameObjects())
+            {
+                if (e.isVisible() && e.getLayer() == layer)
+                {
+                    new_target.set(viewport.worldToScreen(e.getPosition(), e.getGameObject().getDimensions()));
+                    canvas.drawBitmap(level_manager.getBitmap(e.getGameObject().getType()), new_target.left, new_target.top, paint);
+                }
+            }
+        }
+    } // end : drawEntities
+
+    public void drawProjectiles()
+    {
+        if (projectiles.size() <= 0)
+            return;
+
+        else
+        {
+            Rect new_target = new Rect();
+
+            for (Projectile p : projectiles)
+            {
+                new_target.set(viewport.worldToScreen(p.getPosition(), p.getGameObject().getDimensions()));
+                canvas.drawBitmap(level_manager.getBitmap(p.getGameObject().getType()), new_target.left, new_target.top, paint);
+            }
+        }
+    } // end : drawProjectiles
 
     public void control()
     {
@@ -192,9 +198,9 @@ public class GameView extends SurfaceView implements Runnable
         else if (curr_motion.getAction() == MotionEvent.ACTION_DOWN)
         {
             if (DEBUG == 1)
-                Log.d("entering_action_move", "ProcessMovement to be called...");
+                Log.d("entering_action_move", "ProcessMovement to be called with Displacement values calculated");
 
-            curr_player.processMovement(curr_motion.getX(), curr_motion.getY());
+            curr_player.processMovement(curr_motion.getX() + displacementX, curr_motion.getY() + displacementY);
             viewport.setViewPortCentre(curr_player.getPosition());
 
             if (DEBUG == 1)
@@ -204,7 +210,7 @@ public class GameView extends SurfaceView implements Runnable
 
         else if (curr_motion.getAction() == MotionEvent.ACTION_MOVE)
         {
-
+            // To do
         }
 
         return true;
@@ -212,15 +218,18 @@ public class GameView extends SurfaceView implements Runnable
 
     public void updateProjectiles()
     {
-        // Add temp_buffer to Projectile List
-        curr_player.getProjectiles().addAll(temp_buffer);
+        if (temp_buffer.size() <= 0)
+            return;
 
-        for (Projectile p : curr_player.getProjectiles())
+        else
         {
-            p.update();
-        }
+            curr_player.getProjectiles().addAll(temp_buffer);
 
-        temp_buffer.removeAll(temp_buffer);
+            for (Projectile p : curr_player.getProjectiles())
+                p.update();
+
+            temp_buffer.removeAll(temp_buffer);
+        }
 
     }
 
@@ -250,7 +259,7 @@ public class GameView extends SurfaceView implements Runnable
         }
 
     }
-
+*/
 
     public void drawHitBoxes()
     {
@@ -264,19 +273,23 @@ public class GameView extends SurfaceView implements Runnable
             canvas.drawRect(curr_box.left, curr_box.top, curr_box.right, curr_box.bottom, paint);
         }
 
+        /*
         for (TestEnemy e : enemy_list)
         {
             curr_box = e.getHitBox().getHitBox();
             canvas.drawRect(curr_box.left, curr_box.top, curr_box.right, curr_box.bottom, paint);
-        }
+        }*/
 
     }
 
-    */
+
 
     public void addProjectileToPlayer(ControllerFragment.ProjectileType p)
     {
         char type;
+
+        if (DEBUG == 1)
+            Log.d("GameView.addP2P", "AddProjectile2Player called with p = " + p.toString());
 
         switch (p)
         {
@@ -297,7 +310,41 @@ public class GameView extends SurfaceView implements Runnable
         }
 
         // Buffer for adding to Projectiles
-        temp_buffer.add(new Projectile(getContext(), new Position(curr_player.getX(), curr_player.getY()), viewport.getMaxBounds(), viewport.getPixelsPerMetre(), type));
+        temp_buffer.add(new Projectile(getContext(), curr_player.getPosition(), viewport.getMaxBounds(), viewport.getPixelsPerMetre(), type));
     }
 
-}
+    public void updateEntities()
+    {
+        for (Entity e : level_manager.getGameObjects())
+        {
+            if (e.isActive())
+            {
+                if (viewport.clipObject(e.getPosition()))
+                    e.setInvisible();
+
+                else
+                {
+                    e.setVisible();
+
+                    if (e.getSpeed() > 0.0f) {
+                        MovableEntity m = (MovableEntity) e;
+                        m.update();
+
+                        if (m.getGameObject().getType() == 'p')
+                            viewport.setViewPortCentre(curr_player.getPosition());
+                    }
+                }
+            }
+        }
+    } // end : updateEntities()
+
+    public void calcDisplacement()
+    {
+        displacementX = viewport.getViewPortCentre().getX() - viewport.getCentre().getX();
+        displacementY = viewport.getViewPortCentre().getY() - viewport.getCentre().getY();
+
+        if (DEBUG == 1)
+            Log.d("GameView/calcD", "Displacements: " + displacementX + ", " + displacementY);
+    }
+
+} // end : GameView Class
