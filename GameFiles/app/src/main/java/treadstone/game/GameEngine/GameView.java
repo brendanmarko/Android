@@ -11,6 +11,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class GameView extends SurfaceView implements Runnable
 {
@@ -28,7 +29,6 @@ public class GameView extends SurfaceView implements Runnable
     private int                             DEBUG = 1;
     private Position                        ppm;
 
-    private ArrayList<Projectile>           projectiles;
     private ArrayList<Projectile>           temp_buffer;
 
     private float                           displacementX, displacementY;
@@ -40,7 +40,6 @@ public class GameView extends SurfaceView implements Runnable
         init();
 
         // Controls Projectiles
-        projectiles = new ArrayList<Projectile>();
         temp_buffer = new ArrayList<Projectile>();
 
         // Initialize Viewport
@@ -128,20 +127,44 @@ public class GameView extends SurfaceView implements Runnable
                 }
             }
         }
-    } // end : drawEntities
+    }
+
+    public void drawProjectile(Projectile curr_target)
+    {
+        if (DEBUG == 1)
+            Log.d("GameView/DrawP", "Drawing Projectile [Single]");
+
+        Rect new_target = new Rect();
+
+        for (int layer = -1; layer < 3; layer++)
+        {
+            for (Projectile e : curr_player.getProjectiles())
+            {
+                if (e.isVisible() && e.getLayer() == layer)
+                {
+                    new_target.set(viewport.worldToScreen(e.getPosition(), e.getGameObject().getDimensions()));
+                    canvas.drawBitmap(level_manager.getBitmap(e.getGameObject().getType()), new_target.left, new_target.top, paint);
+                }
+            }
+        }
+    }
 
     public void drawProjectiles()
     {
-        if (projectiles.size() <= 0)
-            return;
-
-        else
+        if (DEBUG == 1)
         {
-            Rect new_target = new Rect();
-
-            for (Projectile p : projectiles)
-                drawProjectile(p);
+            Log.d("GameView/DrawP", "Drawing Projectiles!");
+            Log.d("GameView/DrawP", "=== Starting draw from Player with size: " + curr_player.getProjectiles().size());
         }
+
+        for (Iterator<Projectile> iterator = curr_player.getProjectiles().iterator(); iterator.hasNext();)
+        {
+            Projectile p = iterator.next();
+            drawProjectile(p);
+        }
+
+        if (DEBUG == 1)
+            Log.d("GameView/DrawP", "=== Drawing Projectiles complete!");
     }
 
     public void control()
@@ -215,24 +238,34 @@ public class GameView extends SurfaceView implements Runnable
 
     public void updateProjectiles()
     {
+
+        if (DEBUG == 1)
+            Log.d("GameView/UpdateP", "Updating Projectiles @ GameView");
+
         if (temp_buffer.size() <= 0)
             return;
 
         else
         {
+
+            if (DEBUG == 1)
+                Log.d("GameView/UpdateP", "=== Inside Else");
+
             curr_player.getProjectiles().addAll(temp_buffer);
 
-            for (Projectile p : curr_player.getProjectiles())
+            for (Iterator<Projectile> iterator = curr_player.getProjectiles().iterator(); iterator.hasNext();)
+            {
+                Projectile p = iterator.next();
                 p.update();
+            }
+
+            if (DEBUG == 1)
+                Log.d("GameView/UpdateP", "=== Complete update and removing from buffer with size: " + curr_player.getProjectiles().size());
 
             temp_buffer.removeAll(temp_buffer);
+
         }
 
-    }
-
-    public void drawProjectile(Projectile curr_target)
-    {
-        canvas.drawBitmap(curr_target.getImage(), curr_target.getX(), curr_target.getY(), paint);
     }
 
     /*
@@ -323,7 +356,8 @@ public class GameView extends SurfaceView implements Runnable
                 {
                     e.setVisible();
 
-                    if (e.getSpeed() > 0.0f) {
+                    if (e.getSpeed() > 0.0f)
+                    {
                         MovableEntity m = (MovableEntity) e;
                         m.update();
 

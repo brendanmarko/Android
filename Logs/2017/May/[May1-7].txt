@@ -6,11 +6,11 @@ Organized the 'Log Files' into a better folder system better for archiving.
 
 Completed
 =========
-Fixed the bound check function to stop jittery movements and made some adjustments to the Player movement and how it calculates the direction
+1. Fixed the bound check function to stop jittery movements and made some adjustments to the Player movement and how it calculates the direction
 
 To do
 =====
-Refine the movement system wrt the angle a bit more!
+1. Refine the movement system wrt the angle a bit more!
 
 May 5
 =====
@@ -34,3 +34,17 @@ To-do [Secondary]
 =====
 1. Get Projectiles working again for the Player
 2. Get Collisions/Hitboxes to register again
+
+
+May 6
+=====
+Did a bit today regarding Projectiles, good news is that the displacement value change fixed any problems I had for the screen touches!
+
+Completed
+==========
+1. Screen Touching to move Character works 100%
+2. Projectiles add to list but do NOT display
+
+To-do
+=====
+1. Get Projectiles to display

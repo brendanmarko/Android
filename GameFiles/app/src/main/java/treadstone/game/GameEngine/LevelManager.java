@@ -142,6 +142,7 @@ public class LevelManager
                         Log.d("player_test_object+++", "Creating player...");
 
                     temp = new Player(c, p, level_max, pixels_per_metre, d);
+
                     if (DEBUG == 1)
                         Log.d("player_test_object+++", "Player created!");
 
