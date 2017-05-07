@@ -48,3 +48,21 @@ Completed
 To-do
 =====
 1. Get Projectiles to display
+
+May 7
+=====
+I would be a liar if I said today was not a lot of work to get Projectiles to show up on the Canvas.
+As I was working through the GameView I thought to myself, why would GameView be responsible to manage everything?
+I approached the Projectiles in a different way and created a ProjectileManager class that will handle all projectiles.
+This way GameView will only have to manage the ProjectileManager instead of all Projectiles!
+If this works well I will add it for Entity management as well later!
+
+Completed 
+==========
+1. Added ProjectileManager class to handle Projectiles
+2. Completely changed the Projectile class, will look at consilidating classes later wrt Entity
+3. Projectiles now show up on the GameView Canvas!
+
+To-do
+=====
+1. Get Projectiles to move and be removed once they go out of bounds

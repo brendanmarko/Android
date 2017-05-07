@@ -14,13 +14,16 @@ public class Projectile
     private Position        position;
     private GameObject      info;
     private boolean         active, visible;
+    private float           height, width;
 
-    public Projectile(Context c, Entity o, Position pos, Position ppm, char t)
+    public Projectile(Entity o, Position pos, Position ppm, char t)
     {
         owner = o;
         position = pos;
         active = true;
         info = new GameObject(t);
+        width = info.getDimensions().getX() * ppm.getX();
+        height = info.getDimensions().getY() * ppm.getY();
 
         if (DEBUG == 1)
             Log.d("Projectile/CTOR", "Projectile created!");
@@ -84,7 +87,7 @@ public class Projectile
     {
         int id = c.getResources().getIdentifier(s, "drawable", c.getPackageName());
         image = BitmapFactory.decodeResource(c.getResources(), id);
-        image = Bitmap.createScaledBitmap(image, (int) (info.getDimensions().getX() * info.getAnimateFrameCount()), (int) (info.getDimensions().getX() * info.getAnimateFrameCount()), false);
+        image = Bitmap.createScaledBitmap(image, (int) (width * info.getAnimateFrameCount()), (int) (height * info.getAnimateFrameCount()), false);
         return image;
     }
 

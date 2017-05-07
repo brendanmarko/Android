@@ -71,7 +71,7 @@ public class GameObject
                 layer = 2;
                 image_name = "missile";
                 animateFrameCount = 1;
-                dimensions = new Position(2.0f, 2.0f);
+                dimensions = new Position(2.0f, 1.0f);
                 speed = 14.0f;
                 break;
             }

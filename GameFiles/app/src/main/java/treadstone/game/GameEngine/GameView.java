@@ -270,7 +270,7 @@ public class GameView extends SurfaceView implements Runnable
                 type = '.';
         }
 
-        x = new Projectile(getContext(), curr_player, curr_player.getPosition(), viewport.getPixelsPerMetre(), type);
+        x = new Projectile(curr_player, curr_player.getPosition(), viewport.getPixelsPerMetre(), type);
 
         if (DEBUG == 1)
             x.toString();
