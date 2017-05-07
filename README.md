@@ -16,22 +16,33 @@ The ultimate goal of this project is to have a fully functioning 2D space shoote
 
   ## Phase 1 (completed)
   [x] Display GameView within Fragment
+  
   [x] Transfer all Views into Fragments for easier management
+  
   [x] Send information between Fragments in real-time to register button clicks
+  
   [x] Fix concurrency issues when add/remove during gameplay
+  
   [x] Utilize Fragments to Display Gameview/Controller
+  
   [x] ViewPort class
+  
   [x] Level creation from external class
   
   ## Phase 2 (in progress)
   [x] Update Player/Camera movement
+  
   [x] Re-work ViewPort class to create desired Camera/Player movement
+  
   [x] Display projectiles in correct positions in GameView
+  
   [ ] Restore projectile movement and collision checking
   
   ## Phase 3 (pending)
   [ ] Enemy Projectiles
+  
   [ ] Enemy AI
+  
   [ ] Basic combat vs AI
     
 ---
