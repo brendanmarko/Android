@@ -3,15 +3,23 @@ package treadstone.game.GameEngine;
 import android.content.Context;
 import android.util.Log;
 
-public class Projectile extends MovableEntity
+public class Projectile
 {
-    private int         damage;
-    private int         DEBUG = 1;
+    private int             damage;
+    private int             DEBUG = 1;
+    private Entity          owner;
+    private Position        position;
+    private GameObject      info;
+    private boolean         active, visible;
 
-    public Projectile(Context c, Position s, Position m, Position ppm, char t)
+    public Projectile(Context c, Entity o, Position pos, Position ppm, char t)
     {
-        super(c, new Position(s.getX()/ppm.getX(), s.getY()/ppm.getY()), new Position(m.getX()/ppm.getX(), m.getY()/ppm.getY()), ppm, t);
-        setMovable();
+        Log.d("Projectile/CTOR", "Projectile created!");
+        owner = o;
+        position = pos;
+        active = true;
+        info = new GameObject(t);
+        peak();
     }
 
     public void update()
@@ -19,40 +27,47 @@ public class Projectile extends MovableEntity
         if (DEBUG == 1)
             Log.d("Projectile/CTOR", "Inside Projectile update()");
 
-        setPosition(getX() + getSpeed(), getY());
-        boundsCheck(getX(), getY());
-        // getHitBox().update((int) getX(), (int) getY(), getImage());
-        toString();
+
     }
 
-    public void boundsCheck(float x, float y)
+    public Entity getOwner()
     {
+        return owner;
+    }
 
-        if (x < 0.0f)
-        {
-            Log.d("x < 0.0f", "Should be deleted for X < 0.0f");
-        }
+    public void peak()
+    {
+        Log.d("Projectile/peak", "Projectile info: " + "Owner: " + owner.toString() + ", Position: " + position.toString());
+    }
 
-        else if (x > getXMax())
-        {
-            Log.d("X > MAX", "Should be deleted for X > MAX");
-        }
+    public Position getPosition()
+    {
+        return position;
+    }
 
-        else if (y < 0.0f)
-        {
-            Log.d("Y < 0.0f", "Should be reflected back");
-        }
+    public boolean isActive()
+    {
+        return active;
+    }
 
-        else if (y > getYMax())
-        {
-            Log.d("Y > MAX", "Should be reflected back");
-        }
+    public void setInvisible()
+    {
+        visible = false;
+    }
 
-        else if (y + getHeight() > getYMax())
-        {
-            setPosition(getX(), getYMax() - getHeight());
-        }
+    public void setVisible()
+    {
+        visible = true;
+    }
 
+    public boolean isVisible()
+    {
+        return visible;
+    }
+
+    public GameObject getObjInfo()
+    {
+        return info;
     }
 
 }

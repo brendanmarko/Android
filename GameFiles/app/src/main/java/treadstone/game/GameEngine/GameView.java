@@ -1,37 +1,45 @@
 package treadstone.game.GameEngine;
 
-import android.content.Context;
-import android.graphics.Canvas;
+import android.util.Log;
+import java.util.ArrayList;
+import android.graphics.Rect;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
-import android.util.Log;
+import android.content.Context;
+import android.graphics.Canvas;
 import android.view.MotionEvent;
-import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.SurfaceHolder;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 
 public class GameView extends SurfaceView implements Runnable
 {
-    volatile boolean                        view_active;
+    // Debug toggle
+    private int                             DEBUG = 1;
+
+    // Thread
     Thread                                  game_thread = null;
+    volatile boolean                        view_active;
+
+    // Viewport/Level/Player info
+    private Position                        ppm;
     private Player                          curr_player;
     private Position                        screen_size;
     private ViewPort                        viewport;
     private LevelManager                    level_manager;
+    private float                           displacementX, displacementY;
 
+    // Canvas
     private Paint                           paint;
     private Canvas                          canvas;
     private SurfaceHolder                   curr_holder;
 
-    private int                             DEBUG = 1;
-    private Position                        ppm;
+    // Managers
+    private ProjectileManager               projectileMgr;
 
+    // Temp buffer for Projectiles
     private ArrayList<Projectile>           temp_buffer;
 
-    private float                           displacementX, displacementY;
 
     public GameView(Context c, Position m)
     {
@@ -39,22 +47,16 @@ public class GameView extends SurfaceView implements Runnable
         screen_size = m;
         init();
 
-        // Controls Projectiles
-        temp_buffer = new ArrayList<Projectile>();
-
-        // Initialize Viewport
-        viewport = new ViewPort(new Position(m.getX() * 0.9f, m.getY()));
-        ppm = viewport.getPixelsPerMetre();
-
-        // Initialize LevelManager
-        loadLevel(c, "TestLevel", new Position(0.0f, 0.0f));
-
-        // Initialize Player Info
-        curr_player = level_manager.getPlayer();
-        curr_player.initCenter(viewport.getCentre());
+        initViewPort(m);
+        initLevel(c);
+        initPlayer();
 
         // Pass ViewPort max pixel dimensions
         viewport.setMapDimens(level_manager.getMapDimens());
+
+        // Controls Projectiles
+        projectileMgr = new ProjectileManager(level_manager, viewport);
+        temp_buffer = new ArrayList<Projectile>();
     }
 
     public void init()
@@ -74,7 +76,7 @@ public class GameView extends SurfaceView implements Runnable
     {
         while (view_active)
         {
-            calcDisplacement();
+            preUpdate();
             update();
             draw();
             control();
@@ -91,6 +93,30 @@ public class GameView extends SurfaceView implements Runnable
         updateProjectiles();
     }
 
+    public void updateProjectiles()
+    {
+        if (DEBUG == 1)
+            Log.d("GameView/UpdateP", "Updating Projectiles @ GameView");
+
+        if (temp_buffer.size() <= 0)
+            return;
+
+        else
+        {
+            if (DEBUG == 1)
+                Log.d("GameView/UpdateP", "=== Inside Else");
+
+            projectileMgr.addBuffer(temp_buffer);
+            projectileMgr.update();
+
+            if (DEBUG == 1)
+                Log.d("GameView/UpdateP", "=== Complete update and removing from buffer with size: " + projectileMgr.numProjectiles());
+
+            temp_buffer.removeAll(temp_buffer);
+        }
+
+    }
+
     public void draw()
     {
         if (curr_holder.getSurface().isValid())
@@ -104,7 +130,7 @@ public class GameView extends SurfaceView implements Runnable
 
             // Draw to Screen
             drawEntities();
-            drawProjectiles();
+            projectileMgr.drawProjectiles(canvas, paint);
 
             // Unlock and draw
             curr_holder.unlockCanvasAndPost(canvas);
@@ -127,45 +153,7 @@ public class GameView extends SurfaceView implements Runnable
                 }
             }
         }
-    }
-
-    public void drawProjectile(Projectile curr_target)
-    {
-        if (DEBUG == 1)
-            Log.d("GameView/DrawP", "Drawing Projectile [Single]");
-
-        Rect new_target = new Rect();
-
-        for (int layer = -1; layer < 3; layer++)
-        {
-            for (Projectile e : curr_player.getProjectiles())
-            {
-                if (e.isVisible() && e.getLayer() == layer)
-                {
-                    new_target.set(viewport.worldToScreen(e.getPosition(), e.getGameObject().getDimensions()));
-                    canvas.drawBitmap(level_manager.getBitmap(e.getGameObject().getType()), new_target.left, new_target.top, paint);
-                }
-            }
-        }
-    }
-
-    public void drawProjectiles()
-    {
-        if (DEBUG == 1)
-        {
-            Log.d("GameView/DrawP", "Drawing Projectiles!");
-            Log.d("GameView/DrawP", "=== Starting draw from Player with size: " + curr_player.getProjectiles().size());
-        }
-
-        for (Iterator<Projectile> iterator = curr_player.getProjectiles().iterator(); iterator.hasNext();)
-        {
-            Projectile p = iterator.next();
-            drawProjectile(p);
-        }
-
-        if (DEBUG == 1)
-            Log.d("GameView/DrawP", "=== Drawing Projectiles complete!");
-    }
+    }   
 
     public void control()
     {
@@ -236,87 +224,10 @@ public class GameView extends SurfaceView implements Runnable
         return true;
     }
 
-    public void updateProjectiles()
-    {
-
-        if (DEBUG == 1)
-            Log.d("GameView/UpdateP", "Updating Projectiles @ GameView");
-
-        if (temp_buffer.size() <= 0)
-            return;
-
-        else
-        {
-
-            if (DEBUG == 1)
-                Log.d("GameView/UpdateP", "=== Inside Else");
-
-            curr_player.getProjectiles().addAll(temp_buffer);
-
-            for (Iterator<Projectile> iterator = curr_player.getProjectiles().iterator(); iterator.hasNext();)
-            {
-                Projectile p = iterator.next();
-                p.update();
-            }
-
-            if (DEBUG == 1)
-                Log.d("GameView/UpdateP", "=== Complete update and removing from buffer with size: " + curr_player.getProjectiles().size());
-
-            temp_buffer.removeAll(temp_buffer);
-
-        }
-
-    }
-
-    /*
-    public void checkCollisions()
-    {
-        collision_check = new CollisionChecker(curr_player, enemy_list);
-
-        if (collision_check.shipCollisions())
-        {
-            Log.d("collision_log", "Collision [Ship] just occurred");
-        }
-
-        if (collision_check.projectileCollisions())
-        {
-            Log.d("collision_log", "Collision [Projectiles] just occurred!");
-        }
-
-        if (collision_check.projectileBoundary())
-        {
-            Log.d("collision_log", "Projectile out of bounds and being deleted!");
-        }
-
-    }
-*/
-
-    public void drawHitBoxes()
-    {
-        Rect curr_box;
-        curr_box = curr_player.getHitBox().getHitBox();
-        canvas.drawRect(curr_box.left, curr_box.top, curr_box.right, curr_box.bottom, paint);
-
-        for (Projectile p : curr_player.getProjectiles())
-        {
-            curr_box = p.getHitBox().getHitBox();
-            canvas.drawRect(curr_box.left, curr_box.top, curr_box.right, curr_box.bottom, paint);
-        }
-
-        /*
-        for (TestEnemy e : enemy_list)
-        {
-            curr_box = e.getHitBox().getHitBox();
-            canvas.drawRect(curr_box.left, curr_box.top, curr_box.right, curr_box.bottom, paint);
-        }*/
-
-    }
-
-
-
     public void addProjectileToPlayer(ControllerFragment.ProjectileType p)
     {
-        char type;
+        char        type;
+        Projectile  x;
 
         if (DEBUG == 1)
             Log.d("GameView.addP2P", "AddProjectile2Player called with p = " + p.toString());
@@ -339,8 +250,15 @@ public class GameView extends SurfaceView implements Runnable
                 type = '.';
         }
 
-        // Buffer for adding to Projectiles
-        temp_buffer.add(new Projectile(getContext(), curr_player.getPosition(), viewport.getMaxBounds(), viewport.getPixelsPerMetre(), type));
+        x = new Projectile(getContext(), curr_player, curr_player.getPosition(), viewport.getPixelsPerMetre(), type);
+
+        if (DEBUG == 1)
+            x.toString();
+
+        temp_buffer.add(x);
+
+        if (DEBUG == 1)
+            Log.d("GameView.addP2P", "Projectile added to Buffer");
     }
 
     public void updateEntities()
@@ -367,8 +285,11 @@ public class GameView extends SurfaceView implements Runnable
                 }
             }
         }
-    } // end : updateEntities()
+    }
 
+    // void calcDisplacement
+    // This function finds the amount of displacement that the ViewPort is from where it started.
+    // These values are used for updating screen touches with the Game World.
     public void calcDisplacement()
     {
         displacementX = viewport.getViewPortCentre().getX() - viewport.getCentre().getX();
@@ -376,6 +297,35 @@ public class GameView extends SurfaceView implements Runnable
 
         if (DEBUG == 1)
             Log.d("GameView/calcD", "Displacements: " + displacementX + ", " + displacementY);
+    }
+
+    // void preUpdate()
+    // This function serves the purpose of doing any calculations/work before the update function is called wrt the GameView
+    public void preUpdate()
+    {
+        calcDisplacement();
+    }
+
+    // void initViewPort()
+    // This function handles the ViewPort's creation wrt the size and ppm
+    public void initViewPort(Position m)
+    {
+        // Initialize ViewPort size
+        viewport = new ViewPort(new Position(m.getX() * 0.9f, m.getY()));
+        ppm = viewport.getPixelsPerMetre();
+    }
+
+    public void initLevel(Context c)
+    {
+        // Initialize LevelManager
+        loadLevel(c, "TestLevel", new Position(0.0f, 0.0f));
+    }
+
+    public void initPlayer()
+    {
+        // Initialize Player Info
+        curr_player = level_manager.getPlayer();
+        curr_player.initCenter(viewport.getCentre());
     }
 
 } // end : GameView Class

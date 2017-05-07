@@ -5,12 +5,15 @@ import android.util.Log;
 
 public class ViewPort
 {
+    // Debug toggle
+    private int         DEBUG = 0;
+
     private Position    screen_resolution;
     private Position    screen_centre;
     private Position    pixels_per_metre;
     private Position    viewable_size;
     private Position    viewport_centre;
-    private Position    max_view_bounds;
+    private Position    max_view_bounds, max_view_pixels;
     private Position    factor;
 
     // Height and Width of ViewPort wrt in-game Metres
@@ -22,8 +25,6 @@ public class ViewPort
     private Rect        scaled_view_space;
 
     private boolean     locked_t, locked_r, locked_b, locked_l;
-
-    private int         DEBUG = 0;
 
     ViewPort(Position resolution)
     {
@@ -190,10 +191,11 @@ public class ViewPort
 
     public void setMapDimens(Position b)
     {
-        max_view_bounds = new Position(b.getX() * pixels_per_metre.getX(), b.getY() * pixels_per_metre.getY());
+        max_view_bounds = b;
+        max_view_pixels = new Position(b.getX() * pixels_per_metre.getX(), b.getY() * pixels_per_metre.getY());
 
         if (DEBUG == 1)
-            Log.d("vp.setmapdim", "Max dimens: " + max_view_bounds.toString());
+            Log.d("vp.setmapdim", "Max dimens: " + max_view_bounds.toString() + " -> " + max_view_pixels.toString());
     }
 
     // checkT()
@@ -226,7 +228,7 @@ public class ViewPort
         if (DEBUG == 1)
             Log.d("viewport.checkb", "value of view_b: " + view_b);
 
-        if (view_b > max_view_bounds.getY())
+        if (view_b > max_view_pixels.getY())
         {
             locked_b = true;
 
@@ -266,7 +268,7 @@ public class ViewPort
         if (DEBUG == 1)
             Log.d("viewport.checkr", "value of view_r: " + view_r);
 
-        if (view_r > max_view_bounds.getX())
+        if (view_r > max_view_pixels.getX())
         {
             locked_r = true;
             return true;
@@ -318,7 +320,7 @@ public class ViewPort
             if (DEBUG == 1)
                 Log.d("Viewport.ave", "Locked bot found!");
 
-            y = max_view_bounds.getY() - viewable_size.getY()/2;
+            y = max_view_pixels.getY() - viewable_size.getY()/2;
         }
 
         if (locked_l)
@@ -337,7 +339,7 @@ public class ViewPort
             if (DEBUG == 1)
                 Log.d("Viewport.ave", "Locked right found!");
 
-            x = screen_centre.getX() + max_view_bounds.getX() - viewable_size.getX();
+            x = screen_centre.getX() + max_view_pixels.getX() - viewable_size.getX();
 
             if (DEBUG == 1)
                 Log.d("viewport.avpe", "X co-ordinate: " + x);
@@ -374,6 +376,11 @@ public class ViewPort
     public Position getMaxBounds()
     {
         return max_view_bounds;
+    }
+
+    public Position getMaxPixels()
+    {
+        return max_view_pixels;
     }
 
 }

@@ -24,7 +24,7 @@ public abstract class Entity
 
     public abstract void update();
 
-    Entity(Context c, Position s, Position max, Position ppm, char t)
+    Entity(Context c, Position pos, Position max, Position ppm, char t)
     {
         // temp ppm
         ppm_x = ppm.getX();
@@ -33,7 +33,7 @@ public abstract class Entity
         // Allows Entity to move to the edge of the map
         max_bounds = new Position((max.getX() * ppm_x), (max.getY() * ppm_y));
         Log.d("Entity/max", "Max bounds from Entity: " + max_bounds.toString());
-        curr_pos = scaleToPixel(s);
+        curr_pos = scaleToPixel(pos);
 
         if (t == 'p')
             Log.d("Entity/PlayerDims", "Player max location = " + max.toString());
@@ -157,8 +157,8 @@ public abstract class Entity
 
     public String toString()
     {
-        Log.d("entity_to_string", "CURR_POS: " + curr_pos.toString() + " SPEED: " + getSpeed() + " TYPE: " + object_type.getDimensions() + " isMoving: " + moving);
-        return "CURR_POS: " + curr_pos.toString() + " SPEED: " + getSpeed() + " TYPE: " + object_type.getDimensions() + " isMoving: " + moving;
+        Log.d("entity_to_string", "CURR_POS: " + curr_pos.toString() + " SPEED: " + getSpeed() + " DIMENSIONS: " + object_type.getDimensions() + " isMoving: " + moving + " Type: " + object_type.getType());
+        return "CURR_POS: " + curr_pos.toString() + " SPEED: " + getSpeed() + " DIMENSIONS: " + object_type.getDimensions() + " isMoving: " + moving + " Type: " + object_type.getType();
     }
 
 }
