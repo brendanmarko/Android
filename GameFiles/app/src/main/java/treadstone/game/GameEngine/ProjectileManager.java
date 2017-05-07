@@ -1,5 +1,7 @@
 package treadstone.game.GameEngine;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -14,12 +16,16 @@ public class ProjectileManager
 
     private ViewPort                viewport;
     private LevelManager            levelMgr;
+
+    // Storage of Projectiles
+    private Bitmap[]                bitmaps;
     private ArrayList<Projectile>   projectiles;
 
     public ProjectileManager(LevelManager l, ViewPort v)
     {
         viewport = v;
         levelMgr = l;
+        bitmaps = new Bitmap[20];
         projectiles = new ArrayList<Projectile>();
 
         if (DEBUG == 1)
@@ -36,12 +42,15 @@ public class ProjectileManager
         return projectiles;
     }
 
-    public void addBuffer(ArrayList<Projectile> buffer)
+    public void addBuffer(Context c, ArrayList<Projectile> buffer)
     {
         if (DEBUG == 1)
             Log.d("PrjMgr/addBuffer" , "Adding buffer to projectiles!");
 
-    	projectiles.addAll(buffer);
+        for (Projectile p : buffer)
+            checkBitmap(c, p, p.getObjInfo().getType());
+
+        projectiles.addAll(buffer);
 
         if (DEBUG == 1)
             Log.d("PrjMgr/addBuffer" , "New Size of projectiles: " + projectiles.size());
@@ -58,13 +67,15 @@ public class ProjectileManager
                 if (viewport.clipObject(e.getPosition()))
                 {
                     e.setInvisible();
-                    Log.d("PrjMgr/update", "Projectile set as Invisible");
+                    if (DEBUG == 1)
+                        Log.d("PrjMgr/update", "Projectile set as Invisible");
                 }
 
                 else
                 {
                     e.setVisible();
-                    Log.d("PrjMgr/update", "Projectile set as Visible");
+                    if (DEBUG == 1)
+                        Log.d("PrjMgr/update", "Projectile set as Visible");
                 }
             }
     	}
@@ -112,6 +123,63 @@ public class ProjectileManager
         Rect new_target = new Rect();
         new_target.set(viewport.worldToScreen(p.getPosition(), p.getObjInfo().getDimensions()));
         canvas.drawBitmap(levelMgr.getBitmap(p.getObjInfo().getType()), new_target.left, new_target.top, paint);
+    }
+
+    public void checkBitmap(Context c, Projectile p, char d)
+    {
+        if (bitmaps[getIndex(d)] != null)
+            return;
+
+        else
+            bitmaps[getIndex(d)] = p.createBitmap(c, p.getObjInfo().getImageName());
+    }
+
+    public int getIndex(char c)
+    {
+        int index;
+        switch (c)
+        {
+            case 'b':
+                index = 1;
+                break;
+
+            case 'm':
+                index = 2;
+                break;
+
+            case 's':
+                index = 3;
+                break;
+
+            default:
+                index = 0;
+        }
+
+        return index;
+    }
+
+    public Bitmap getBitmap(char c)
+    {
+        int index;
+        switch (c)
+        {
+            case 'b':
+                index = 1;
+                break;
+
+            case 'm':
+                index = 2;
+                break;
+
+            case 's':
+                index = 3;
+                break;
+
+            default:
+                index = 0;
+        }
+
+        return bitmaps[index];
     }
 
 }

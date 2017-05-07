@@ -106,7 +106,7 @@ public class GameView extends SurfaceView implements Runnable
             if (DEBUG == 1)
                 Log.d("GameView/UpdateP", "=== Inside Else");
 
-            projectileMgr.addBuffer(temp_buffer);
+            projectileMgr.addBuffer(this.getContext(), temp_buffer);
             projectileMgr.update();
 
             if (DEBUG == 1)
@@ -130,12 +130,32 @@ public class GameView extends SurfaceView implements Runnable
 
             // Draw to Screen
             drawEntities();
-            projectileMgr.drawProjectiles(canvas, paint);
+            drawProjectiles();
 
             // Unlock and draw
             curr_holder.unlockCanvasAndPost(canvas);
         }
 
+    }
+
+    public void drawProjectiles()
+    {
+        Rect r = new Rect();
+
+        if  (DEBUG == 1)
+            Log.d("GameView/DrawPrj", "Drawing Projectiles within GameView with size: " + projectileMgr.getProjectiles().size());
+
+        for (int layer = -1; layer < 3; layer++)
+        {
+            for (Projectile p : projectileMgr.getProjectiles())
+            {
+                if (p.isVisible() && p.getLayer() == layer)
+                {
+                    r.set(viewport.worldToScreen(p.getPosition(), p.getObjInfo().getDimensions()));
+                    canvas.drawBitmap(projectileMgr.getBitmap(p.getObjInfo().getType()), r.left, r.top, paint);
+                }
+            }
+        }
     }
 
     public void drawEntities()

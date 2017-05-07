@@ -41,7 +41,7 @@ public class LevelManager
         bitmaps = new Bitmap[20];
 
         // Load the map
-        loadMapData(c, ppm, player_start);
+        loadMapData(c);
         playing = true;
 
     }
@@ -94,7 +94,7 @@ public class LevelManager
         return index;
     }
 
-    private void loadMapData(Context c, Position ppm, Position player_start)
+    private void loadMapData(Context c)
     {
         curr_index = -1;
 
@@ -102,9 +102,7 @@ public class LevelManager
         for (int y = 0; y < level_data.getTiles().size(); y++)
         {
             for (int x = 0; x < level_data.getTiles().get(y).length(); x++)
-            {
                 objectCreate(c, new Position(x, y), level_data.getTiles().get(y).charAt(x));
-            }
         }
 
     }
@@ -131,7 +129,6 @@ public class LevelManager
         else
         {
             curr_index++;
-
             Entity temp;
 
             switch (d)
