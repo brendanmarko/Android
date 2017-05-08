@@ -39,7 +39,7 @@ public class GameObject
                 image_name = "bullet";
                 animateFrameCount = 1;
                 dimensions = new Position(1.0f, 1.0f);
-                speed = 20.0f;
+                speed = 10.0f;
                 break;
             }
 

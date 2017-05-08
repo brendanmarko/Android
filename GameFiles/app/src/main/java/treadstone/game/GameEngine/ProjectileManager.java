@@ -12,7 +12,7 @@ import java.util.Iterator;
 public class ProjectileManager
 {
     // Debug toggle
-    private int                     DEBUG = 1;
+private int                     DEBUG = 0;
 
     private ViewPort                viewport;
     private LevelManager            levelMgr;
@@ -77,52 +77,10 @@ public class ProjectileManager
                     if (DEBUG == 1)
                         Log.d("PrjMgr/update", "Projectile set as Visible");
                 }
+
+                e.update();
             }
     	}
-    }
-
-
-    public void add(Projectile p)
-    {
-        if (DEBUG == 1)
-            Log.d("PMgr/add", "=== Adding to PMGR: " + p.toString());
-
-        projectiles.add(p);
-
-        if (DEBUG == 1)
-            Log.d("PMgr/add", "=== add() successful");
-    }
-
-    public void drawProjectiles(Canvas canvas, Paint paint)
-    {
-        if (DEBUG == 1)
-        {
-            if (projectiles.size() > 0)
-            {
-                Log.d("GameView/DrawP", "Drawing Projectiles!");
-                Log.d("GameView/DrawP", "=== Starting draw from PrjMgr with size: " + projectiles.size());
-            }
-        }
-
-        for (Projectile p : projectiles)
-        {
-            if (p.isVisible())
-                drawP(canvas, paint, p);
-        }
-
-        if (DEBUG == 1)
-            if (projectiles.size() > 0)
-                Log.d("GameView/DrawP", "=== Drawing Projectiles complete!");
-    }
-
-    public void drawP(Canvas canvas, Paint paint, Projectile p)
-    {
-        if (DEBUG == 1)
-            Log.d("GameView/DrawP", "Drawing Projectile p: " + p.toString());
-
-        Rect new_target = new Rect();
-        new_target.set(viewport.worldToScreen(p.getPosition(), p.getObjInfo().getDimensions()));
-        canvas.drawBitmap(levelMgr.getBitmap(p.getObjInfo().getType()), new_target.left, new_target.top, paint);
     }
 
     public void checkBitmap(Context c, Projectile p, char d)

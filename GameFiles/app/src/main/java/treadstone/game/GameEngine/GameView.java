@@ -15,7 +15,7 @@ import android.view.SurfaceHolder;
 public class GameView extends SurfaceView implements Runnable
 {
     // Debug toggle
-    private int                             DEBUG = 1;
+    private int                             DEBUG = 0;
 
     // Thread
     Thread                                  game_thread = null;
@@ -98,11 +98,6 @@ public class GameView extends SurfaceView implements Runnable
         if (DEBUG == 1)
             Log.d("GameView/UpdateP", "Updating Projectiles @ GameView");
 
-        if (temp_buffer.size() <= 0)
-            return;
-
-        else
-        {
             if (DEBUG == 1)
                 Log.d("GameView/UpdateP", "=== Inside Else");
 
@@ -113,8 +108,6 @@ public class GameView extends SurfaceView implements Runnable
                 Log.d("GameView/UpdateP", "=== Complete update and removing from buffer with size: " + projectileMgr.numProjectiles());
 
             temp_buffer.removeAll(temp_buffer);
-        }
-
     }
 
     public void draw()
@@ -184,7 +177,7 @@ public class GameView extends SurfaceView implements Runnable
 
         catch (InterruptedException e)
         {
-            Log.d("CONTROL_CRASH", "Interrupt caught within control() [View]");
+            Log.d("GameView/Control", "Interrupt from control()");
         }
 
     }
@@ -256,26 +249,25 @@ public class GameView extends SurfaceView implements Runnable
         {
             case BULLET:
                 type = 'b';
+                x = new Bullet(curr_player, curr_player.getPosition(), viewport.getPixelsPerMetre(), viewport.getMaxBounds(), type);
+                temp_buffer.add(x);
                 break;
 
             case MISSILE:
                 type = 'm';
+                x = new Missile(curr_player, curr_player.getPosition(), viewport.getPixelsPerMetre(), viewport.getMaxBounds(), type);
+                temp_buffer.add(x);
                 break;
 
             case SHIELD:
                 type = 's';
+                x = new Bullet(curr_player, curr_player.getPosition(), viewport.getPixelsPerMetre(), viewport.getMaxBounds(), type);
+                temp_buffer.add(x);
                 break;
 
             default:
                 type = '.';
         }
-
-        x = new Projectile(curr_player, curr_player.getPosition(), viewport.getPixelsPerMetre(), type);
-
-        if (DEBUG == 1)
-            x.toString();
-
-        temp_buffer.add(x);
 
         if (DEBUG == 1)
             Log.d("GameView.addP2P", "Projectile added to Buffer");
@@ -330,7 +322,6 @@ public class GameView extends SurfaceView implements Runnable
     // This function handles the ViewPort's creation wrt the size and ppm
     public void initViewPort(Position m)
     {
-        // Initialize ViewPort size
         viewport = new ViewPort(new Position(m.getX() * 0.9f, m.getY()));
         ppm = viewport.getPixelsPerMetre();
     }
