@@ -1,7 +1,7 @@
 ---
 
 # Project Outline
-This project is going to serve as my first attempt into GameDev. I'll be using the Android OS to write my own game engine where I will design, test and implement a Game while documentating all progress, difficuluties, or changes that I deem noteworthy within logs.
+This project is going to serve as my first attempt into GameDev. I'll be using the Android OS to write my own game engine where I will design, test and implement a Game while documentating all progress, difficulties, or changes that I deem noteworthy within logs.
 
 ---
 
