@@ -3,6 +3,7 @@ package treadstone.game.GameEngine;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.util.Log;
 
 public abstract class Entity
@@ -25,7 +26,7 @@ public abstract class Entity
     private boolean             visible;
     private boolean             moving;
 
-    private RectangleHitBox     hitbox;
+    private RectangleHitBox     hitbox_object;
 
     public abstract void update();
 
@@ -54,7 +55,7 @@ public abstract class Entity
         height = object_type.getDimensions().getY() * ppm_y;
 
         // Establish hitbox
-        hitbox = new RectangleHitBox(pos, image);
+        hitbox_object = new RectangleHitBox(pos, image);
         active = true;
     }
 
@@ -167,6 +168,11 @@ public abstract class Entity
     {
         Log.d("entity_to_string", "CURR_POS: " + curr_pos.toString() + " SPEED: " + getSpeed() + " DIMENSIONS: " + object_type.getDimensions() + " isMoving: " + moving + " Type: " + object_type.getType());
         return "CURR_POS: " + curr_pos.toString() + " SPEED: " + getSpeed() + " DIMENSIONS: " + object_type.getDimensions() + " isMoving: " + moving + " Type: " + object_type.getType();
+    }
+
+    public Rect getHitbox()
+    {
+        return hitbox_object.getHitBox();
     }
 
 }

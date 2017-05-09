@@ -127,6 +127,7 @@ public class GameView extends SurfaceView implements Runnable
             // Draw to Screen
             drawEntities();
             drawProjectiles();
+            drawHitboxes();
 
             // Unlock and draw
             curr_holder.unlockCanvasAndPost(canvas);
@@ -351,14 +352,11 @@ public class GameView extends SurfaceView implements Runnable
 
     public void drawHitboxes()
     {
-        Rect curr_box;
-        curr_box = curr_player.getHitRect().getHitbox();
-        canvas.drawRect(curr_box.left, curr_box.top, curr_box.right, curr_box.bottom, paint);
-
-        for (TestEnemy curr_enemy : enemy_list)
+        Rect box;
+        for (Entity e : level_manager.getGameObjects())
         {
-            curr_box = curr_enemy.getHitRect().getHitbox();
-            canvas.drawRect(curr_box.left, curr_box.top, curr_box.right, curr_box.bottom, paint);
+            box = e.getHitbox();
+            canvas.drawRect(box.left, box.top, box.right, box.bottom, paint);
         }
 
     }
