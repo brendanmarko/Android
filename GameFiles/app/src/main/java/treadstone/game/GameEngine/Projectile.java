@@ -3,6 +3,7 @@ package treadstone.game.GameEngine;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.util.Log;
 
 public abstract class Projectile
@@ -10,15 +11,18 @@ public abstract class Projectile
     // Debug toggle
     private int             DEBUG = 1;
 
-    private int             damage;
-    private Bitmap          image;
-    private Entity          owner;
-    private Position        position;
-    private GameObject      info;
-    private boolean         active, visible;
-    private float           height, width;
-    private Position        ppm;
-    private Position        max_bounds;
+    private Position            ppm;
+    private Position            position;
+    private Position            max_bounds;
+
+    private int                 damage;
+    private Bitmap              image;
+    private Entity              owner;
+    private GameObject          info;
+    private boolean             active, visible;
+    private float               height, width;
+
+    private RectangleHitBox     hitbox_object;
 
     // Abstract functions
     public abstract boolean inBounds();
@@ -34,6 +38,9 @@ public abstract class Projectile
         info = new GameObject(t);
         width = info.getDimensions().getX() * ppm.getX();
         height = info.getDimensions().getY() * ppm.getY();
+
+        // Set hitbox
+        hitbox_object = new RectangleHitBox(pos, image);
 
         if (DEBUG == 1)
             Log.d("Projectile/CTOR", "Projectile created!");
@@ -110,6 +117,11 @@ public abstract class Projectile
     public Position getMaxBounds()
     {
         return max_bounds;
+    }
+
+    public Rect getHitbox()
+    {
+        return hitbox_object.getHitBox();
     }
 
 }

@@ -353,9 +353,22 @@ public class GameView extends SurfaceView implements Runnable
     public void drawHitboxes()
     {
         Rect box;
+
+        if (DEBUG == 1)
+            Log.d("GameView/drawHB", "Drawing Entity boxes");
+
         for (Entity e : level_manager.getGameObjects())
         {
             box = e.getHitbox();
+            canvas.drawRect(box.left, box.top, box.right, box.bottom, paint);
+        }
+
+        if (DEBUG == 1)
+            Log.d("GameView/drawHB", "Drawing Projectile boxes");
+
+        for (Projectile p : projectileMgr.getProjectiles())
+        {
+            box = p.getHitbox();
             canvas.drawRect(box.left, box.top, box.right, box.bottom, paint);
         }
 

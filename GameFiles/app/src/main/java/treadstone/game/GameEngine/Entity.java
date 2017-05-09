@@ -54,8 +54,9 @@ public abstract class Entity
         width = object_type.getDimensions().getX() * ppm_x;
         height = object_type.getDimensions().getY() * ppm_y;
 
-        // Establish hitbox
+        // Set hitbox
         hitbox_object = new RectangleHitBox(pos, image);
+
         active = true;
     }
 

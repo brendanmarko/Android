@@ -18,3 +18,10 @@ Began work today on CollisionManager and laid down the framework for some functi
 Completed
 =========
 1. Created CollisionMgr class with some basic functions
+2. Added back Hitbox framework back
+
+To-do
+=====
+1. Test and complete Hitbox detection
+2. Implement Collisions of Entities
+3. Implement Collisions of Entities/Projectiles
