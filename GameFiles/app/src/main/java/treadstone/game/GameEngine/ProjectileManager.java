@@ -15,16 +15,14 @@ public class ProjectileManager
 private int                     DEBUG = 0;
 
     private ViewPort                viewport;
-    private LevelManager            levelMgr;
 
     // Storage of Projectiles
     private Bitmap[]                bitmaps;
     private ArrayList<Projectile>   projectiles;
 
-    public ProjectileManager(LevelManager l, ViewPort v)
+    public ProjectileManager(ViewPort v)
     {
         viewport = v;
-        levelMgr = l;
         bitmaps = new Bitmap[20];
         projectiles = new ArrayList<Projectile>();
 

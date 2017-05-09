@@ -36,10 +36,10 @@ public class GameView extends SurfaceView implements Runnable
 
     // Managers
     private ProjectileManager               projectileMgr;
+    private CollisionManager                collisionMgr;
 
     // Temp buffer for Projectiles
     private ArrayList<Projectile>           temp_buffer;
-
 
     public GameView(Context c, Position m)
     {
@@ -54,8 +54,11 @@ public class GameView extends SurfaceView implements Runnable
         // Pass ViewPort max pixel dimensions
         viewport.setMapDimens(level_manager.getMapDimens());
 
-        // Controls Projectiles
-        projectileMgr = new ProjectileManager(level_manager, viewport);
+        // Mgr init
+        collisionMgr = new CollisionManager();
+        projectileMgr = new ProjectileManager(viewport);
+
+        // Projectile buffer
         temp_buffer = new ArrayList<Projectile>();
     }
 
