@@ -19,6 +19,7 @@ public class CollisionManager
     public void entityCollisions(ArrayList<Entity> e)
     {
         Log.d("CollMgr/eCollide", "Checking entities for collisions...");
+
     }
 
     // void projectileCollisions()

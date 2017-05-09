@@ -1,0 +1,20 @@
+May 8
+=====
+I did not really do too much today since I put in a lot of time yesterday and was needed a little break!
+
+Completed
+=========
+1. Projectiles safely delete from ProjectileManager during gameplay
+2. Projectiles are deleted when the max_bounds are exceeded, but behavior will be changed wrt Projectile
+
+To-do:
+======
+1. CollisionMgr needs to be created and properly handle collisions wrt Entities, Projectiles and max_bounds
+
+May 9
+=====
+Began work today on CollisionManager and laid down the framework for some functions!
+
+Completed
+=========
+1. Created CollisionMgr class with some basic functions

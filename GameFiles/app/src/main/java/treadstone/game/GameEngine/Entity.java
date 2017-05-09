@@ -7,20 +7,25 @@ import android.util.Log;
 
 public abstract class Entity
 {
-    private Position        curr_pos;
-    private Position        max_bounds;
+    private Position            curr_pos;
+    private Position            max_bounds;
 
-    private int             layer_num;
-    private Bitmap          image;
-    private GameObject      object_type;
-    private float           height;
-    private float           width;
-    private float           ppm_x, ppm_y;
-    private boolean         visible;
-    private boolean         moving;
-    private float           speed;
-    private boolean         active;
-    private boolean         movable;
+    private int                 layer_num;
+    private Bitmap              image;
+    private GameObject          object_type;
+    private float               height;
+    private float               width;
+    private float               ppm_x, ppm_y;
+
+    private float               speed;
+
+    // Booleans
+    private boolean             active;
+    private boolean             movable;
+    private boolean             visible;
+    private boolean             moving;
+
+    private RectangleHitBox     hitbox;
 
     public abstract void update();
 
@@ -47,6 +52,9 @@ public abstract class Entity
 
         width = object_type.getDimensions().getX() * ppm_x;
         height = object_type.getDimensions().getY() * ppm_y;
+
+        // Establish hitbox
+        hitbox = new RectangleHitBox(pos, image);
         active = true;
     }
 

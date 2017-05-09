@@ -12,9 +12,9 @@ public class RectangleHitBox
         hitbox = new Rect(x, y, (int) p.getX(), (int) p.getY());
     }
 
-    public RectangleHitBox(int x, int y, Bitmap curr_bitmap)
+    public RectangleHitBox(Position p, Bitmap curr_bitmap)
     {
-        hitbox = new Rect(x, y, curr_bitmap.getWidth(), curr_bitmap.getHeight());
+        hitbox = new Rect((int) p.getX(), (int) p.getY(), curr_bitmap.getWidth(), curr_bitmap.getHeight());
     }
 
     public Rect getHitBox()

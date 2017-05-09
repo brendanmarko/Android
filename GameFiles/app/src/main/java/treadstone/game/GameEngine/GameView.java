@@ -11,7 +11,6 @@ import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 
-
 public class GameView extends SurfaceView implements Runnable
 {
     // Debug toggle
@@ -71,7 +70,7 @@ public class GameView extends SurfaceView implements Runnable
     public void loadLevel(Context c, String n, Position s)
     {
         level_manager = null;
-        level_manager = new LevelManager(c, n, viewport.getPixelsPerMetre(), s);
+        level_manager = new LevelManager(c, n, viewport.getPixelsPerMetre());
     }
 
     @Override
@@ -94,6 +93,7 @@ public class GameView extends SurfaceView implements Runnable
     {
         updateEntities();
         updateProjectiles();
+        collisionCheck();
     }
 
     public void updateProjectiles()
@@ -331,15 +331,36 @@ public class GameView extends SurfaceView implements Runnable
 
     public void initLevel(Context c)
     {
-        // Initialize LevelManager
         loadLevel(c, "TestLevel", new Position(0.0f, 0.0f));
     }
 
     public void initPlayer()
     {
-        // Initialize Player Info
         curr_player = level_manager.getPlayer();
         curr_player.initCenter(viewport.getCentre());
+    }
+
+    public void collisionCheck()
+    {
+        Log.d("GameView/CollChk", "Checking for collisions wrt Entities");
+        collisionMgr.entityCollisions(level_manager.getGameObjects());
+        Log.d("GameView/CollChk", "Checking for collisions wrt Entities/Projectiles");
+        collisionMgr.projectileCollisions(level_manager.getGameObjects(), projectileMgr.getProjectiles());
+        Log.d("GameView/CollChk", "Collision check completed.");
+    }
+
+    public void drawHitboxes()
+    {
+        Rect curr_box;
+        curr_box = curr_player.getHitRect().getHitbox();
+        canvas.drawRect(curr_box.left, curr_box.top, curr_box.right, curr_box.bottom, paint);
+
+        for (TestEnemy curr_enemy : enemy_list)
+        {
+            curr_box = curr_enemy.getHitRect().getHitbox();
+            canvas.drawRect(curr_box.left, curr_box.top, curr_box.right, curr_box.bottom, paint);
+        }
+
     }
 
 } // end : GameView Class

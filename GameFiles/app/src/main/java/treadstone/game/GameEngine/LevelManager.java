@@ -19,7 +19,7 @@ public class LevelManager
     private boolean                 playing;
     private int                     DEBUG = 0;
 
-    public LevelManager(Context c, String level_name, Position ppm, Position player_start)
+    public LevelManager(Context c, String level_name, Position ppm)
     {
         // Gather parameters
         level = level_name;
