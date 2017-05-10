@@ -1,13 +1,11 @@
 package treadstone.game.GameEngine;
 
-import android.content.Context;
 
 public class TestEnemy extends MovableEntity
 {
-
-    TestEnemy(Context context, Position s, Position m, Position ppm, char t)
+    TestEnemy(Position s, Position m, Position ppm, char t)
     {
-        super(context, s, m, ppm, t);
+        super(s, m, ppm, t);
     }
 
     @Override
@@ -15,7 +13,6 @@ public class TestEnemy extends MovableEntity
     {
         setPosition(getX()-getSpeed(), getY());
         boundsCheck(getX(), getY());
-        // getHitBox().update((int) getX(), (int) getY(), getImage());
     }
 
     public void boundsCheck(float x, float y)

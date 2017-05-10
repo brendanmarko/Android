@@ -7,18 +7,20 @@ import java.util.ArrayList;
 public class CollisionManager
 {
     // Debug toggle
-    private int DEBUG = 1;
+    private int DEBUG = 0;
 
     public CollisionManager()
     {
-        Log.d("CollMgr/CTOR", "CollisionMgr created");
+        if (DEBUG == 1)
+            Log.d("CollMgr/CTOR", "CollisionMgr created");
     }
 
     // void entityCollisions()
     // This functions checks if there are any collisions between entities managed by GameView
     public void entityCollisions(ArrayList<Entity> e)
     {
-        Log.d("CollMgr/eCollide", "Checking entities for collisions...");
+        if (DEBUG == 1)
+            Log.d("CollMgr/eCollide", "Checking entities for collisions...");
 
     }
 
@@ -27,6 +29,7 @@ public class CollisionManager
     // are NOT owned by them
     public void projectileCollisions(ArrayList<Entity> e, ArrayList<Projectile> p)
     {
-        Log.d("CollMgr/pCollide", "Checking entities & projectiles for collisions...");
+        if (DEBUG == 1)
+            Log.d("CollMgr/pCollide", "Checking entities & projectiles for collisions...");
     }
 }

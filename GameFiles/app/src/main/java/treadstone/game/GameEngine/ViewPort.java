@@ -56,6 +56,9 @@ public class ViewPort
         viewport_centre = screen_centre;
 
         pixels_per_metre = new Position(r.getX()/viewport_width, r.getY()/viewport_height);
+
+        if (DEBUG == 1)
+            Log.d("Viewport/initP", "PPM: " + pixels_per_metre.toString());
     }
 
     public void buildViewportEdges(Position p)

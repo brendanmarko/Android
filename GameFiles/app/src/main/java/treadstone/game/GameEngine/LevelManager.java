@@ -138,7 +138,7 @@ public class LevelManager
                     if (DEBUG == 1)
                         Log.d("player_test_object+++", "Creating player...");
 
-                    temp = new Player(c, p, level_max, pixels_per_metre, d);
+                    temp = new Player(p, level_max, pixels_per_metre, d);
 
                     if (DEBUG == 1)
                         Log.d("player_test_object+++", "Player created!");
@@ -154,13 +154,13 @@ public class LevelManager
                     break;
 
                 case 'e':
-                    temp = new TestEnemy(c, p, level_max, pixels_per_metre, d);
+                    temp = new TestEnemy(p, level_max, pixels_per_metre, d);
                     game_objects.add(temp);
                     checkBitmap(c, temp, d);
                     break;
 
                 case 'd':
-                    temp = new Debris(c, p, level_max, pixels_per_metre, d);
+                    temp = new Debris(p, level_max, pixels_per_metre, d);
                     game_objects.add(temp);
                     checkBitmap(c, temp, d);
                     break;

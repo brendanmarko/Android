@@ -8,17 +8,18 @@ import android.util.Log;
 
 public abstract class Entity
 {
+    // Debug toggle
+    private int                 DEBUG = 1;
+
+    private Position            pixels_per_metre;
     private Position            curr_pos;
     private Position            max_bounds;
 
     private int                 layer_num;
     private Bitmap              image;
     private GameObject          object_type;
-    private float               height;
-    private float               width;
+    private float               height, width, speed;
     private float               ppm_x, ppm_y;
-
-    private float               speed;
 
     // Booleans
     private boolean             active;
@@ -26,19 +27,22 @@ public abstract class Entity
     private boolean             visible;
     private boolean             moving;
 
-    private RectangleHitBox     hitbox_object;
+    private RectangleHitbox     hitbox_object;
 
     public abstract void update();
 
-    Entity(Context c, Position pos, Position max, Position ppm, char t)
+    Entity(Position pos, Position max, Position ppm, char t)
     {
-        // temp ppm
         ppm_x = ppm.getX();
         ppm_y = ppm.getY();
+        pixels_per_metre = new Position(ppm_x, ppm_y);
 
         // Allows Entity to move to the edge of the map
         max_bounds = new Position((max.getX() * ppm_x), (max.getY() * ppm_y));
-        Log.d("Entity/max", "Max bounds from Entity: " + max_bounds.toString());
+
+        if (DEBUG == 1)
+            Log.d("Entity/max", "Max bounds from Entity: " + max_bounds.toString());
+
         curr_pos = scaleToPixel(pos);
 
         if (t == 'p')
@@ -54,8 +58,7 @@ public abstract class Entity
         width = object_type.getDimensions().getX() * ppm_x;
         height = object_type.getDimensions().getY() * ppm_y;
 
-        // Set hitbox
-        hitbox_object = new RectangleHitBox(pos, image);
+        hitbox_object = new RectangleHitbox();
 
         active = true;
     }
@@ -98,6 +101,11 @@ public abstract class Entity
     public void setPosition(float x, float y)
     {
         curr_pos = new Position(x, y);
+    }
+
+    public Position getPPM()
+    {
+        return pixels_per_metre;
     }
 
     public float getXMax()
@@ -167,13 +175,27 @@ public abstract class Entity
 
     public String toString()
     {
-        Log.d("entity_to_string", "CURR_POS: " + curr_pos.toString() + " SPEED: " + getSpeed() + " DIMENSIONS: " + object_type.getDimensions() + " isMoving: " + moving + " Type: " + object_type.getType());
+        if (DEBUG == 1)
+            Log.d("entity_to_string", "CURR_POS: " + curr_pos.toString() + " SPEED: " + getSpeed() + " DIMENSIONS: " + object_type.getDimensions() + " isMoving: " + moving + " Type: " + object_type.getType());
+
         return "CURR_POS: " + curr_pos.toString() + " SPEED: " + getSpeed() + " DIMENSIONS: " + object_type.getDimensions() + " isMoving: " + moving + " Type: " + object_type.getType();
     }
 
     public Rect getHitbox()
     {
-        return hitbox_object.getHitBox();
+        return hitbox_object.getHitbox();
+    }
+
+    public void updateHitbox()
+    {
+        if (DEBUG == 1)
+        {
+            Log.d("Entity/updateHB", "Values within updateHB: " + "POS: " + getPosition().toString());
+            Log.d("Entity/updateHB", "Values within updateHB: " + "PPM: " + getPPM().toString());
+            Log.d("Entity/updateHB", "Values within updateHB: " + "DIMENS: " + getGameObject().getDimensions().toString());
+        }
+
+        hitbox_object = new RectangleHitbox(getPosition(), getPPM(), getGameObject().getDimensions());
     }
 
 }

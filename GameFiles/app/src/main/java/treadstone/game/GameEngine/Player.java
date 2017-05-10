@@ -12,9 +12,9 @@ public class Player extends MovableEntity
     private double                      angle_of_movement;
     private int                         DEBUG = 0;
 
-    Player(Context context, Position s, Position m, Position ppm, char t)
+    Player(Position s, Position m, Position ppm, char t)
     {
-        super(context, s, m, ppm, t);
+        super(s, m, ppm, t);
         projectiles = new ArrayList<>();
     }
 

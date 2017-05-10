@@ -9,7 +9,7 @@ import android.util.Log;
 public abstract class Projectile
 {
     // Debug toggle
-    private int             DEBUG = 1;
+    private int                 DEBUG = 1;
 
     private Position            ppm;
     private Position            position;
@@ -22,7 +22,7 @@ public abstract class Projectile
     private boolean             active, visible;
     private float               height, width;
 
-    private RectangleHitBox     hitbox_object;
+    private RectangleHitbox     hitbox_object;
 
     // Abstract functions
     public abstract boolean inBounds();
@@ -31,7 +31,7 @@ public abstract class Projectile
     public Projectile(Entity o, Position pos, Position p, Position max, char t)
     {
         owner = o;
-        position = pos;
+        position = new Position(pos.getX(), pos.getY());
         active = true;
         ppm = p;
         max_bounds = max;
@@ -40,7 +40,7 @@ public abstract class Projectile
         height = info.getDimensions().getY() * ppm.getY();
 
         // Set hitbox
-        hitbox_object = new RectangleHitBox(pos, image);
+        hitbox_object = new RectangleHitbox(pos, ppm, info.getDimensions());
 
         if (DEBUG == 1)
             Log.d("Projectile/CTOR", "Projectile created!");
@@ -121,7 +121,7 @@ public abstract class Projectile
 
     public Rect getHitbox()
     {
-        return hitbox_object.getHitBox();
+        return hitbox_object.getHitbox();
     }
 
 }

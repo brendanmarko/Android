@@ -14,7 +14,7 @@ import android.view.SurfaceHolder;
 public class GameView extends SurfaceView implements Runnable
 {
     // Debug toggle
-    private int                             DEBUG = 0;
+    private int                             DEBUG = 1;
 
     // Thread
     Thread                                  game_thread = null;
@@ -93,7 +93,7 @@ public class GameView extends SurfaceView implements Runnable
     {
         updateEntities();
         updateProjectiles();
-        collisionCheck();
+        //collisionCheck();
     }
 
     public void updateProjectiles()
@@ -289,6 +289,7 @@ public class GameView extends SurfaceView implements Runnable
                 else
                 {
                     e.setVisible();
+                    e.updateHitbox();
 
                     if (e.getSpeed() > 0.0f)
                     {
@@ -354,23 +355,32 @@ public class GameView extends SurfaceView implements Runnable
     {
         Rect box;
 
+        paint.setColor(Color.argb(255, 100, 100, 200));
+
         if (DEBUG == 1)
             Log.d("GameView/drawHB", "Drawing Entity boxes");
 
         for (Entity e : level_manager.getGameObjects())
         {
-            box = e.getHitbox();
+            if (DEBUG == 1)
+                Log.d("GameView/drawHB", "Drawing entity: " + e.toString());
+
+            box = new Rect(e.getHitbox());
+
+            if (DEBUG == 1)
+                Log.d("GameView/drawHB", "Box value: " + box.toString());
+
             canvas.drawRect(box.left, box.top, box.right, box.bottom, paint);
         }
 
-        if (DEBUG == 1)
+       /* if (DEBUG == 1)
             Log.d("GameView/drawHB", "Drawing Projectile boxes");
 
         for (Projectile p : projectileMgr.getProjectiles())
         {
             box = p.getHitbox();
             canvas.drawRect(box.left, box.top, box.right, box.bottom, paint);
-        }
+        }*/
 
     }
 
