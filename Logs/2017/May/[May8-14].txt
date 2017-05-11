@@ -1,6 +1,6 @@
 May 8
 =====
-I did not really do too much today since I put in a lot of time yesterday and was needed a little break!
+I did not really do too much today since I put in a lot of time yesterday and needed a little break!
 
 Completed
 =========
@@ -27,3 +27,7 @@ To-do
 1. Test and complete Hitbox detection
 2. Implement Collisions of Entities
 3. Implement Collisions of Entities/Projectiles
+
+May 10
+======
+Began work on fine tuning the RectangleHitbox class today.

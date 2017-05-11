@@ -105,7 +105,7 @@ public class GameView extends SurfaceView implements Runnable
                 Log.d("GameView/UpdateP", "=== Inside Else");
 
             projectileMgr.addBuffer(this.getContext(), temp_buffer);
-            projectileMgr.update();
+            projectileMgr.update(displacementX, displacementY);
 
             if (DEBUG == 1)
                 Log.d("GameView/UpdateP", "=== Complete update and removing from buffer with size: " + projectileMgr.numProjectiles());
@@ -284,12 +284,14 @@ public class GameView extends SurfaceView implements Runnable
             if (e.isActive())
             {
                 if (viewport.clipObject(e.getPosition()))
+                {
+                    Log.d("GameView/UpdateE", "ENTITY SHOULD BE INVISIBLE");
                     e.setInvisible();
+                }
 
                 else
                 {
                     e.setVisible();
-                    e.updateHitbox();
 
                     if (e.getSpeed() > 0.0f)
                     {
@@ -300,6 +302,9 @@ public class GameView extends SurfaceView implements Runnable
                             viewport.setViewPortCentre(curr_player.getPosition());
                     }
                 }
+
+                e.updateHitbox(displacementX, displacementY);
+
             }
         }
     }
@@ -365,22 +370,28 @@ public class GameView extends SurfaceView implements Runnable
             if (DEBUG == 1)
                 Log.d("GameView/drawHB", "Drawing entity: " + e.toString());
 
-            box = new Rect(e.getHitbox());
+            if (e.isVisible())
+            {
+                box = new Rect(e.getHitbox());
+                canvas.drawRect(box.left, box.top, box.right, box.bottom, paint);
+            }
 
-            if (DEBUG == 1)
+            else
+                box = null;
+
+            if (DEBUG == 1 && box != null)
                 Log.d("GameView/drawHB", "Box value: " + box.toString());
 
-            canvas.drawRect(box.left, box.top, box.right, box.bottom, paint);
         }
 
-       /* if (DEBUG == 1)
+        if (DEBUG == 1)
             Log.d("GameView/drawHB", "Drawing Projectile boxes");
 
         for (Projectile p : projectileMgr.getProjectiles())
         {
             box = p.getHitbox();
             canvas.drawRect(box.left, box.top, box.right, box.bottom, paint);
-        }*/
+        }
 
     }
 

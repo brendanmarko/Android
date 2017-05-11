@@ -2,6 +2,7 @@
   <dictionary name="brend">
     <words>
       <w>hitbox</w>
+      <w>hitboxes</w>
     </words>
   </dictionary>
 </component>

@@ -7,7 +7,7 @@ import android.graphics.Bitmap;
 public class RectangleHitbox
 {
     // Debug toggle
-    private int         DEBUG = 1;
+    private int         DEBUG = 0;
 
     private Rect        hitbox;
     private int         l, b, r, t;

@@ -11,7 +11,7 @@ public abstract class Projectile
     // Debug toggle
     private int                 DEBUG = 1;
 
-    private Position            ppm;
+    private Position            pixels_per_metre;
     private Position            position;
     private Position            max_bounds;
 
@@ -33,14 +33,14 @@ public abstract class Projectile
         owner = o;
         position = new Position(pos.getX(), pos.getY());
         active = true;
-        ppm = p;
+        pixels_per_metre = p;
         max_bounds = max;
         info = new GameObject(t);
-        width = info.getDimensions().getX() * ppm.getX();
-        height = info.getDimensions().getY() * ppm.getY();
+        width = info.getDimensions().getX() * pixels_per_metre.getX();
+        height = info.getDimensions().getY() * pixels_per_metre.getY();
 
         // Set hitbox
-        hitbox_object = new RectangleHitbox(pos, ppm, info.getDimensions());
+        hitbox_object = new RectangleHitbox(pos, pixels_per_metre, info.getDimensions());
 
         if (DEBUG == 1)
             Log.d("Projectile/CTOR", "Projectile created!");
@@ -122,6 +122,19 @@ public abstract class Projectile
     public Rect getHitbox()
     {
         return hitbox_object.getHitbox();
+    }
+
+    public void updateHitbox(float x, float y)
+    {
+        if (DEBUG == 1)
+        {
+            Log.d("Prj/updateHB", "Values within updateHB: " + "POS: " + getPosition().toString());
+            Log.d("Prj/updateHB", "Values within updateHB: " + "PPM: " + pixels_per_metre.toString());
+            Log.d("Prj/updateHB", "Values within updateHB: " + "DIMENS: " + info.getDimensions().toString());
+        }
+
+        Position temp = new Position(getPosition().getX() - x, getPosition().getY() - y);
+        hitbox_object = new RectangleHitbox(temp, pixels_per_metre, info.getDimensions());
     }
 
 }

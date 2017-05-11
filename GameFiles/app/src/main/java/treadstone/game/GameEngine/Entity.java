@@ -9,7 +9,7 @@ import android.util.Log;
 public abstract class Entity
 {
     // Debug toggle
-    private int                 DEBUG = 1;
+    private int                 DEBUG = 0;
 
     private Position            pixels_per_metre;
     private Position            curr_pos;
@@ -57,9 +57,6 @@ public abstract class Entity
 
         width = object_type.getDimensions().getX() * ppm_x;
         height = object_type.getDimensions().getY() * ppm_y;
-
-        hitbox_object = new RectangleHitbox();
-
         active = true;
     }
 
@@ -186,7 +183,7 @@ public abstract class Entity
         return hitbox_object.getHitbox();
     }
 
-    public void updateHitbox()
+    public void updateHitbox(float x, float y)
     {
         if (DEBUG == 1)
         {
@@ -195,7 +192,8 @@ public abstract class Entity
             Log.d("Entity/updateHB", "Values within updateHB: " + "DIMENS: " + getGameObject().getDimensions().toString());
         }
 
-        hitbox_object = new RectangleHitbox(getPosition(), getPPM(), getGameObject().getDimensions());
+        Position temp = new Position(getPosition().getX() - x, getPosition().getY() - y);
+        hitbox_object = new RectangleHitbox(temp, pixels_per_metre, object_type.getDimensions());
     }
 
 }

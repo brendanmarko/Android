@@ -54,7 +54,7 @@ private int                     DEBUG = 0;
             Log.d("PrjMgr/addBuffer" , "New Size of projectiles: " + projectiles.size());
     }
 
-    public void update()
+    public void update(float x, float y)
     {
     	for (Iterator<Projectile> iterator = projectiles.iterator(); iterator.hasNext();)
         {
@@ -76,7 +76,7 @@ private int                     DEBUG = 0;
                         Log.d("PrjMgr/update", "Projectile set as Visible");
                 }
 
-                e.update();
+                e.updateHitbox(x, y);
             }
     	}
     }
