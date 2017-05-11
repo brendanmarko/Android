@@ -21,7 +21,7 @@ public class GameView extends SurfaceView implements Runnable
     volatile boolean                        view_active;
 
     // Viewport/Level/Player info
-    private Position                        ppm;
+    private Position                        pixels_per_metre;
     private Player                          curr_player;
     private Position                        screen_size;
     private ViewPort                        viewport;
@@ -333,7 +333,7 @@ public class GameView extends SurfaceView implements Runnable
     public void initViewPort(Position m)
     {
         viewport = new ViewPort(new Position(m.getX() * 0.9f, m.getY()));
-        ppm = viewport.getPixelsPerMetre();
+        pixels_per_metre = viewport.getPixelsPerMetre();
     }
 
     public void initLevel(Context c)
@@ -349,11 +349,18 @@ public class GameView extends SurfaceView implements Runnable
 
     public void collisionCheck()
     {
-        Log.d("GameView/CollChk", "Checking for collisions wrt Entities");
+        if (DEBUG == 1)
+            Log.d("GameView/CollChk", "Checking for collisions wrt Entities");
+
         collisionMgr.entityCollisions(level_manager.getGameObjects());
-        Log.d("GameView/CollChk", "Checking for collisions wrt Entities/Projectiles");
+
+        if (DEBUG == 1)
+            Log.d("GameView/CollChk", "Checking for collisions wrt Entities/Projectiles");
+
         collisionMgr.projectileCollisions(level_manager.getGameObjects(), projectileMgr.getProjectiles());
-        Log.d("GameView/CollChk", "Collision check completed.");
+
+        if (DEBUG == 1)
+            Log.d("GameView/CollChk", "Collision check completed.");
     }
 
     public void drawHitboxes()
@@ -389,8 +396,17 @@ public class GameView extends SurfaceView implements Runnable
 
         for (Projectile p : projectileMgr.getProjectiles())
         {
-            box = p.getHitbox();
-            canvas.drawRect(box.left, box.top, box.right, box.bottom, paint);
+            if (p.isVisible())
+            {
+                box = new Rect(p.getHitbox());
+                canvas.drawRect(box.left, box.top, box.right, box.bottom, paint);
+            }
+
+            else
+                box = null;
+
+            if (DEBUG == 1 && box != null)
+                Log.d("GameView/drawHBP", "Prj value: " + box.toString());
         }
 
     }
