@@ -24,7 +24,7 @@ public class Laser extends Projectile
         return true;
     }
 
-    public void update()
+    public void updateProjectile()
     {
         if (DEBUG == 1)
             Log.d("Laser/update", "Before update: " + getPosition().toString());

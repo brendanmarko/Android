@@ -9,7 +9,7 @@ import android.util.Log;
 public abstract class Projectile
 {
     // Debug toggle
-    private int                 DEBUG = 1;
+    private int                 DEBUG = 0;
 
     private Position            pixels_per_metre;
     private Position            position;
@@ -25,16 +25,16 @@ public abstract class Projectile
     private RectangleHitbox     hitbox_object;
 
     // Abstract functions
-    public abstract boolean inBounds();
-    public abstract void update();
+    public abstract boolean     inBounds();
+    public abstract void        updateProjectile();
 
     public Projectile(Entity o, Position pos, Position p, Position max, char t)
     {
         owner = o;
         position = new Position(pos.getX(), pos.getY());
         active = true;
+        max_bounds = new Position(max.getX() * p.getX(), max.getY() * p.getY());
         pixels_per_metre = p;
-        max_bounds = max;
         info = new GameObject(t);
         width = info.getDimensions().getX() * pixels_per_metre.getX();
         height = info.getDimensions().getY() * pixels_per_metre.getY();
@@ -133,7 +133,7 @@ public abstract class Projectile
             Log.d("Prj/updateHB", "Values within updateHB: " + "DIMENS: " + info.getDimensions().toString());
         }
 
-        Position temp = new Position(getPosition().getX() - x, getPosition().getY() - y);
+        Position temp = new Position(getPosition().getX() - x + owner.getWidth(), getPosition().getY() - y + owner.getHeight()/3);
         hitbox_object = new RectangleHitbox(temp, pixels_per_metre, info.getDimensions());
     }
 

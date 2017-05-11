@@ -5,7 +5,7 @@ import android.util.Log;
 public class Missile extends Projectile
 {
     // Debug toggle
-    private int     DEBUG = 1;
+    private int     DEBUG = 0;
 
     public Missile(Entity o, Position pos, Position p, Position max, char t)
     {
@@ -24,7 +24,7 @@ public class Missile extends Projectile
         return true;
     }
      
-    public void update()
+    public void updateProjectile()
     {
         if (DEBUG == 1)
             Log.d("Projectile/CTOR", "Before update: " + getPosition().toString());

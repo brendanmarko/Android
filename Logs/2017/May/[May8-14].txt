@@ -30,4 +30,19 @@ To-do
 
 May 10
 ======
-Began work on fine tuning the RectangleHitbox class today.
+Began work on fine tuning the RectangleHitbox class today, some problems still exists though with Projectiles not showing up.
+
+May 11
+======
+Finished drawing the Hitboxes for all Projectiles that are created by the Player so far! Removal from projectiles collection works and no problems removing it from the list.
+
+Completed
+=========
+1. Hitboxes drawing for Projectiles
+2. Hitbox position updates as objects move across screen using the displacement values
+3. Changed the colors of boxes to help differentiate
+
+To-do
+=====
+1. Test and complete Hitbox detection
+2. Apply detection to the various collections in GameView

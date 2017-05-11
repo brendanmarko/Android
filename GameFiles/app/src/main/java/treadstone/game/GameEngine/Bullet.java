@@ -14,23 +14,26 @@ public class Bullet extends Projectile
 
     public boolean inBounds()
     {
+        if (DEBUG == 1)
+            Log.d("Bullet/inBounds", "Position inBounds: " + getPosition().toString() + " vs MAX: " + getMaxBounds().toString());
+
         if (getPosition().getX() + getWidth() > getMaxBounds().getX())
         {
             if (DEBUG == 1)
-                Log.d("Bullet/checkBounds", "Beyond max bound of level, removing.");
+                Log.d("Bullet/inBounds", "Beyond max bound of level, removing.");
+
             return false;
         }
 
         return true;
     }
 
-    public void update()
+    public void updateProjectile()
     {
         if (DEBUG == 1)
             Log.d("Projectile/CTOR", "Before update: " + getPosition().toString());
 
         setPosition(getPosition().getX() + getObjInfo().getSpeed(), getPosition().getY());
-        inBounds();
 
         if (DEBUG == 1)
             Log.d("Prj/update", " === New position: " + getPosition().toString());

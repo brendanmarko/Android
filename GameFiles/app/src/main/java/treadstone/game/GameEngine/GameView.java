@@ -14,7 +14,7 @@ import android.view.SurfaceHolder;
 public class GameView extends SurfaceView implements Runnable
 {
     // Debug toggle
-    private int                             DEBUG = 1;
+    private int                             DEBUG = 0;
 
     // Thread
     Thread                                  game_thread = null;
@@ -149,7 +149,7 @@ public class GameView extends SurfaceView implements Runnable
                 if (p.isVisible() && p.getLayer() == layer)
                 {
                     r.set(viewport.worldToScreen(p.getPosition(), p.getObjInfo().getDimensions()));
-                    canvas.drawBitmap(projectileMgr.getBitmap(p.getObjInfo().getType()), r.left, r.top, paint);
+                    canvas.drawBitmap(projectileMgr.getBitmap(p.getObjInfo().getType()), r.left + p.getOwner().getWidth(), r.top + p.getOwner().getHeight()/3, paint);
                 }
             }
         }
@@ -393,6 +393,8 @@ public class GameView extends SurfaceView implements Runnable
 
         if (DEBUG == 1)
             Log.d("GameView/drawHB", "Drawing Projectile boxes");
+
+        paint.setColor(Color.argb(255, 255, 255, 0));
 
         for (Projectile p : projectileMgr.getProjectiles())
         {

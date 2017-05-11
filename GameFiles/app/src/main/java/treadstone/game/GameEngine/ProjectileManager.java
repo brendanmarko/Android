@@ -2,9 +2,6 @@ package treadstone.game.GameEngine;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Rect;
 import android.util.Log;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,7 +9,7 @@ import java.util.Iterator;
 public class ProjectileManager
 {
     // Debug toggle
-private int                     DEBUG = 0;
+private int                     DEBUG = 1;
 
     private ViewPort                viewport;
 
@@ -76,7 +73,22 @@ private int                     DEBUG = 0;
                         Log.d("PrjMgr/update", "Projectile set as Visible");
                 }
 
-                e.updateHitbox(x, y);
+                if (e.inBounds())
+                {
+                    if (DEBUG == 1)
+                        Log.d("PrjMgr/update", "Projectile in bounds.");
+
+                    e.updateProjectile();
+                    e.updateHitbox(x, y);
+                }
+
+                else
+                {
+                    if (DEBUG == 1)
+                        Log.d("PrjMgr/update", "Projectile OUT of bounds, removing from projectiles");
+
+                    iterator.remove();
+                }
             }
     	}
     }
