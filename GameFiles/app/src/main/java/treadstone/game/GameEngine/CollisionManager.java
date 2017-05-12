@@ -22,20 +22,6 @@ public class CollisionManager
         if (DEBUG == 1)
             Log.d("CollMgr/eCollide", "Checking entities for collisions...");
 
-        for (int i = 0; i < e.size(); i++)
-        {
-            for (int j = 1; j < e.size(); j++)
-            {
-                if (DEBUG == 1)
-                    Log.d("CollMgr/entityColl", e.get(i).toString() + ", " + e.get(j).toString());
-
-                if (e.get(i).getHitbox().intersect(e.get(j).getHitbox()))
-                {
-                    if (DEBUG == 1)
-                        Log.d("CollMgr/entityColl", "Collision between entities found!");
-                }
-            }
-        }
     }
 
     // void projectileCollisions()
@@ -45,5 +31,20 @@ public class CollisionManager
     {
         if (DEBUG == 1)
             Log.d("CollMgr/pCollide", "Checking entities & projectiles for collisions...");
+
+        for (Entity obj : e)
+        {
+            for (Projectile prj : p)
+            {
+                if (obj.getHitbox().intersect(prj.getHitbox()))
+                {
+                    if (DEBUG == 1)
+                        Log.d("CollMgr/prjColl", "Collision between entity and projectile found!");
+
+                        // Perform proximity checks and such
+
+                }
+            }
+        }
     }
 }
