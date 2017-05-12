@@ -14,7 +14,7 @@ import android.view.SurfaceHolder;
 public class GameView extends SurfaceView implements Runnable
 {
     // Debug toggle
-    private int                             DEBUG = 0;
+    private int                             DEBUG = 1;
 
     // Thread
     Thread                                  game_thread = null;
@@ -93,7 +93,7 @@ public class GameView extends SurfaceView implements Runnable
     {
         updateEntities();
         updateProjectiles();
-        //collisionCheck();
+        collisionCheck();
     }
 
     public void updateProjectiles()
@@ -352,7 +352,7 @@ public class GameView extends SurfaceView implements Runnable
         if (DEBUG == 1)
             Log.d("GameView/CollChk", "Checking for collisions wrt Entities");
 
-        collisionMgr.entityCollisions(level_manager.getGameObjects());
+        collisionMgr.entityCollisions(trimToView(level_manager.getGameObjects()));
 
         if (DEBUG == 1)
             Log.d("GameView/CollChk", "Checking for collisions wrt Entities/Projectiles");
@@ -411,6 +411,22 @@ public class GameView extends SurfaceView implements Runnable
                 Log.d("GameView/drawHBP", "Prj value: " + box.toString());
         }
 
+    }
+
+    public ArrayList<Entity> trimToView(ArrayList<Entity> all)
+    {
+        ArrayList<Entity> buffer = new ArrayList<>();
+
+        for (Entity e : all)
+        {
+            if (e.isVisible())
+                buffer.add(e);
+        }
+
+        if (DEBUG == 1)
+            Log.d("GameView/Trim2V", "Size of buffer going into CollMgr: " + buffer.size());
+
+        return buffer;
     }
 
 } // end : GameView Class

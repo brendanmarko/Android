@@ -14,10 +14,14 @@ public class Missile extends Projectile
 
     public boolean inBounds()
     {
+        if (DEBUG == 1)
+            Log.d("Bullet/inBounds", "Position inBounds: " + getPosition().toString() + " vs MAX: " + getMaxBounds().toString());
+
         if (getPosition().getX() + getWidth() > getMaxBounds().getX())
         {
             if (DEBUG == 1)
                 Log.d("Bullet/checkBounds", "Beyond max bound of level, removing.");
+
             return false;
         }
 

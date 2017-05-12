@@ -9,11 +9,9 @@ import java.util.Iterator;
 public class ProjectileManager
 {
     // Debug toggle
-private int                     DEBUG = 1;
+    private int                     DEBUG = 0;
 
     private ViewPort                viewport;
-
-    // Storage of Projectiles
     private Bitmap[]                bitmaps;
     private ArrayList<Projectile>   projectiles;
 

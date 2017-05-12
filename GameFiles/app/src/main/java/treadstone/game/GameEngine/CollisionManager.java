@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class CollisionManager
 {
     // Debug toggle
-    private int DEBUG = 0;
+    private int DEBUG = 1;
 
     public CollisionManager()
     {
@@ -22,6 +22,20 @@ public class CollisionManager
         if (DEBUG == 1)
             Log.d("CollMgr/eCollide", "Checking entities for collisions...");
 
+        for (int i = 0; i < e.size(); i++)
+        {
+            for (int j = 1; j < e.size(); j++)
+            {
+                if (DEBUG == 1)
+                    Log.d("CollMgr/entityColl", e.get(i).toString() + ", " + e.get(j).toString());
+
+                if (e.get(i).getHitbox().intersect(e.get(j).getHitbox()))
+                {
+                    if (DEBUG == 1)
+                        Log.d("CollMgr/entityColl", "Collision between entities found!");
+                }
+            }
+        }
     }
 
     // void projectileCollisions()

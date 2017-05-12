@@ -5,7 +5,7 @@ import android.util.Log;
 public class Bullet extends Projectile
 {
     // Debug toggle
-    private int     DEBUG = 1;
+    private int     DEBUG = 0;
 
     public Bullet(Entity o, Position pos, Position p, Position max, char t)
     {
