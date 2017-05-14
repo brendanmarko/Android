@@ -9,7 +9,7 @@ import android.util.Log;
 public abstract class Entity
 {
     // Debug toggle
-    private int                 DEBUG = 0;
+    private int                 DEBUG = 1;
 
     private Position            pixels_per_metre;
     private Position            curr_pos;
@@ -29,6 +29,7 @@ public abstract class Entity
 
     private RectangleHitbox     hitbox_object;
 
+    // Abstract functions
     public abstract void update();
 
     Entity(Position pos, Position max, Position ppm, char t)
@@ -173,9 +174,9 @@ public abstract class Entity
     public String toString()
     {
         if (DEBUG == 1)
-            Log.d("entity_to_string", "CURR_POS: " + curr_pos.toString() + " SPEED: " + getSpeed() + " DIMENSIONS: " + object_type.getDimensions() + " isMoving: " + moving + " Type: " + object_type.getType());
+            Log.d("entity_to_string", "POS: " + curr_pos.toString() + " SPEED: " + getSpeed() + "isVisible = " + isVisible() + " isMoving: " + moving + " Type: " + object_type.getType());
 
-        return "CURR_POS: " + curr_pos.toString() + " SPEED: " + getSpeed() + " DIMENSIONS: " + object_type.getDimensions() + " isMoving: " + moving + " Type: " + object_type.getType();
+        return "POS: " + curr_pos.toString() + " SPEED: " + getSpeed() + "isVisible = " + visible + " isMoving: " + moving + " Type: " + object_type.getType();
     }
 
     public Rect getHitbox()

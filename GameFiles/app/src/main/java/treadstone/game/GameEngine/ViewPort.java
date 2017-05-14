@@ -47,7 +47,7 @@ public class ViewPort
         setScreenViewPortFactor();
     }
 
-    public void initializeParam(Position r)
+    private void initializeParam(Position r)
     {
         viewable_size = new Position(r.getX(), r.getY());
         screen_centre = new Position(r.getX()/4, r.getY()/2);
@@ -61,7 +61,7 @@ public class ViewPort
             Log.d("Viewport/initP", "PPM: " + pixels_per_metre.toString());
     }
 
-    public void buildViewportEdges(Position p)
+    private void buildViewportEdges(Position p)
     {
         if (DEBUG == 1)
             Log.d("viewport.bvpe","Position passed: " + p.toString() + ", viewport dimens: " + viewable_size.toString());
@@ -133,29 +133,55 @@ public class ViewPort
     }
 
     // clipObjects(Position, Position)
-    // This function takes the 2 same Positions as above and test them to see if an object has to be
-    // clipped or not from the view.
+    // This function takes a Position and tests if an object has to be appears within the ViewPort.
     public boolean clipObject(Position p)
     {
+        if (DEBUG == 1)
+        {
+            Log.d("VIEWPORT/CLIP", "VPC: " + viewport_centre.toString() + " VIEWSPACE: " + viewable_size.toString());
+            Log.d("VIEWPORT/CLIP", "Checking P(L) " + p.getX() + " < " + (viewport_centre.getX() - viewable_size.getX()/4));
+        }
+
+
         if (p.getX() < (viewport_centre.getX() - viewable_size.getX()/4))
         {
+            if (DEBUG == 1)
+                Log.d("VIEWPORT/CLIP", "RETURNING TRUE ===== ");
             return true;
         }
 
-        if (p.getY() > (viewport_centre.getY() + viewable_size.getX()/2))
+        if (DEBUG == 1)
+            Log.d("VIEWPORT/CLIP", "Checking P(B) " + p.getY() + " > " + (viewport_centre.getY() + viewable_size.getY()/2));
+
+        if (p.getY() > (viewport_centre.getY() + viewable_size.getY()/2))
         {
+            if (DEBUG == 1)
+                Log.d("VIEWPORT/CLIP", "RETURNING TRUE ===== ");
             return true;
         }
 
-        if (p.getX() > viewport_centre.getX() + (viewable_size.getX() - viewable_size.getX()/4))
+        if (DEBUG == 1)
+            Log.d("VIEWPORT/CLIP", "Checking P(R) " + p.getX() + " > " + (viewport_centre.getX() + (viewable_size.getX() - viewable_size.getX()/4)));
+
+        if (p.getX() > (viewport_centre.getX() + (viewable_size.getX() - viewable_size.getX()/4)))
         {
+            if (DEBUG == 1)
+                Log.d("VIEWPORT/CLIP", "RETURNING TRUE ===== ");
             return true;
         }
 
-        if (p.getY() < (viewport_centre.getY() - viewable_size.getX()/2))
+        if (DEBUG == 1)
+            Log.d("VIEWPORT/CLIP", "Checking P(T) " + p.getY() + " < " + (viewport_centre.getY() - viewable_size.getY()/2));
+
+        if (p.getY() < (viewport_centre.getY() - viewable_size.getY()/2 - pixels_per_metre.getX()))
         {
+            if (DEBUG == 1)
+                Log.d("VIEWPORT/CLIP", "RETURNING TRUE ===== ");
             return true;
         }
+
+        if (DEBUG == 1)
+            Log.d("VIEWPORT/CLIP", "RETURNING FALSE ===== ");
 
         return false;
 

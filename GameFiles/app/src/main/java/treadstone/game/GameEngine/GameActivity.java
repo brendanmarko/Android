@@ -1,16 +1,14 @@
 package treadstone.game.GameEngine;
 
-import android.support.v4.app.FragmentTransaction;
-import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
-import android.view.Display;
-import android.graphics.Point;
+import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
 public class GameActivity extends FragmentActivity implements OnControllerPress
 {
-
     private ScreenFragment          screen;
     private ControllerFragment      controller;
 
@@ -21,17 +19,16 @@ public class GameActivity extends FragmentActivity implements OnControllerPress
         setContentView(R.layout.activity_game);
 
         // Find Display Size
-        Display curr_display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        curr_display.getSize(size);
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
         // Fragment Management
         FragmentManager manager = getSupportFragmentManager();
 
         // Create Bundle
         Bundle bundle = new Bundle();
-        bundle.putInt("X_BOUND", size.x);
-        bundle.putInt("Y_BOUND", size.y);
+        bundle.putInt("X_BOUND", metrics.widthPixels);
+        bundle.putInt("Y_BOUND", metrics.heightPixels);
 
         // Add Fragment [Controller]
         FragmentTransaction transaction = manager.beginTransaction();

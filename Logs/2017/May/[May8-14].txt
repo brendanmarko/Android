@@ -46,3 +46,20 @@ To-do
 =====
 1. Test and complete Hitbox detection
 2. Apply detection to the various collections in GameView
+
+May 13
+======
+Over the last couple days I noticed that some of the Entities were returning the wrong value for an 'isVisible()' call. After closer exmaniation I found that the problem was 
+actually coming from clipObject, where some of the values were not being calculated properly! Once this was fixed and with some other adjustments I was able to get the
+detection working for collisions between Entity/Entity and Projectile/Entity!
+
+Completed
+=========
+1. Fixed ViewPort clipObject() to properly calculate results
+2. Completed hit detection so that hits between Entity/Entity register
+3. Completed hit detection so that hits between Entity/Prjs register
+
+To-do
+=====
+1. Handling collisions between Entities
+2. Handling collisions between Projectiles/Entities

@@ -2,6 +2,7 @@ package treadstone.game.GameEngine;
 
 import android.util.Log;
 import java.util.ArrayList;
+
 import android.graphics.Rect;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -91,9 +92,18 @@ public class GameView extends SurfaceView implements Runnable
     // the game world objects within LevelManager.getGameOjbects()
     public void update()
     {
+        showObjects();
         updateEntities();
         updateProjectiles();
         collisionCheck();
+    }
+
+    public void showObjects()
+    {
+        for (Entity e : level_manager.getGameObjects())
+        {
+            e.toString();
+        }
     }
 
     public void updateProjectiles()
@@ -283,6 +293,10 @@ public class GameView extends SurfaceView implements Runnable
         {
             if (e.isActive())
             {
+
+                if (DEBUG == 1)
+                    Log.d("GameView/UpEnt", "Examining: " + e.toString());
+
                 if (viewport.clipObject(e.getPosition()))
                 {
                     Log.d("GameView/UpdateE", "ENTITY SHOULD BE INVISIBLE");
@@ -291,6 +305,7 @@ public class GameView extends SurfaceView implements Runnable
 
                 else
                 {
+                    Log.d("GameView/UpdateE", "ENTITY SHOULD BE VISIBLE");
                     e.setVisible();
 
                     if (e.getSpeed() > 0.0f)
@@ -302,6 +317,9 @@ public class GameView extends SurfaceView implements Runnable
                             viewport.setViewPortCentre(curr_player.getPosition());
                     }
                 }
+
+                if (DEBUG == 1)
+                    Log.d("GameView/UpEnt", "Post-Examining: " + e.toString());
 
                 e.updateHitbox(displacementX, displacementY);
 
@@ -350,9 +368,12 @@ public class GameView extends SurfaceView implements Runnable
     public void collisionCheck()
     {
         if (DEBUG == 1)
+        {
             Log.d("GameView/CollChk", "Checking for collisions wrt Entities");
+            showObjects();
+        }
 
-        collisionMgr.entityCollisions(trimToView(level_manager.getGameObjects()));
+        collisionMgr.entityCollisions(level_manager.getGameObjects());
 
         if (DEBUG == 1)
             Log.d("GameView/CollChk", "Checking for collisions wrt Entities/Projectiles");
@@ -411,22 +432,6 @@ public class GameView extends SurfaceView implements Runnable
                 Log.d("GameView/drawHBP", "Prj value: " + box.toString());
         }
 
-    }
-
-    public ArrayList<Entity> trimToView(ArrayList<Entity> all)
-    {
-        ArrayList<Entity> buffer = new ArrayList<>();
-
-        for (Entity e : all)
-        {
-            if (e.isVisible())
-                buffer.add(e);
-        }
-
-        if (DEBUG == 1)
-            Log.d("GameView/Trim2V", "Size of buffer going into CollMgr: " + buffer.size());
-
-        return buffer;
     }
 
 } // end : GameView Class

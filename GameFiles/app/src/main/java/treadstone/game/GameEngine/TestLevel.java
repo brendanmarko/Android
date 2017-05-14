@@ -7,7 +7,6 @@ public class TestLevel extends LevelData
 
     public TestLevel()
     {
-
         setTiles(new ArrayList<String>());
         getTiles().add("d............................d");
         getTiles().add("..............................");
@@ -22,7 +21,7 @@ public class TestLevel extends LevelData
         getTiles().add("..............................");
         getTiles().add("..............................");
         getTiles().add("..............................");
-        getTiles().add("..............................");
+        getTiles().add("..............d...............");
         getTiles().add("..............................");
         getTiles().add("..............................");
         getTiles().add("..............................");
