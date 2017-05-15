@@ -130,8 +130,8 @@ public abstract class Projectile extends Entity
         if (DEBUG == 1)
         {
             Log.d("Prj/updateHB", "Values within updateHB: " + "POS: " + getPosition().toString());
-            Log.d("Prj/updateHB", "Values within updateHB: " + "PPM: " + pixels_per_metre.toString());
-            Log.d("Prj/updateHB", "Values within updateHB: " + "DIMENS: " + info.getDimensions().toString());
+            Log.d("Prj/updateHB", "Values within updateHB: " + "PPM: " + getPPM().toString());
+            Log.d("Prj/updateHB", "Values within updateHB: " + "DIMENS: " + getObjInfo().getDimensions().toString());
         }
 
         Position temp = new Position(getPosition().getX() - x + owner.getWidth(), getPosition().getY() - y + owner.getHeight()/3);

@@ -23,14 +23,14 @@ public class TestEnemy extends MovableEntity
             // random_spawn()
         }
 
-        else if (x > getXMax())
+        else if (x > getMaxBounds().getX())
         {
-            setPosition(getXMax(), getY());
+            setPosition(getMaxBounds().getX(), getY());
         }
 
-        else if (y + getHeight() > getYMax())
+        else if (y + getHeight() > getMaxBounds().getY())
         {
-            setPosition(getX(), getYMax() - getHeight());
+            setPosition(getX(), getMaxBounds().getY() - getHeight());
         }
 
     }

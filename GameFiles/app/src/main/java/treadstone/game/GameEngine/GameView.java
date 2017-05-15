@@ -15,7 +15,7 @@ import android.view.SurfaceHolder;
 public class GameView extends SurfaceView implements Runnable
 {
     // Debug toggle
-    private int                             DEBUG = 1;
+    private int                             DEBUG = 0;
 
     // Thread
     Thread                                  game_thread = null;

@@ -9,7 +9,7 @@ import android.util.Log;
 public abstract class Entity
 {
     // Debug toggle
-    private int                 DEBUG = 0;
+    private int                 DEBUG = 1;
 
     private Position            pixels_per_metre;
     private Position            position;
@@ -34,7 +34,10 @@ public abstract class Entity
 
     Entity(Position pos, Position max, Position ppm, char t)
     {
-        pixels_per_metre = new Position(ppm.getX(),ppm.getY());
+        if (DEBUG == 1)
+            Log.d("Entity/CTOR", "Entity created @ " + pos.toString() + ", type = " + t);
+
+        pixels_per_metre = ppm;
 
         // Allows Entity to move to the edge of the map
         max_bounds = new Position((max.getX() * ppm.getX()), (max.getY() * ppm.getY()));
@@ -106,14 +109,9 @@ public abstract class Entity
         return pixels_per_metre;
     }
 
-    public float getXMax()
+    public Position getMaxBounds()
     {
-        return max_bounds.getX();
-    }
-
-    public float getYMax()
-    {
-        return max_bounds.getY();
+        return max_bounds;
     }
 
     public float getHeight()
@@ -190,6 +188,11 @@ public abstract class Entity
 
         Position temp = new Position(getPosition().getX() - x, getPosition().getY() - y);
         hitbox_object = new RectangleHitbox(temp, pixels_per_metre, info.getDimensions());
+    }
+
+    public void setHitbox(RectangleHitbox r)
+    {
+        hitbox_object = r;
     }
 
 }

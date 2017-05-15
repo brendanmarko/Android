@@ -138,12 +138,12 @@ public class Player extends MovableEntity
             new_x = 0.0f;
         }
 
-        else if (x + getWidth() > getXMax())
+        else if (x + getWidth() > getMaxBounds().getX())
         {
             if (DEBUG == 1)
                 Log.d("Player.boundsCheck", "X > max");
 
-            new_x = getXMax() - getWidth();
+            new_x = getMaxBounds().getX() - getWidth();
         }
 
         else if (new_x == 0.0f)
@@ -159,12 +159,12 @@ public class Player extends MovableEntity
             new_y = 0.0f;
         }
 
-        else if (y + getHeight() > getYMax())
+        else if (y + getHeight() > getMaxBounds().getY())
         {
             if (DEBUG == 1)
                 Log.d("Player.boundsCheck", "Y > max");
 
-            new_y = getYMax() - getHeight();
+            new_y = getMaxBounds().getY() - getHeight();
         }
 
         else if (new_y == 0.0f)
