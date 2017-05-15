@@ -6,7 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.util.Log;
 
-public abstract class Projectile
+public abstract class Projectile extends MovableEntity
 {
     // Debug toggle
     private int                 DEBUG = 0;
@@ -26,7 +26,7 @@ public abstract class Projectile
 
     // Abstract functions
     public abstract boolean     inBounds();
-    public abstract void        updateProjectile();
+    public abstract void        update();
 
     public Projectile(Entity o, Position pos, Position p, Position max, char t)
     {

@@ -1,6 +1,5 @@
 package treadstone.game.GameEngine;
 
-import android.content.Context;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -32,7 +31,7 @@ public class Player extends MovableEntity
         }
 
         // Set Player to moving
-        setMovable();
+        //setMovable();
 
         // Get lengths of sides
         spanX = x_location - getX();

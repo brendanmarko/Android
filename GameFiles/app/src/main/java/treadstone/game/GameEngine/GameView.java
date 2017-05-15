@@ -175,8 +175,8 @@ public class GameView extends SurfaceView implements Runnable
             {
                 if (e.isVisible() && e.getLayer() == layer)
                 {
-                    new_target.set(viewport.worldToScreen(e.getPosition(), e.getGameObject().getDimensions()));
-                    canvas.drawBitmap(level_manager.getBitmap(e.getGameObject().getType()), new_target.left, new_target.top, paint);
+                    new_target.set(viewport.worldToScreen(e.getPosition(), e.getObjInfo().getDimensions()));
+                    canvas.drawBitmap(level_manager.getBitmap(e.getObjInfo().getType()), new_target.left, new_target.top, paint);
                 }
             }
         }
@@ -313,7 +313,7 @@ public class GameView extends SurfaceView implements Runnable
                         MovableEntity m = (MovableEntity) e;
                         m.update();
 
-                        if (m.getGameObject().getType() == 'p')
+                        if (m.getObjInfo().getType() == 'p')
                             viewport.setViewPortCentre(curr_player.getPosition());
                     }
                 }

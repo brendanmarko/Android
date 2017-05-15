@@ -28,7 +28,7 @@ public class Missile extends Projectile
         return true;
     }
      
-    public void updateProjectile()
+    public void update()
     {
         if (DEBUG == 1)
             Log.d("Projectile/CTOR", "Before update: " + getPosition().toString());

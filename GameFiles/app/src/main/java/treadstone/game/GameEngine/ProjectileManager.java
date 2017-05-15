@@ -76,7 +76,7 @@ public class ProjectileManager
                     if (DEBUG == 1)
                         Log.d("PrjMgr/update", "Projectile in bounds.");
 
-                    e.updateProjectile();
+                    e.update();
                     e.updateHitbox(x, y);
                 }
 

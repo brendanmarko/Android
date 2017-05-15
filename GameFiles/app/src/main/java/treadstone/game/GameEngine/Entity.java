@@ -9,55 +9,52 @@ import android.util.Log;
 public abstract class Entity
 {
     // Debug toggle
-    private int                 DEBUG = 1;
+    private int                 DEBUG = 0;
 
     private Position            pixels_per_metre;
-    private Position            curr_pos;
+    private Position            position;
     private Position            max_bounds;
 
     private int                 layer_num;
     private Bitmap              image;
-    private GameObject          object_type;
+    private GameObject          info;
+    private boolean             active, visible;
     private float               height, width, speed;
-    private float               ppm_x, ppm_y;
-
-    // Booleans
-    private boolean             active;
-    private boolean             movable;
-    private boolean             visible;
-    private boolean             moving;
 
     private RectangleHitbox     hitbox_object;
 
     // Abstract functions
     public abstract void update();
 
+    Entity()
+    {
+        if (DEBUG == 1)
+            Log.d("Entity/CTOR", "Empty Entity created.");
+    }
+
     Entity(Position pos, Position max, Position ppm, char t)
     {
-        ppm_x = ppm.getX();
-        ppm_y = ppm.getY();
-        pixels_per_metre = new Position(ppm_x, ppm_y);
+        pixels_per_metre = new Position(ppm.getX(),ppm.getY());
 
         // Allows Entity to move to the edge of the map
-        max_bounds = new Position((max.getX() * ppm_x), (max.getY() * ppm_y));
+        max_bounds = new Position((max.getX() * ppm.getX()), (max.getY() * ppm.getY()));
 
         if (DEBUG == 1)
             Log.d("Entity/max", "Max bounds from Entity: " + max_bounds.toString());
 
-        curr_pos = scaleToPixel(pos);
+        position = scaleToPixel(pos);
 
         if (t == 'p')
             Log.d("Entity/PlayerDims", "Player max location = " + max.toString());
 
-        object_type = new GameObject(t);
-        speed = object_type.getSpeed();
-        layer_num = object_type.getLayer();
+        info = new GameObject(t);
+        speed = info.getSpeed();
+        layer_num = info.getLayer();
 
         visible = false;
-        movable = false;
 
-        width = object_type.getDimensions().getX() * ppm_x;
-        height = object_type.getDimensions().getY() * ppm_y;
+        width = info.getDimensions().getX() * ppm.getX();
+        height = info.getDimensions().getY() * ppm.getY();
         active = true;
     }
 
@@ -65,13 +62,13 @@ public abstract class Entity
     {
         int id = c.getResources().getIdentifier(s, "drawable", c.getPackageName());
         image = BitmapFactory.decodeResource(c.getResources(), id);
-        image = Bitmap.createScaledBitmap(image, (int) (width * object_type.getAnimateFrameCount()), (int) (height * object_type.getAnimateFrameCount()), false);
+        image = Bitmap.createScaledBitmap(image, (int) (width * info.getAnimateFrameCount()), (int) (height * info.getAnimateFrameCount()), false);
         return image;
     }
 
     public Position scaleToPixel(Position p)
     {
-        return new Position(p.getX() * ppm_x, p.getY() * ppm_y);
+        return new Position(p.getX() * pixels_per_metre.getX(), p.getY() * pixels_per_metre.getY());
     }
 
     public int getLayer()
@@ -81,24 +78,24 @@ public abstract class Entity
 
     public float getX()
     {
-        return curr_pos.getX();
+        return position.getX();
     }
 
     public float getY()
     {
-        return curr_pos.getY();
+        return position.getY();
     }
 
     public Position getPosition()
     {
-        return curr_pos;
+        return position;
     }
 
     // setPosition(float, float)
     // This function takes 2 float inputs and saves them as pixel (x,y) co-ordinates for later use
     public void setPosition(float x, float y)
     {
-        curr_pos = new Position(x, y);
+        position = new Position(x, y);
     }
 
     public Position getPPM()
@@ -133,7 +130,7 @@ public abstract class Entity
 
     public String getImageName()
     {
-        return object_type.getImageName();
+        return info.getImageName();
     }
 
     public boolean isVisible()
@@ -151,11 +148,6 @@ public abstract class Entity
         visible = true;
     }
 
-    public void setMovable()
-    {
-        movable = true;
-    }
-
     public float getSpeed()
     {
         return speed;
@@ -166,17 +158,17 @@ public abstract class Entity
         return active;
     }
 
-    public GameObject getGameObject()
+    public GameObject getObjInfo()
     {
-        return object_type;
+        return info;
     }
 
     public String toString()
     {
         if (DEBUG == 1)
-            Log.d("entity_to_string", "POS: " + curr_pos.toString() + " SPEED: " + getSpeed() + "isVisible = " + isVisible() + " isMoving: " + moving + " Type: " + object_type.getType());
+            Log.d("entity_to_string", "POS: " + position.toString() + " SPEED: " + getSpeed() + "isVisible = " + isVisible() + " Type: " + info.getType());
 
-        return "POS: " + curr_pos.toString() + " SPEED: " + getSpeed() + "isVisible = " + visible + " isMoving: " + moving + " Type: " + object_type.getType();
+        return "POS: " + position.toString() + " SPEED: " + getSpeed() + "isVisible = " + visible + " Type: " + info.getType();
     }
 
     public Rect getHitbox()
@@ -190,11 +182,16 @@ public abstract class Entity
         {
             Log.d("Entity/updateHB", "Values within updateHB: " + "POS: " + getPosition().toString());
             Log.d("Entity/updateHB", "Values within updateHB: " + "PPM: " + getPPM().toString());
-            Log.d("Entity/updateHB", "Values within updateHB: " + "DIMENS: " + getGameObject().getDimensions().toString());
+            Log.d("Entity/updateHB", "Values within updateHB: " + "DIMENS: " + getObjInfo().getDimensions().toString());
         }
 
         Position temp = new Position(getPosition().getX() - x, getPosition().getY() - y);
-        hitbox_object = new RectangleHitbox(temp, pixels_per_metre, object_type.getDimensions());
+        hitbox_object = new RectangleHitbox(temp, pixels_per_metre, info.getDimensions());
+    }
+
+    public void setHitbox(RectangleHitbox r)
+    {
+        hitbox_object = r;
     }
 
 }
