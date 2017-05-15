@@ -56,6 +56,9 @@ public abstract class Entity
         width = info.getDimensions().getX() * ppm.getX();
         height = info.getDimensions().getY() * ppm.getY();
         active = true;
+
+        // Set hitbox
+        hitbox_object = new RectangleHitbox(pos, pixels_per_metre, info.getDimensions());
     }
 
     public Bitmap createBitmap(Context c, String s)
@@ -187,11 +190,6 @@ public abstract class Entity
 
         Position temp = new Position(getPosition().getX() - x, getPosition().getY() - y);
         hitbox_object = new RectangleHitbox(temp, pixels_per_metre, info.getDimensions());
-    }
-
-    public void setHitbox(RectangleHitbox r)
-    {
-        hitbox_object = r;
     }
 
 }

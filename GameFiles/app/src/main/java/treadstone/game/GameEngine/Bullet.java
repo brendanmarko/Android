@@ -15,7 +15,7 @@ public class Bullet extends Projectile
     public boolean inBounds()
     {
         if (DEBUG == 1)
-            Log.d("Bullet/inBounds", "Position inBounds: " + getPosition().toString() + " vs MAX: " + getMaxBounds().toString());
+            Log.d("Bullet/inBounds", "Position inBounds: " + getPosition().toString());
 
         if (getPosition().getX() + getWidth() > getMaxBounds().getX())
         {
