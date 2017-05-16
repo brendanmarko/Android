@@ -65,7 +65,7 @@ public abstract class Entity
     {
         int id = c.getResources().getIdentifier(s, "drawable", c.getPackageName());
         image = BitmapFactory.decodeResource(c.getResources(), id);
-        image = Bitmap.createScaledBitmap(image, (int) (width * info.getAnimateFrameCount()), (int) (height * info.getAnimateFrameCount()), false);
+        image = Bitmap.createScaledBitmap(image, (int) (width * info.getFrameCount()), (int) (height * info.getFrameCount()), false);
         return image;
     }
 

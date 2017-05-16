@@ -7,8 +7,8 @@ import java.util.Random;
 public class GameObject
 {
     private char            type;
-    private int             animateFrameCount, layer;
-    private float           speed;
+    private int frame_count, layer;
+    private float           speed, effective_range;
     private String          movementType;
     private String          image_name;
     private Position        dimensions; // assigned as [Width, Height]
@@ -28,7 +28,7 @@ public class GameObject
             {
                 layer = 2;
                 image_name = "bob";
-                animateFrameCount = 1;
+                frame_count = 1;
                 dimensions = new Position(2.0f, 3.0f);
                 speed = 10.0f;
                 movementType = "dynamic";
@@ -40,10 +40,11 @@ public class GameObject
             {
                 layer = 2;
                 image_name = "bullet";
-                animateFrameCount = 1;
+                frame_count = 1;
                 dimensions = new Position(1.0f, 1.0f);
                 speed = 20.0f;
                 movementType = "dynamic";
+                effective_range = 2000.0f;
                 break;
             }
 
@@ -52,7 +53,7 @@ public class GameObject
             {
                 layer = 1;
                 image_name = "debris";
-                animateFrameCount = 1;
+                frame_count = 1;
                 dimensions = new Position(1.0f, 1.0f);
                 movementType = "static";
                 break;
@@ -63,7 +64,7 @@ public class GameObject
             {
                 layer = 2;
                 image_name = "bob_evil";
-                animateFrameCount = 1;
+                frame_count = 1;
                 dimensions = new Position(2.0f, 3.0f);
                 speed = 10.0f;
                 movementType = "dynamic";
@@ -75,10 +76,11 @@ public class GameObject
             {
                 layer = 2;
                 image_name = "missile";
-                animateFrameCount = 1;
+                frame_count = 1;
                 dimensions = new Position(2.0f, 1.0f);
                 speed = 14.0f;
                 movementType = "dynamic";
+                effective_range = 3000.0f;
                 break;
             }
 
@@ -87,7 +89,7 @@ public class GameObject
             {
                 layer = 0;
                 image_name = "star_small";
-                animateFrameCount = 1;
+                frame_count = 1;
                 dimensions = new Position(1f, 1f);
                 Random r = new Random();
                 speed = 18.0f * r.nextFloat();
@@ -100,7 +102,7 @@ public class GameObject
             {
                 layer = 0;
                 image_name = "star_yellow";
-                animateFrameCount = 1;
+                frame_count = 1;
                 dimensions = new Position(1.0f, 1.0f);
                 Random r = new Random();
                 speed = 12.0f * r.nextFloat();
@@ -110,7 +112,7 @@ public class GameObject
 
             default:
                 layer = 0;
-                animateFrameCount = 1;
+                frame_count = 1;
                 image_name = "default";
                 speed = 0.0f;
                 dimensions = new Position(0.0f, 0.0f);
@@ -128,9 +130,9 @@ public class GameObject
         return image_name;
     }
 
-    public int getAnimateFrameCount()
+    public int getFrameCount()
     {
-        return animateFrameCount;
+        return frame_count;
     }
 
     public Position getDimensions()
@@ -159,4 +161,8 @@ public class GameObject
         return movementType;
     }
 
+    public float getEffectiveRange()
+    {
+        return effective_range;
+    }
 }

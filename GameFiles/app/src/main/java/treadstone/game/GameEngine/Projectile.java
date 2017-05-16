@@ -8,6 +8,7 @@ public abstract class Projectile extends MovableEntity
     private int                 DEBUG = 0;
 
     private Entity              owner;
+    private float               range;
 
     // Abstract functions
     public abstract boolean     inBounds();
@@ -17,6 +18,7 @@ public abstract class Projectile extends MovableEntity
     {
         super(pos, max, p, t);
         owner = o;
+        range = getObjInfo().getEffectiveRange();
 
         if (DEBUG == 1)
             Log.d("Projectile/CTOR", "Projectile created!");
