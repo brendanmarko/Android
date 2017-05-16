@@ -49,4 +49,9 @@ public abstract class Projectile extends MovableEntity
         setHitbox(new RectangleHitbox(temp, getPPM(), getObjInfo().getDimensions()));
     }
 
+    public float getRange()
+    {
+        return range;
+    }
+
 }

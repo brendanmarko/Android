@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class LevelManager
 {
     // Debug toggle
-    private int                     DEBUG = 0;
+    private int                     DEBUG = 1;
 
     private int                     curr_index, player_index;
     private Player                  player;
@@ -18,7 +18,7 @@ public class LevelManager
     private LevelData               level_data;
     private ArrayList<Entity>       game_objects;
     private Bitmap[]                bitmaps;
-    private Position                pixels_per_metre;
+    private Position                pixels_per_metre, endpoint;
     private boolean                 playing;
 
     public LevelManager(Context c, String level_name, Position ppm)
@@ -128,6 +128,13 @@ public class LevelManager
         if (d == '.')
             return;
 
+        else if (d == 'x')
+        {
+            if (DEBUG == 1)
+                Log.d("LevelMgr/objCreate", "Setting endpoint ref");
+            endpoint = new Position(p.getX() * pixels_per_metre.getX(), p.getY() * pixels_per_metre.getY());
+        }
+
         else
         {
             curr_index++;
@@ -220,6 +227,11 @@ public class LevelManager
     public Position getMapDimens()
     {
         return level_max;
+    }
+
+    public Position getEndpoint()
+    {
+        return endpoint;
     }
 
 }

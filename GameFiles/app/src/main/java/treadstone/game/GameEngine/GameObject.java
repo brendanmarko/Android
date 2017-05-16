@@ -7,7 +7,7 @@ import java.util.Random;
 public class GameObject
 {
     private char            type;
-    private int frame_count, layer;
+    private int             frame_count, layer;
     private float           speed, effective_range;
     private String          movementType;
     private String          image_name;
