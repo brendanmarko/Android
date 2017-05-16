@@ -1,5 +1,7 @@
 package treadstone.game.GameEngine;
 
+import android.util.Log;
+
 import java.util.Random;
 
 public class GameObject
@@ -137,6 +139,12 @@ public class GameObject
     public char getType()
     {
         return type;
+    }
+
+    public String toString()
+    {
+        Log.d("GameObject", image_name + " dimens: " + dimensions + " in layer " + layer);
+        return image_name + " dimens: " + dimensions + " in layer " + layer;
     }
 
 }

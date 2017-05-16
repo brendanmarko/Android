@@ -8,6 +8,9 @@ import java.util.ArrayList;
 
 public class LevelManager
 {
+    // Debug toggle
+    private int                     DEBUG = 0;
+
     private int                     curr_index, player_index;
     private Player                  player;
     private String                  level;
@@ -17,7 +20,6 @@ public class LevelManager
     private Bitmap[]                bitmaps;
     private Position                pixels_per_metre;
     private boolean                 playing;
-    private int                     DEBUG = 0;
 
     public LevelManager(Context c, String level_name, Position ppm)
     {
@@ -102,7 +104,7 @@ public class LevelManager
         for (int y = 0; y < level_data.getTiles().size(); y++)
         {
             for (int x = 0; x < level_data.getTiles().get(y).length(); x++)
-                objectCreate(c, new Position(x, y), level_data.getTiles().get(y).charAt(x));
+                objectCreate(c, new Position(x * pixels_per_metre.getX(), y * pixels_per_metre.getY()), level_data.getTiles().get(y).charAt(x));
         }
 
     }

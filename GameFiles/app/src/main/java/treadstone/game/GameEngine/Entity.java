@@ -15,7 +15,7 @@ public abstract class Entity
     private Position            position;
     private Position            max_bounds;
 
-    private int                 layer_num;
+    private int                 layer;
     private Bitmap              image;
     private GameObject          info;
     private boolean             active, visible;
@@ -32,33 +32,29 @@ public abstract class Entity
             Log.d("Entity/CTOR", "Empty Entity created.");
     }
 
-    Entity(Position pos, Position max, Position ppm, char t)
+    Entity(Position pos, Position max, Position p, char t)
     {
         if (DEBUG == 1)
             Log.d("Entity/CTOR", "Entity created @ " + pos.toString() + ", type = " + t);
 
-        pixels_per_metre = ppm;
-
         // Allows Entity to move to the edge of the map
-        max_bounds = new Position((max.getX() * ppm.getX()), (max.getY() * ppm.getY()));
+        max_bounds = new Position(max.getX() * p.getX(), max.getY() * p.getY());
+        pixels_per_metre = p;
+        info = new GameObject(t);
+        layer = info.getLayer();
+        speed = info.getSpeed();
+        width = info.getDimensions().getX() * p.getX();
+        height = info.getDimensions().getY() * p.getY();
+        active = true;
+        visible = false;
 
         if (DEBUG == 1)
-            Log.d("Entity/max", "Max bounds from Entity: " + max_bounds.toString());
+            Log.d("Entity/obj", "Info For Object: " + info.toString());
 
-        position = scaleToPixel(pos);
+        position = pos;
 
         if (t == 'p')
             Log.d("Entity/PlayerDims", "Player max location = " + max.toString());
-
-        info = new GameObject(t);
-        speed = info.getSpeed();
-        layer_num = info.getLayer();
-
-        visible = false;
-
-        width = info.getDimensions().getX() * ppm.getX();
-        height = info.getDimensions().getY() * ppm.getY();
-        active = true;
 
         // Set hitbox
         hitbox_object = new RectangleHitbox(pos, pixels_per_metre, info.getDimensions());
@@ -79,7 +75,7 @@ public abstract class Entity
 
     public int getLayer()
     {
-        return layer_num;
+        return layer;
     }
 
     public float getX()

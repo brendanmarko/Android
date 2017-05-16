@@ -7,9 +7,9 @@ public class Bullet extends Projectile
     // Debug toggle
     private int     DEBUG = 0;
 
-    public Bullet(Entity o, Position pos, Position p, Position max, char t)
+    public Bullet(Entity o, Position pos, Position max, Position p, char t)
     {
-        super(o, pos, p, max, t);
+        super(o, pos, max, p, t);
     }
 
     public boolean inBounds()

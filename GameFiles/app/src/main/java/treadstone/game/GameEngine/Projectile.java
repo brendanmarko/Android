@@ -1,15 +1,13 @@
 package treadstone.game.GameEngine;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Rect;
 import android.util.Log;
+import android.graphics.Rect;
+import android.graphics.Bitmap;
 
-public abstract class Projectile extends Entity
+public abstract class Projectile extends MovableEntity
 {
     // Debug toggle
-    private int                 DEBUG = 0;
+    private int                 DEBUG = 1;
 
     private Position            pixels_per_metre;
     private Position            position;
@@ -28,10 +26,11 @@ public abstract class Projectile extends Entity
     public abstract boolean     inBounds();
     public abstract void        update();
 
-    public Projectile(Entity o, Position pos, Position p, Position max, char t)
+    public Projectile(Entity o, Position pos, Position max, Position p, char t)
     {
-        // super(pos, p, max, t);
+        super(pos, max, p, t);
         owner = o;
+
         position = new Position(pos.getX(), pos.getY());
         active = true;
         max_bounds = new Position(max.getX() * p.getX(), max.getY() * p.getY());
@@ -41,7 +40,7 @@ public abstract class Projectile extends Entity
         height = info.getDimensions().getY() * pixels_per_metre.getY();
 
         // Set hitbox
-        hitbox_object = new RectangleHitbox(pos, pixels_per_metre, info.getDimensions());
+        hitbox_object = new RectangleHitbox(pos, getPPM(), getObjInfo().getDimensions());
 
         if (DEBUG == 1)
             Log.d("Projectile/CTOR", "Projectile created!");
@@ -52,6 +51,7 @@ public abstract class Projectile extends Entity
         return owner;
     }
 
+    @Override
     public String toString()
     {
         return "Projectile info: " + "Owner: " + owner.toString() + ", Position: " + position.toString();
@@ -82,11 +82,6 @@ public abstract class Projectile extends Entity
         return visible;
     }
 
-    public GameObject getObjInfo()
-    {
-        return info;
-    }
-
     public int getLayer()
     {
         return info.getLayer();
@@ -107,14 +102,6 @@ public abstract class Projectile extends Entity
         position = new Position(x, y);
     }
 
-    public Bitmap createBitmap(Context c, String s)
-    {
-        int id = c.getResources().getIdentifier(s, "drawable", c.getPackageName());
-        image = BitmapFactory.decodeResource(c.getResources(), id);
-        image = Bitmap.createScaledBitmap(image, (int) (width * info.getAnimateFrameCount()), (int) (height * info.getAnimateFrameCount()), false);
-        return image;
-    }
-
     public Position getMaxBounds()
     {
         return max_bounds;
@@ -125,6 +112,7 @@ public abstract class Projectile extends Entity
         return hitbox_object.getHitbox();
     }
 
+    @Override
     public void updateHitbox(float x, float y)
     {
         if (DEBUG == 1)

@@ -13,14 +13,9 @@ public abstract class MovableEntity extends Entity
             Log.d("MovableE/CTOR", "Empty MovableE created.");
     }
 
-    public MovableEntity(Position s, Position m, Position ppm, char t)
+    public MovableEntity(Position p, Position m, Position ppm, char t)
     {
-        super(s, m, ppm, t);
-    }
-
-    public void update()
-    {
-
+        super(p, m, ppm, t);
     }
 
 }
