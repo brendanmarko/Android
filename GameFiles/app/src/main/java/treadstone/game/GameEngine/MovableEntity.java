@@ -6,8 +6,8 @@ public abstract class MovableEntity extends Entity
 {
     // Debug toggle
     private int                     DEBUG = 1;
-    private float                   speed;
 
+    private float                   speed;
 
     public MovableEntity()
     {
@@ -27,7 +27,7 @@ public abstract class MovableEntity extends Entity
     public String toString()
     {
         if (DEBUG == 1)
-            Log.d("MoveableE/toString", "Current MovableE @" + getPosition().toString() + " w/ speed " + getSpeed());
+            Log.d("MovableE/toString", "Current MovableE @" + getPosition().toString() + " w/ speed " + getSpeed());
         return "Current MovableE @" + getPosition().toString() + " w/ speed " + getSpeed();
     }
 
