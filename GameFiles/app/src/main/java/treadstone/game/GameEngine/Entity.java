@@ -9,7 +9,7 @@ import android.util.Log;
 public abstract class Entity
 {
     // Debug toggle
-    private int                 DEBUG = 1;
+    private int                 DEBUG = 0;
 
     private Position            pixels_per_metre;
     private Position            position;
@@ -37,7 +37,6 @@ public abstract class Entity
         if (DEBUG == 1)
             Log.d("Entity/CTOR", "Entity created @ " + pos.toString() + ", type = " + t);
 
-        // Allows Entity to move to the edge of the map
         max_bounds = new Position(max.getX() * p.getX(), max.getY() * p.getY());
         pixels_per_metre = p;
         info = new GameObject(t);
@@ -58,6 +57,9 @@ public abstract class Entity
 
         // Set hitbox
         hitbox_object = new RectangleHitbox(pos, pixels_per_metre, info.getDimensions());
+
+        if (DEBUG == 1)
+            Log.d("Entity/obj", "Hitbox set properly");
     }
 
     public Bitmap createBitmap(Context c, String s)
@@ -66,11 +68,6 @@ public abstract class Entity
         image = BitmapFactory.decodeResource(c.getResources(), id);
         image = Bitmap.createScaledBitmap(image, (int) (width * info.getAnimateFrameCount()), (int) (height * info.getAnimateFrameCount()), false);
         return image;
-    }
-
-    public Position scaleToPixel(Position p)
-    {
-        return new Position(p.getX() * pixels_per_metre.getX(), p.getY() * pixels_per_metre.getY());
     }
 
     public int getLayer()

@@ -141,8 +141,7 @@ public class ViewPort
             Log.d("VIEWPORT/CLIP", "VPC: " + viewport_centre.toString() + " VIEWSPACE: " + viewable_size.toString());
             Log.d("VIEWPORT/CLIP", "Checking P(L) " + p.getX() + " < " + (viewport_centre.getX() - viewable_size.getX()/4));
         }
-
-
+        
         if (p.getX() < (viewport_centre.getX() - viewable_size.getX()/4))
         {
             if (DEBUG == 1)

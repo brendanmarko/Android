@@ -1,0 +1,16 @@
+May 16
+======
+I had known for awhile that my Projectile class and Entity/MovableEntity needed some tidying up and decided to polish off the classes before proceeding.
+It's a good thing that I did, simplifying the inheritance made for an easy way to create projectiles. I will have to do some work on MovableEntity with
+some sort of field for movement types later before I can look at changing the way some projectiles react with entities.
+
+Completed
+=========
+1. Consolidated Projectile to use inheritance from Entity
+2. Tided up Entity/MovableEntity
+3. Changed all CTORs to have same pattern of variables
+
+To do
+=====
+1. Add movement type field to Objects
+2. Handle the new MT in GameView

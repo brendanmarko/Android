@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class CollisionManager
 {
     // Debug toggle
-    private int DEBUG = 0;
+    private int DEBUG = 1;
 
     public CollisionManager()
     {
