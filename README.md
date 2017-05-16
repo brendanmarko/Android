@@ -36,7 +36,11 @@ The ultimate goal of this project is to have a fully functioning 2D space shoote
   
   [x] Display projectiles in correct positions in GameView
   
-  [ ] Restore projectile movement and collision checking
+  [x] Restore projectile movement and collision checking
+  
+  [x] Consolidate and organize Entity subclasses
+  
+  [ ] Finalize MovableEntity and Projectile basics 
   
   ## Phase 3 (pending)
   [ ] Enemy Projectiles
