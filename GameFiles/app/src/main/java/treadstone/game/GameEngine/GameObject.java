@@ -7,11 +7,11 @@ import java.util.Random;
 public class GameObject
 {
     private char            type;
-    private int             layer;
-    private String          image_name;
-    private int             animateFrameCount;
-    private Position        dimensions; // assigned as [Width, Height]
+    private int             animateFrameCount, layer;
     private float           speed;
+    private String          movementType;
+    private String          image_name;
+    private Position        dimensions; // assigned as [Width, Height]
 
     GameObject(char object_type)
     {
@@ -31,6 +31,7 @@ public class GameObject
                 animateFrameCount = 1;
                 dimensions = new Position(2.0f, 3.0f);
                 speed = 10.0f;
+                movementType = "dynamic";
                 break;
             }
 
@@ -42,6 +43,7 @@ public class GameObject
                 animateFrameCount = 1;
                 dimensions = new Position(1.0f, 1.0f);
                 speed = 20.0f;
+                movementType = "dynamic";
                 break;
             }
 
@@ -52,7 +54,7 @@ public class GameObject
                 image_name = "debris";
                 animateFrameCount = 1;
                 dimensions = new Position(1.0f, 1.0f);
-                speed = 0.0f;
+                movementType = "static";
                 break;
             }
 
@@ -64,6 +66,7 @@ public class GameObject
                 animateFrameCount = 1;
                 dimensions = new Position(2.0f, 3.0f);
                 speed = 10.0f;
+                movementType = "dynamic";
                 break;
             }
 
@@ -75,6 +78,7 @@ public class GameObject
                 animateFrameCount = 1;
                 dimensions = new Position(2.0f, 1.0f);
                 speed = 14.0f;
+                movementType = "dynamic";
                 break;
             }
 
@@ -87,6 +91,7 @@ public class GameObject
                 dimensions = new Position(1f, 1f);
                 Random r = new Random();
                 speed = 18.0f * r.nextFloat();
+                movementType = "dynamic";
                 break;
             }
 
@@ -99,6 +104,7 @@ public class GameObject
                 dimensions = new Position(1.0f, 1.0f);
                 Random r = new Random();
                 speed = 12.0f * r.nextFloat();
+                movementType = "dynamic";
                 break;
             }
 
@@ -108,6 +114,7 @@ public class GameObject
                 image_name = "default";
                 speed = 0.0f;
                 dimensions = new Position(0.0f, 0.0f);
+                movementType = "static";
         }
     }
 
@@ -145,6 +152,11 @@ public class GameObject
     {
         Log.d("GameObject", image_name + " dimens: " + dimensions + " in layer " + layer);
         return image_name + " dimens: " + dimensions + " in layer " + layer;
+    }
+
+    public String getMovementType()
+    {
+        return movementType;
     }
 
 }

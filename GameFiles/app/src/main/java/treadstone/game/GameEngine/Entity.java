@@ -19,7 +19,7 @@ public abstract class Entity
     private Bitmap              image;
     private GameObject          info;
     private boolean             active, visible;
-    private float               height, width, speed;
+    private float               height, width;
 
     private RectangleHitbox     hitbox_object;
 
@@ -41,7 +41,6 @@ public abstract class Entity
         pixels_per_metre = p;
         info = new GameObject(t);
         layer = info.getLayer();
-        speed = info.getSpeed();
         width = info.getDimensions().getX() * p.getX();
         height = info.getDimensions().getY() * p.getY();
         active = true;
@@ -142,11 +141,6 @@ public abstract class Entity
         visible = true;
     }
 
-    public float getSpeed()
-    {
-        return speed;
-    }
-
     public boolean isActive()
     {
         return active;
@@ -157,12 +151,17 @@ public abstract class Entity
         return info;
     }
 
+    public String movementType()
+    {
+        return info.getMovementType();
+    }
+
     public String toString()
     {
         if (DEBUG == 1)
-            Log.d("entity_to_string", "POS: " + position.toString() + " SPEED: " + getSpeed() + "isVisible = " + isVisible() + " Type: " + info.getType());
+            Log.d("entity_to_string", "POS: " + position.toString() + " isVisible = " + isVisible() + " Type: " + info.getType());
 
-        return "POS: " + position.toString() + " SPEED: " + getSpeed() + "isVisible = " + visible + " Type: " + info.getType();
+        return "POS: " + position.toString() + "isVisible = " + visible + " Type: " + info.getType();
     }
 
     public Rect getHitbox()

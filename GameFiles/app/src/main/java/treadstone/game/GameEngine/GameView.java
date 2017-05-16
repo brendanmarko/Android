@@ -24,7 +24,6 @@ public class GameView extends SurfaceView implements Runnable
     // Viewport/Level/Player info
     private Position                        pixels_per_metre;
     private Player                          curr_player;
-    private Position                        screen_size;
     private ViewPort                        viewport;
     private LevelManager                    level_manager;
     private float                           displacementX, displacementY;
@@ -44,7 +43,6 @@ public class GameView extends SurfaceView implements Runnable
     public GameView(Context c, Position m)
     {
         super(c);
-        screen_size = m;
         init();
 
         initViewPort(m);
@@ -59,7 +57,7 @@ public class GameView extends SurfaceView implements Runnable
         projectileMgr = new ProjectileManager(viewport);
 
         // Projectile buffer
-        temp_buffer = new ArrayList<Projectile>();
+        temp_buffer = new ArrayList<>();
     }
 
     public void init()
@@ -71,7 +69,7 @@ public class GameView extends SurfaceView implements Runnable
     public void loadLevel(Context c, String n, Position s)
     {
         level_manager = null;
-        level_manager = new LevelManager(c, n, viewport.getPixelsPerMetre());
+        level_manager = new LevelManager(c, n, pixels_per_metre);
     }
 
     @Override
@@ -263,19 +261,19 @@ public class GameView extends SurfaceView implements Runnable
         {
             case BULLET:
                 type = 'b';
-                x = new Bullet(curr_player, curr_player.getPosition(), viewport.getMaxBounds(), viewport.getPixelsPerMetre(), type);
+                x = new Bullet(curr_player, curr_player.getPosition(), viewport.getMaxBounds(), pixels_per_metre, type);
                 temp_buffer.add(x);
                 break;
 
             case MISSILE:
                 type = 'm';
-                x = new Missile(curr_player, curr_player.getPosition(), viewport.getMaxBounds(), viewport.getPixelsPerMetre(), type);
+                x = new Missile(curr_player, curr_player.getPosition(), viewport.getMaxBounds(), pixels_per_metre, type);
                 temp_buffer.add(x);
                 break;
 
             case SHIELD:
                 type = 's';
-                x = new Bullet(curr_player, curr_player.getPosition(), viewport.getMaxBounds(), viewport.getPixelsPerMetre(), type);
+                x = new Bullet(curr_player, curr_player.getPosition(), viewport.getMaxBounds(), pixels_per_metre, type);
                 temp_buffer.add(x);
                 break;
         }
@@ -305,7 +303,7 @@ public class GameView extends SurfaceView implements Runnable
                     Log.d("GameView/UpdateE", "ENTITY SHOULD BE VISIBLE");
                     e.setVisible();
 
-                    if (e.getSpeed() > 0.0f)
+                    if (e.movementType().equals("dynamic"))
                     {
                         MovableEntity m = (MovableEntity) e;
                         m.update();
@@ -431,4 +429,4 @@ public class GameView extends SurfaceView implements Runnable
 
     }
 
-} // end : GameView Class
+}
