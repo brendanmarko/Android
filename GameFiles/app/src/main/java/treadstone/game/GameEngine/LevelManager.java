@@ -18,7 +18,7 @@ public class LevelManager
     private LevelData               level_data;
     private ArrayList<Entity>       game_objects;
     private Bitmap[]                bitmaps;
-    private Position                pixels_per_metre, endpoint;
+    private Position                pixels_per_metre, end_point, start_point;
     private boolean                 playing;
 
     public LevelManager(Context c, String level_name, Position ppm)
@@ -39,7 +39,7 @@ public class LevelManager
         level_max = level_data.getMapDimens();
 
         // Initialize Bitmap/Game object storage
-        game_objects = new ArrayList<Entity>();
+        game_objects = new ArrayList<>();
         bitmaps = new Bitmap[20];
 
         // Load the map
@@ -128,11 +128,18 @@ public class LevelManager
         if (d == '.')
             return;
 
-        else if (d == 'x')
+        else if (d == '@')
+        {
+            if (DEBUG == 1)
+                Log.d("LevelMgr/objCreate", "Setting starting point ref");
+            start_point = new Position(p.getX() * pixels_per_metre.getX(), p.getY() * pixels_per_metre.getY());
+        }
+
+        else if (d == '#')
         {
             if (DEBUG == 1)
                 Log.d("LevelMgr/objCreate", "Setting endpoint ref");
-            endpoint = new Position(p.getX() * pixels_per_metre.getX(), p.getY() * pixels_per_metre.getY());
+            end_point = new Position(p.getX() * pixels_per_metre.getX(), p.getY() * pixels_per_metre.getY());
         }
 
         else
@@ -231,7 +238,12 @@ public class LevelManager
 
     public Position getEndpoint()
     {
-        return endpoint;
+        return end_point;
+    }
+
+    public Position getStartPoint()
+    {
+        return start_point;
     }
 
 }

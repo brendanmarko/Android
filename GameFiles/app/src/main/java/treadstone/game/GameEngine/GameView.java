@@ -22,7 +22,7 @@ public class GameView extends SurfaceView implements Runnable
     volatile boolean                        view_active;
 
     // Viewport/Level/Player info
-    private Position                        pixels_per_metre, endpoint;
+    private Position                        pixels_per_metre;
     private Player                          curr_player;
     private ViewPort                        viewport;
     private LevelManager                    level_manager;
@@ -34,18 +34,24 @@ public class GameView extends SurfaceView implements Runnable
     private SurfaceHolder                   curr_holder;
 
     // Managers
-    private ProjectileManager               projectileMgr;
-    private CollisionManager                collisionMgr;
+    private EntityManager                   entity_manager;
+    private HitboxManager                   hitbox_manager;
+    private ProjectileManager               projectile_manager;
+    private CollisionManager                collision_manager;
 
-    // Temp buffer for Projectiles
-    private ArrayList<Projectile>           temp_buffer;
+    // Temp buffers
+    private ArrayList<Projectile>           projectile_buffer;
+    private ArrayList<Entity>               entity_buffer;
 
     public GameView(Context c, Position m)
     {
         super(c);
-        init();
+        paint = new Paint();
+        curr_holder = getHolder();
 
-        initViewPort(m);
+        viewport = new ViewPort(new Position(m.getX() * 0.9f, m.getY()));
+        pixels_per_metre = viewport.getPixelsPerMetre();
+
         initLevel(c);
         initPlayer();
 
@@ -53,20 +59,18 @@ public class GameView extends SurfaceView implements Runnable
         viewport.setMapDimens(level_manager.getMapDimens());
 
         // Mgr init
-        collisionMgr = new CollisionManager();
-        projectileMgr = new ProjectileManager(viewport);
+        hitbox_manager = new HitboxManager();
+        collision_manager = new CollisionManager();
+        projectile_manager = new ProjectileManager(viewport);
+        entity_manager = new EntityManager(c, viewport, level_manager.getStartPoint(), level_manager.getEndpoint(), level_manager.getGameObjects());
 
-        // Projectile buffer
-        temp_buffer = new ArrayList<>();
+        // Temp buffers
+        entity_buffer = new ArrayList<>();
+        projectile_buffer = new ArrayList<>();
+
     }
 
-    public void init()
-    {
-        paint = new Paint();
-        curr_holder = getHolder();
-    }
-
-    public void loadLevel(Context c, String n, Position s)
+    public void loadLevel(Context c, String n)
     {
         level_manager = null;
         level_manager = new LevelManager(c, n, pixels_per_metre);
@@ -87,7 +91,7 @@ public class GameView extends SurfaceView implements Runnable
 
     // update()
     // This function is called once every iteration of the game loop and handles the changes in
-    // the game world objects within LevelManager.getGameOjbects()
+    // all the game world objects
     public void update()
     {
         showObjects();
@@ -109,16 +113,9 @@ public class GameView extends SurfaceView implements Runnable
         if (DEBUG == 1)
             Log.d("GameView/UpdateP", "Updating Projectiles @ GameView");
 
-            if (DEBUG == 1)
-                Log.d("GameView/UpdateP", "=== Inside Else");
-
-            projectileMgr.addBuffer(this.getContext(), temp_buffer);
-            projectileMgr.update(displacementX, displacementY);
-
-            if (DEBUG == 1)
-                Log.d("GameView/UpdateP", "=== Complete update and removing from buffer with size: " + projectileMgr.numProjectiles());
-
-            temp_buffer.removeAll(temp_buffer);
+        projectile_manager.addBuffer(this.getContext(), projectile_buffer);
+        projectile_manager.update(displacementX, displacementY);
+        projectile_buffer.removeAll(projectile_buffer);
     }
 
     public void draw()
@@ -133,52 +130,15 @@ public class GameView extends SurfaceView implements Runnable
             paint.setColor(Color.argb(255, 0, 0, 0));
 
             // Draw to Screen
-            drawEntities();
-            drawProjectiles();
-            drawHitboxes();
+            entity_manager.draw(canvas, paint);
+            projectile_manager.draw(canvas, paint);
+            hitbox_manager.draw(entity_manager.getEntities(), projectile_manager.getProjectiles(), canvas, paint);
 
             // Unlock and draw
             curr_holder.unlockCanvasAndPost(canvas);
         }
 
     }
-
-    public void drawProjectiles()
-    {
-        Rect r = new Rect();
-
-        if  (DEBUG == 1)
-            Log.d("GameView/DrawPrj", "Drawing Projectiles within GameView with size: " + projectileMgr.getProjectiles().size());
-
-        for (int layer = -1; layer < 3; layer++)
-        {
-            for (Projectile p : projectileMgr.getProjectiles())
-            {
-                if (p.isVisible() && p.getLayer() == layer)
-                {
-                    r.set(viewport.worldToScreen(p.getPosition(), p.getObjInfo().getDimensions()));
-                    canvas.drawBitmap(projectileMgr.getBitmap(p.getObjInfo().getType()), r.left + p.getOwner().getWidth(), r.top + p.getOwner().getHeight()/3, paint);
-                }
-            }
-        }
-    }
-
-    public void drawEntities()
-    {
-        Rect new_target = new Rect();
-
-        for (int layer = -1; layer < 3; layer++)
-        {
-            for (Entity e : level_manager.getGameObjects())
-            {
-                if (e.isVisible() && e.getLayer() == layer)
-                {
-                    new_target.set(viewport.worldToScreen(e.getPosition(), e.getObjInfo().getDimensions()));
-                    canvas.drawBitmap(level_manager.getBitmap(e.getObjInfo().getType()), new_target.left, new_target.top, paint);
-                }
-            }
-        }
-    }   
 
     public void control()
     {
@@ -262,19 +222,19 @@ public class GameView extends SurfaceView implements Runnable
             case BULLET:
                 type = 'b';
                 x = new Bullet(curr_player, curr_player.getPosition(), viewport.getMaxBounds(), pixels_per_metre, type);
-                temp_buffer.add(x);
+                projectile_buffer.add(x);
                 break;
 
             case MISSILE:
                 type = 'm';
                 x = new Missile(curr_player, curr_player.getPosition(), viewport.getMaxBounds(), pixels_per_metre, type);
-                temp_buffer.add(x);
+                projectile_buffer.add(x);
                 break;
 
             case SHIELD:
                 type = 's';
                 x = new Bullet(curr_player, curr_player.getPosition(), viewport.getMaxBounds(), pixels_per_metre, type);
-                temp_buffer.add(x);
+                projectile_buffer.add(x);
                 break;
         }
 
@@ -284,42 +244,12 @@ public class GameView extends SurfaceView implements Runnable
 
     public void updateEntities()
     {
-        for (Entity e : level_manager.getGameObjects())
-        {
-            if (e.isActive())
-            {
+        if (DEBUG == 1)
+            Log.d("GameView/UpdateP", "Updating Entities @ GameView");
 
-                if (DEBUG == 1)
-                    Log.d("GameView/UpEnt", "Examining: " + e.toString());
-
-                if (viewport.clipObject(e.getPosition()))
-                {
-                    Log.d("GameView/UpdateE", "ENTITY SHOULD BE INVISIBLE");
-                    e.setInvisible();
-                }
-
-                else
-                {
-                    Log.d("GameView/UpdateE", "ENTITY SHOULD BE VISIBLE");
-                    e.setVisible();
-
-                    if (e.movementType().equals("dynamic"))
-                    {
-                        MovableEntity m = (MovableEntity) e;
-                        m.update();
-
-                        if (m.getObjInfo().getType() == 'p')
-                            viewport.setViewPortCentre(curr_player.getPosition());
-                    }
-                }
-
-                if (DEBUG == 1)
-                    Log.d("GameView/UpEnt", "Post-Examining: " + e.toString());
-
-                e.updateHitbox(displacementX, displacementY);
-
-            }
-        }
+        entity_manager.addBuffer(this.getContext(), entity_buffer);
+        entity_manager.update(displacementX, displacementY);
+        entity_buffer.removeAll(entity_buffer);
     }
 
     // void calcDisplacement
@@ -341,18 +271,9 @@ public class GameView extends SurfaceView implements Runnable
         calcDisplacement();
     }
 
-    // void initViewPort()
-    // This function handles the ViewPort's creation wrt the size and ppm
-    public void initViewPort(Position m)
-    {
-        viewport = new ViewPort(new Position(m.getX() * 0.9f, m.getY()));
-        pixels_per_metre = viewport.getPixelsPerMetre();
-    }
-
     public void initLevel(Context c)
     {
-        loadLevel(c, "TestLevel", new Position(0.0f, 0.0f));
-        endpoint = level_manager.getEndpoint();
+        loadLevel(c, "TestLevel");
     }
 
     public void initPlayer()
@@ -369,70 +290,15 @@ public class GameView extends SurfaceView implements Runnable
             showObjects();
         }
 
-        collisionMgr.entityCollisions(level_manager.getGameObjects());
+        collision_manager.entityCollisions(level_manager.getGameObjects());
 
         if (DEBUG == 1)
             Log.d("GameView/CollChk", "Checking for collisions wrt Entities/Projectiles");
 
-        collisionMgr.projectileCollisions(level_manager.getGameObjects(), projectileMgr.getProjectiles());
+        collision_manager.projectileCollisions(level_manager.getGameObjects(), projectile_manager.getProjectiles());
 
         if (DEBUG == 1)
             Log.d("GameView/CollChk", "Collision check completed.");
-    }
-
-    public void drawHitboxes()
-    {
-        Rect box;
-
-        paint.setColor(Color.argb(255, 100, 100, 200));
-
-        if (DEBUG == 1)
-            Log.d("GameView/drawHB", "Drawing Entity boxes");
-
-        for (Entity e : level_manager.getGameObjects())
-        {
-            if (DEBUG == 1)
-                Log.d("GameView/drawHB", "Drawing entity: " + e.toString());
-
-            if (e.isVisible())
-            {
-                box = new Rect(e.getHitbox());
-                canvas.drawRect(box.left, box.top, box.right, box.bottom, paint);
-            }
-
-            else
-                box = null;
-
-            if (DEBUG == 1 && box != null)
-                Log.d("GameView/drawHB", "Box value: " + box.toString());
-
-        }
-
-        if (DEBUG == 1)
-            Log.d("GameView/drawHB", "Drawing Projectile boxes");
-
-        paint.setColor(Color.argb(255, 255, 255, 0));
-
-        for (Projectile p : projectileMgr.getProjectiles())
-        {
-            if (p.isVisible())
-            {
-                box = new Rect(p.getHitbox());
-                canvas.drawRect(box.left, box.top, box.right, box.bottom, paint);
-            }
-
-            else
-                box = null;
-
-            if (DEBUG == 1 && box != null)
-                Log.d("GameView/drawHBP", "Prj value: " + box.toString());
-        }
-
-    }
-
-    public Position endPoint()
-    {
-        return endpoint;
     }
 
 }

@@ -14,3 +14,18 @@ To do
 =====
 1. Add movement type field to Objects
 2. Handle the new MT in GameView
+
+May 17
+======
+In the spirit of reorganzing the code a bit before moving on, I alleviated a lot of the work done within GameView and assigned it to separate Manager
+classes that I created. I also added the movement type and the check for it within GameView that I wanted to accomplish yesterday!
+
+Completed
+=========
+1. Added HitboxManager and EntityManager as helper classes for GameView
+2. MovementType added to GameObjects, handled in MovableEntity
+
+To do
+=====
+1. Projectile interaction with Entities
+2. Projectile interaction with max bounds

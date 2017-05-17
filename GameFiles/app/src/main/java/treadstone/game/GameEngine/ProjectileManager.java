@@ -2,6 +2,9 @@ package treadstone.game.GameEngine;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.Log;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -19,15 +22,10 @@ public class ProjectileManager
     {
         viewport = v;
         bitmaps = new Bitmap[20];
-        projectiles = new ArrayList<Projectile>();
+        projectiles = new ArrayList<>();
 
         if (DEBUG == 1)
             Log.d("PMgr/CTOR", "ProjectileManager initialized!");
-    }
-
-    public int numProjectiles()
-    {
-        return projectiles.size();
     }
 
     public ArrayList<Projectile> getProjectiles()
@@ -146,6 +144,26 @@ public class ProjectileManager
         }
 
         return bitmaps[index];
+    }
+
+    public void draw(Canvas canvas, Paint paint)
+    {
+        Rect r = new Rect();
+
+        if  (DEBUG == 1)
+            Log.d("GameView/DrawPrj", "Drawing Projectiles with size: " + projectiles.size());
+
+        for (int layer = 0; layer < 3; layer++)
+        {
+            for (Projectile p : projectiles)
+            {
+                if (p.isVisible() && p.getLayer() == layer)
+                {
+                    r.set(viewport.worldToScreen(p.getPosition(), p.getObjInfo().getDimensions()));
+                    canvas.drawBitmap(getBitmap(p.getObjInfo().getType()), r.left + p.getOwner().getWidth(), r.top + p.getOwner().getHeight()/3, paint);
+                }
+            }
+        }
     }
 
 }

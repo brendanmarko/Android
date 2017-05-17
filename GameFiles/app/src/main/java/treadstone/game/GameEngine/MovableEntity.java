@@ -45,9 +45,9 @@ public abstract class MovableEntity extends Entity
         return direction;
     }
 
-    public void setDirection()
+    public void setDirection(String d)
     {
-        return;
+        direction = d;
     }
 
 }
