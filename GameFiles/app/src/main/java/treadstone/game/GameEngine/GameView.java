@@ -22,7 +22,7 @@ public class GameView extends SurfaceView implements Runnable
     volatile boolean                        view_active;
 
     // Viewport/Level/Player info
-    private Position                        pixels_per_metre;
+    private Position                        pixels_per_metre, endpoint;
     private Player                          curr_player;
     private ViewPort                        viewport;
     private LevelManager                    level_manager;
@@ -352,6 +352,7 @@ public class GameView extends SurfaceView implements Runnable
     public void initLevel(Context c)
     {
         loadLevel(c, "TestLevel", new Position(0.0f, 0.0f));
+        endpoint = level_manager.getEndpoint();
     }
 
     public void initPlayer()
@@ -427,6 +428,11 @@ public class GameView extends SurfaceView implements Runnable
                 Log.d("GameView/drawHBP", "Prj value: " + box.toString());
         }
 
+    }
+
+    public Position endPoint()
+    {
+        return endpoint;
     }
 
 }
