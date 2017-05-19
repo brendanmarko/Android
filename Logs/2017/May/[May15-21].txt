@@ -29,3 +29,18 @@ To do
 =====
 1. Projectile interaction with Entities
 2. Projectile interaction with max bounds
+
+May 18
+======
+When I was reviewing my code for the Manager classes (Entity, Prj, Level) I noticed there was a lot of repeated code and thought that creating
+an inheritance structure for this would do wonders for simplicity!
+I wrote everything up for it and will test to make sure everything works smoothly when I get home!
+
+Completed
+=========
+1. Added Manager class
+2. Extended all *Manager classes to utilize their new super class
+
+To do
+=====
+1. Projectile reqs from other day!
