@@ -12,6 +12,7 @@ public abstract class Manager<T>
 
     private Bitmap[]        bitmaps;
     private ArrayList<T>    storage;
+    private int             index;
 
     Manager()
     {
@@ -26,7 +27,6 @@ public abstract class Manager<T>
 
     public Bitmap getBitmap(char c)
     {
-        int index;
         switch (c)
         {
             case 'p':
@@ -50,7 +50,6 @@ public abstract class Manager<T>
 
     public int getIndex(char c)
     {
-        int index;
         switch (c)
         {
             case 'p':

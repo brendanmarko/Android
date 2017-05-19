@@ -15,6 +15,7 @@ public class ProjectileManager extends Manager
     private int                     DEBUG = 0;
 
     private ViewPort                viewport;
+    private int                     index;
 
     public ProjectileManager(ViewPort v)
     {
@@ -44,7 +45,6 @@ public class ProjectileManager extends Manager
     	for (Iterator<Projectile> iterator = getList().iterator(); iterator.hasNext();)
         {
             Projectile e = iterator.next();
-
             if (e.isActive())
             {
                 if (viewport.clipObject(e.getPosition()))
@@ -92,7 +92,6 @@ public class ProjectileManager extends Manager
 
     public int getIndex(char c)
     {
-        int index;
         switch (c)
         {
             case 'b':
@@ -116,7 +115,6 @@ public class ProjectileManager extends Manager
 
     public Bitmap getBitmap(char c)
     {
-        int index;
         switch (c)
         {
             case 'b':

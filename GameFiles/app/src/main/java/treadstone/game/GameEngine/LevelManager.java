@@ -45,7 +45,6 @@ public class LevelManager extends Manager
     {
         curr_index = -1;
 
-        // Reads in the Level layout file
         for (int y = 0; y < level_data.getTiles().size(); y++)
         {
             for (int x = 0; x < level_data.getTiles().get(y).length(); x++)
@@ -65,7 +64,6 @@ public class LevelManager extends Manager
         {
             if (DEBUG == 1)
                 Log.d("LevelMgr/objCreate", "Setting starting point ref");
-
             start_point = new Position(p.getX() * pixels_per_metre.getX(), p.getY() * pixels_per_metre.getY());
         }
 
@@ -73,7 +71,6 @@ public class LevelManager extends Manager
         {
             if (DEBUG == 1)
                 Log.d("LevelMgr/objCreate", "Setting endpoint ref");
-
             end_point = new Position(p.getX() * pixels_per_metre.getX(), p.getY() * pixels_per_metre.getY());
         }
 
@@ -93,7 +90,6 @@ public class LevelManager extends Manager
 
                     if (DEBUG == 1)
                         Log.d("player_test_object+++", "Player created: " + player.toString());
-
                     break;
 
                 case 'e':

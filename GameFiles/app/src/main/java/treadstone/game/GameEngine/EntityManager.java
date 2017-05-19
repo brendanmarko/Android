@@ -32,7 +32,6 @@ public class EntityManager extends Manager
         for (Iterator<Entity> iterator = getList().iterator(); iterator.hasNext();)
         {
             Entity e = iterator.next();
-
             if (e.isActive())
             {
                 if (DEBUG == 1)
