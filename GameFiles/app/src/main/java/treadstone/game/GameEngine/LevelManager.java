@@ -65,6 +65,7 @@ public class LevelManager extends Manager
         {
             if (DEBUG == 1)
                 Log.d("LevelMgr/objCreate", "Setting starting point ref");
+
             start_point = new Position(p.getX() * pixels_per_metre.getX(), p.getY() * pixels_per_metre.getY());
         }
 
@@ -72,6 +73,7 @@ public class LevelManager extends Manager
         {
             if (DEBUG == 1)
                 Log.d("LevelMgr/objCreate", "Setting endpoint ref");
+
             end_point = new Position(p.getX() * pixels_per_metre.getX(), p.getY() * pixels_per_metre.getY());
         }
 
@@ -106,9 +108,7 @@ public class LevelManager extends Manager
                     checkBitmap(c, temp, d);
                     break;
             }
-
         }
-
     }
 
     public String getLevelName()
