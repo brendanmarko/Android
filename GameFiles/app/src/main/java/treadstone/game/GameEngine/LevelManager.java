@@ -6,7 +6,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-public class LevelManager
+public class LevelManager extends Manager
 {
     // Debug toggle
     private int                     DEBUG = 1;
@@ -16,18 +16,16 @@ public class LevelManager
     private String                  level;
     private Position                level_max;
     private LevelData               level_data;
-    private ArrayList<Entity>       game_objects;
-    private Bitmap[]                bitmaps;
+
     private Position                pixels_per_metre, end_point, start_point;
     private boolean                 playing;
 
     public LevelManager(Context c, String level_name, Position ppm)
     {
-        // Gather parameters
+        super();
         level = level_name;
         pixels_per_metre = ppm;
 
-        // Initialize level
         switch (level_name)
         {
             case "TestLevel":
@@ -38,62 +36,9 @@ public class LevelManager
         level_data.printTiles();
         level_max = level_data.getMapDimens();
 
-        // Initialize Bitmap/Game object storage
-        game_objects = new ArrayList<>();
-        bitmaps = new Bitmap[20];
-
         // Load the map
         loadMapData(c);
         playing = true;
-
-    }
-
-    public Bitmap getBitmap(char c)
-    {
-        int index;
-        switch (c)
-        {
-            case 'p':
-                index = 1;
-                break;
-
-            case 'e':
-                index = 2;
-                break;
-
-            case 'd':
-                index = 3;
-                break;
-
-            default:
-                index = 0;
-        }
-
-        return bitmaps[index];
-    }
-
-    public int getIndex(char c)
-    {
-        int index;
-        switch (c)
-        {
-            case 'p':
-                index = 1;
-                break;
-
-            case 'e':
-                index = 2;
-                break;
-
-            case 'd':
-                index = 3;
-                break;
-
-            default:
-                index = 0;
-        }
-
-        return index;
     }
 
     private void loadMapData(Context c)
@@ -107,18 +52,6 @@ public class LevelManager
                 objectCreate(c, new Position(x * pixels_per_metre.getX(), y * pixels_per_metre.getY()), level_data.getTiles().get(y).charAt(x));
         }
 
-    }
-
-    // checkBitmap()
-    // This functions checks if the specified Bitmap has already been prepared for use and prepares
-    // the specified Bitmap if it requires it (builds up Bitmap array)
-    public void checkBitmap(Context c, Entity e, char d)
-    {
-        if (bitmaps[getIndex(d)] != null)
-            return;
-
-        else
-            bitmaps[getIndex(d)] = e.createBitmap(c, e.getImageName());
     }
 
     // objectCreate(char)
@@ -150,34 +83,26 @@ public class LevelManager
             switch (d)
             {
                 case 'p':
-
-                    if (DEBUG == 1)
-                        Log.d("player_test_object+++", "Creating player...");
-
                     temp = new Player(p, level_max, pixels_per_metre, d);
-
-                    if (DEBUG == 1)
-                        Log.d("player_test_object+++", "Player created!");
-
                     player = (Player) temp;
+                    player_index = curr_index;
+                    getList().add(player);
+                    checkBitmap(c, temp, d);
 
                     if (DEBUG == 1)
-                        Log.d("player_test_object+++", player.toString());
+                        Log.d("player_test_object+++", "Player created: " + player.toString());
 
-                    player_index = curr_index;
-                    game_objects.add(player);
-                    checkBitmap(c, temp, d);
                     break;
 
                 case 'e':
                     temp = new TestEnemy(p, level_max, pixels_per_metre, d);
-                    game_objects.add(temp);
+                    getList().add(temp);
                     checkBitmap(c, temp, d);
                     break;
 
                 case 'd':
                     temp = new Debris(p, level_max, pixels_per_metre, d);
-                    game_objects.add(temp);
+                    getList().add(temp);
                     checkBitmap(c, temp, d);
                     break;
             }
@@ -189,11 +114,6 @@ public class LevelManager
     public String getLevelName()
     {
         return level;
-    }
-
-    public Bitmap[] getBitmaps()
-    {
-        return bitmaps;
     }
 
     public LevelData getLevelData()
@@ -211,20 +131,6 @@ public class LevelManager
         return player_index;
     }
 
-    public ArrayList<Entity> getGameObjects()
-    {
-        return game_objects;
-    }
-
-    public Entity objectAt(int i)
-    {
-        return game_objects.get(i);
-    }
-
-    public Bitmap bitmapAt(int i)
-    {
-        return bitmaps[i];
-    }
 
     public Player getPlayer()
     {

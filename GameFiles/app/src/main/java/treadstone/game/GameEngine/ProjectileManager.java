@@ -9,28 +9,20 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class ProjectileManager
+public class ProjectileManager extends Manager
 {
     // Debug toggle
     private int                     DEBUG = 0;
 
     private ViewPort                viewport;
-    private Bitmap[]                bitmaps;
-    private ArrayList<Projectile>   projectiles;
 
     public ProjectileManager(ViewPort v)
     {
+        super();
         viewport = v;
-        bitmaps = new Bitmap[20];
-        projectiles = new ArrayList<>();
 
         if (DEBUG == 1)
             Log.d("PMgr/CTOR", "ProjectileManager initialized!");
-    }
-
-    public ArrayList<Projectile> getProjectiles()
-    {
-        return projectiles;
     }
 
     public void addBuffer(Context c, ArrayList<Projectile> buffer)
@@ -41,15 +33,15 @@ public class ProjectileManager
         for (Projectile p : buffer)
             checkBitmap(c, p, p.getObjInfo().getType());
 
-        projectiles.addAll(buffer);
+        getList().addAll(buffer);
 
         if (DEBUG == 1)
-            Log.d("PrjMgr/addBuffer" , "New Size of projectiles: " + projectiles.size());
+            Log.d("PrjMgr/addBuffer" , "New Size of projectiles: " + getList().size());
     }
 
     public void update(float x, float y)
     {
-    	for (Iterator<Projectile> iterator = projectiles.iterator(); iterator.hasNext();)
+    	for (Iterator<Projectile> iterator = getList().iterator(); iterator.hasNext();)
         {
             Projectile e = iterator.next();
 
@@ -91,11 +83,11 @@ public class ProjectileManager
 
     public void checkBitmap(Context c, Projectile p, char d)
     {
-        if (bitmaps[getIndex(d)] != null)
+        if (getBitmaps()[getIndex(d)] != null)
             return;
 
         else
-            bitmaps[getIndex(d)] = p.createBitmap(c, p.getObjInfo().getImageName());
+            getBitmaps()[getIndex(d)] = p.createBitmap(c, p.getObjInfo().getImageName());
     }
 
     public int getIndex(char c)
@@ -143,7 +135,7 @@ public class ProjectileManager
                 index = 0;
         }
 
-        return bitmaps[index];
+        return getBitmaps()[index];
     }
 
     public void draw(Canvas canvas, Paint paint)
@@ -151,12 +143,13 @@ public class ProjectileManager
         Rect r = new Rect();
 
         if  (DEBUG == 1)
-            Log.d("GameView/DrawPrj", "Drawing Projectiles with size: " + projectiles.size());
+            Log.d("GameView/DrawPrj", "Drawing Projectiles with size: " + getList().size());
 
         for (int layer = 0; layer < 3; layer++)
         {
-            for (Projectile p : projectiles)
+            for (Iterator<Projectile> iterator = getList().iterator(); iterator.hasNext();)
             {
+                Projectile p = iterator.next();
                 if (p.isVisible() && p.getLayer() == layer)
                 {
                     r.set(viewport.worldToScreen(p.getPosition(), p.getObjInfo().getDimensions()));
@@ -165,5 +158,4 @@ public class ProjectileManager
             }
         }
     }
-
 }

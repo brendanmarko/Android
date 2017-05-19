@@ -8,36 +8,31 @@ import android.graphics.Paint;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class EntityManager
+public class EntityManager extends Manager
 {
     // Debug toggle
     private int                 DEBUG = 0;
 
-    private Bitmap[]            bitmaps;
     private ViewPort            viewport;
     private Position            start_point, end_point;
-    private ArrayList<Entity>   entity_list;
 
     EntityManager(Context c, ViewPort v, Position start, Position end, ArrayList<Entity> list)
     {
+        super();
         viewport = v;
-        bitmaps = new Bitmap[20];
         start_point = start;
         end_point = end;
-        entity_list = new ArrayList<>();
         addBuffer(c, list);
-    }
-
-    public ArrayList<Entity> getEntities()
-    {
-        return entity_list;
     }
 
     public void update(float x, float y)
     {
-        for (Entity e : entity_list)
+        for (Iterator<Entity> iterator = getList().iterator(); iterator.hasNext();)
         {
+            Entity e = iterator.next();
+
             if (e.isActive())
             {
                 if (DEBUG == 1)
@@ -69,7 +64,6 @@ public class EntityManager
                     Log.d("GameView/UpEnt", "Post-Examining: " + e.toString());
 
                 e.updateHitbox(x, y);
-
             }
         }
     }
@@ -82,67 +76,10 @@ public class EntityManager
         for (Entity e : buffer)
             checkBitmap(c, e, e.getObjInfo().getType());
 
-        entity_list.addAll(buffer);
+        getList().addAll(buffer);
 
         if (DEBUG == 1)
-            Log.d("PrjMgr/addBuffer" , "New Size of projectiles: " + entity_list.size());
-    }
-
-    public void checkBitmap(Context c, Entity e, char d)
-    {
-        if (bitmaps[getIndex(d)] != null)
-            return;
-
-        else
-            bitmaps[getIndex(d)] = e.createBitmap(c, e.getObjInfo().getImageName());
-    }
-
-    public int getIndex(char c)
-    {
-        int index;
-        switch (c)
-        {
-            case 'b':
-                index = 1;
-                break;
-
-            case 'm':
-                index = 2;
-                break;
-
-            case 's':
-                index = 3;
-                break;
-
-            default:
-                index = 0;
-        }
-
-        return index;
-    }
-
-    public Bitmap getBitmap(char c)
-    {
-        int index;
-        switch (c)
-        {
-            case 'b':
-                index = 1;
-                break;
-
-            case 'm':
-                index = 2;
-                break;
-
-            case 's':
-                index = 3;
-                break;
-
-            default:
-                index = 0;
-        }
-
-        return bitmaps[index];
+            Log.d("PrjMgr/addBuffer" , "New Size of projectiles: " + getList().size());
     }
 
     public void draw(Canvas canvas, Paint paint)
@@ -150,12 +87,13 @@ public class EntityManager
         Rect r = new Rect();
 
         if  (DEBUG == 1)
-            Log.d("GameView/DrawPrj", "Drawing Entities with size: " + entity_list.size());
+            Log.d("GameView/DrawPrj", "Drawing Entities with size: " + getList().size());
 
         for (int layer = 0; layer < 3; layer++)
         {
-            for (Entity e : entity_list)
+            for (Iterator<Entity> iterator = getList().iterator(); iterator.hasNext();)
             {
+                Entity e = iterator.next();
                 if (e.isVisible() && e.getLayer() == layer)
                 {
                     r.set(viewport.worldToScreen(e.getPosition(), e.getObjInfo().getDimensions()));
