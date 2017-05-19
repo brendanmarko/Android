@@ -43,6 +43,8 @@ The ultimate goal of this project is to have a fully functioning 2D space shoote
   [x] Finalize MovableEntity and Projectile basics 
   
   ## Phase 3 (Current)
+  [x] Consolidate *Manager classes  
+
   [ ] Add Projectile reaction to Entities/Boundaries
   
   [ ] Enemy Projectiles
