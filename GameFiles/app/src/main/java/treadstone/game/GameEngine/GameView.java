@@ -2,6 +2,7 @@ package treadstone.game.GameEngine;
 
 import android.util.Log;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import android.graphics.Rect;
 import android.graphics.Color;
@@ -62,7 +63,7 @@ public class GameView extends SurfaceView implements Runnable
         hitbox_manager = new HitboxManager();
         collision_manager = new CollisionManager();
         projectile_manager = new ProjectileManager(viewport);
-        entity_manager = new EntityManager(c, viewport, level_manager.getStartPoint(), level_manager.getEndpoint(), level_manager.getGameObjects());
+        entity_manager = new EntityManager(c, viewport, level_manager.getStartPoint(), level_manager.getEndpoint(), level_manager.getList());
 
         // Temp buffers
         entity_buffer = new ArrayList<>();
@@ -102,8 +103,9 @@ public class GameView extends SurfaceView implements Runnable
 
     public void showObjects()
     {
-        for (Entity e : level_manager.getGameObjects())
+        for (Iterator<Entity> iterator = entity_manager.getList().iterator(); iterator.hasNext();)
         {
+            Entity e = iterator.next();
             e.toString();
         }
     }
@@ -132,7 +134,7 @@ public class GameView extends SurfaceView implements Runnable
             // Draw to Screen
             entity_manager.draw(canvas, paint);
             projectile_manager.draw(canvas, paint);
-            hitbox_manager.draw(entity_manager.getEntities(), projectile_manager.getProjectiles(), canvas, paint);
+            hitbox_manager.draw(entity_manager.getList(), projectile_manager.getList(), canvas, paint);
 
             // Unlock and draw
             curr_holder.unlockCanvasAndPost(canvas);
@@ -290,12 +292,12 @@ public class GameView extends SurfaceView implements Runnable
             showObjects();
         }
 
-        collision_manager.entityCollisions(level_manager.getGameObjects());
+        collision_manager.entityCollisions(level_manager.getList());
 
         if (DEBUG == 1)
             Log.d("GameView/CollChk", "Checking for collisions wrt Entities/Projectiles");
 
-        collision_manager.projectileCollisions(level_manager.getGameObjects(), projectile_manager.getProjectiles());
+        collision_manager.projectileCollisions(level_manager.getList(), projectile_manager.getList());
 
         if (DEBUG == 1)
             Log.d("GameView/CollChk", "Collision check completed.");
