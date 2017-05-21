@@ -7,7 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Canvas;
 
-public class HitboxManager
+public class HitboxManager extends Manager
 {
     // Debug toggle
     private int         DEBUG = 0;
@@ -27,6 +27,7 @@ public class HitboxManager
         if (DEBUG == 1)
             Log.d("GameView/drawHB", "Drawing Entity boxes");
 
+        // Draw Hitboxes for Entities
         for (Entity e : ent)
         {
             if (DEBUG == 1)
@@ -48,6 +49,7 @@ public class HitboxManager
 
         p.setColor(Color.argb(255, 255, 255, 0));
 
+        // Draw Hitboxes for Projectiles
         for (Projectile projectile : prj)
         {
             if (projectile.isVisible())

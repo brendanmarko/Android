@@ -44,3 +44,21 @@ Completed
 To do
 =====
 1. Projectile reqs from other day!
+
+May 21
+======
+Today while working on determining the direction that a MovableEntity is facing, which is important for which direction projectiles will be sent from an
+object that has the capacity to shoot, I saw a lot of code from the Player class could be repurposed and used within the MovableEntity class. After moving
+some functions around, I am able to determine the direction that an entity is facing now, which will give me the ability to direct projectiles to move in the
+specified direction.
+
+Completed
+=========
+1. Consolidated Player class functions into MovableEntity
+2. Added some helpers to Player
+3. The calcDisplacement function now uses a String as a paramater instead of float, since MovableEntities will not have to calculate angles as the Player does
+
+To do
+=====
+1. Shoot Projectile in desired direction
+2. Projectile interaction with Entities/Bounds

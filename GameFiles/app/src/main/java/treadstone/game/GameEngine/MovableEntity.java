@@ -7,8 +7,10 @@ public abstract class MovableEntity extends Entity
     // Debug toggle
     private int                     DEBUG = 1;
 
-    private float                   speed;
+    private float                   speed, x_dir, y_dir;
     private String                  direction;
+
+    public abstract void update();
 
     public MovableEntity()
     {
@@ -50,4 +52,129 @@ public abstract class MovableEntity extends Entity
         direction = d;
     }
 
+    public void calcDisplacement(String d)
+    {
+
+        if (d.equals(("E")))
+        {
+            x_dir = getSpeed();
+            y_dir = 0.0f;
+        }
+
+        else if (d.equals("NE"))
+        {
+            y_dir = (0 - getSpeed()) * 0.75f;
+            x_dir = getSpeed() * 0.75f;
+        }
+
+        else if (d.equals("N"))
+        {
+            x_dir = 0.0f;
+            y_dir = 0 - getSpeed();
+        }
+
+        else if (d.equals("NW"))
+        {
+            x_dir = (0 - getSpeed()) * 0.75f;
+            y_dir = (0 - getSpeed()) * 0.75f;
+        }
+
+        else if (d.equals("W"))
+        {
+            x_dir = 0 - getSpeed();
+            y_dir = 0.0f;
+        }
+
+        else if (d.equals("SW"))
+        {
+            x_dir = (0 - getSpeed()) * 0.75f;
+            y_dir = getSpeed() * 0.75f;
+        }
+
+        else if (d.equals("S"))
+        {
+            x_dir = 0.0f;
+            y_dir = getSpeed();
+            direction = "S";
+        }
+
+        else if (d.equals("SE"))
+        {
+            x_dir = getSpeed() * 0.75f;
+            y_dir = getSpeed() * 0.75f;
+            direction = "SE";
+        }
+
+        if (DEBUG == 1)
+            Log.d("MovableE/calcD", "x_dir, y_dir: " + x_dir + ", " + y_dir);
+
+        // Change position
+        setPosition(getPosition().getX() + x_dir, getPosition().getY() + y_dir);
+    }
+
+    public float directionX()
+    {
+        return x_dir;
+    }
+
+    public float directionY()
+    {
+        return y_dir;
+    }
+
+    public void boundsCheck(float x, float y)
+    {
+        if (DEBUG == 1)
+            Log.d("MovableE.boundsCheck", "Checking bounds for Player with [X, Y]: " + x + ", " + y);
+
+        float new_x = 0.0f;
+        float new_y = 0.0f;
+
+        if (x < 0.0f)
+        {
+            if (DEBUG == 1)
+                Log.d("MovableE.boundsCheck", "X < 0");
+
+            new_x = 0.0f;
+        }
+
+        else if (x + getWidth() > getMaxBounds().getX())
+        {
+            if (DEBUG == 1)
+                Log.d("MovableE.boundsCheck", "X > max");
+
+            new_x = getMaxBounds().getX() - getWidth();
+        }
+
+        else if (new_x == 0.0f)
+        {
+            new_x = x;
+        }
+
+        if (y < 0.0f)
+        {
+            if (DEBUG == 1)
+                Log.d("Player.boundsCheck", "Y < 0");
+
+            new_y = 0.0f;
+        }
+
+        else if (y + getHeight() > getMaxBounds().getY())
+        {
+            if (DEBUG == 1)
+                Log.d("Player.boundsCheck", "Y > max");
+
+            new_y = getMaxBounds().getY() - getHeight();
+        }
+
+        else if (new_y == 0.0f)
+        {
+            new_y = y;
+        }
+
+        if (DEBUG == 1)
+            Log.d("Player.boundsCheck", "Checking bounds for Player with [X, Y]: " + new_x + ", " + new_y);
+
+        setPosition(new_x, new_y);
+    }
 }

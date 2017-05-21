@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Player extends MovableEntity
 {
-    private float                       spanX, spanY, spanZ, x_dir, y_dir;
+    private float                       spanX, spanY, spanZ;
     private ArrayList<Projectile>       projectiles;
     private double                      angle_of_movement;
     private int                         DEBUG = 0;
@@ -30,9 +30,6 @@ public class Player extends MovableEntity
             Log.d("Player/processMove", "Current Player location: " + getX() + ", " + getY());
         }
 
-        // Set Player to moving
-        //setMovable();
-
         // Get lengths of sides
         spanX = x_location - getX();
         spanY = y_location - getY() + (0.5f * getHeight());
@@ -50,7 +47,7 @@ public class Player extends MovableEntity
             Log.d("player.movement", "Angle after adjust: " + angle_of_movement);
 
         // Apply to Object using move speed
-        calcDisplacement(angle_of_movement);
+        calcDisplacement(convertAngleToString(angle_of_movement));
         boundsCheck(getX(), getY());
     }
 
@@ -60,123 +57,8 @@ public class Player extends MovableEntity
         if (DEBUG == 1)
             Log.d("Player_update", "update() called in Player");
 
-        setPosition(getPosition().getX() + x_dir, getPosition().getY() + y_dir);
+        setPosition(getPosition().getX() + directionX(), getPosition().getY() + directionY());
         boundsCheck(getX(), getY());
-    }
-
-    public void calcDisplacement(double angle)
-    {
-
-        if (angle == 0.0d)
-        {
-            x_dir = getSpeed();
-            y_dir = 0.0f;
-        }
-
-        else if (angle == 45.0d)
-        {
-            y_dir = (0 - getSpeed()) * 0.75f;
-            x_dir = getSpeed() * 0.75f;
-        }
-
-        else if (angle == 90.0d)
-        {
-            x_dir = 0.0f;
-            y_dir = 0 - getSpeed();
-        }
-
-        else if (angle == 135.0d)
-        {
-            x_dir = (0 - getSpeed()) * 0.75f;
-            y_dir = (0 - getSpeed()) * 0.75f;
-        }
-
-        else if (angle == 180.0d)
-        {
-            x_dir = 0 - getSpeed();
-            y_dir = 0.0f;
-        }
-
-        else if (angle == 225.0d)
-        {
-            x_dir = (0 - getSpeed()) * 0.75f;
-            y_dir = getSpeed() * 0.75f;
-        }
-
-        else if (angle == 270.0d)
-        {
-            x_dir = 0.0f;
-            y_dir = getSpeed();
-        }
-
-        else if (angle == 315.0d)
-        {
-            x_dir = getSpeed() * 0.75f;
-            y_dir = getSpeed() * 0.75f;
-        }
-
-        if (DEBUG == 1)
-            Log.d("Player/calcD", "x_dir, y_dir: " + x_dir + ", " + y_dir);
-
-        // Change position
-        setPosition(getPosition().getX() + x_dir, getPosition().getY() + y_dir);
-    }
-
-    public void boundsCheck(float x, float y)
-    {
-        if (DEBUG == 1)
-            Log.d("Player.boundsCheck", "Checking bounds for Player with [X, Y]: " + x + ", " + y);
-
-        float new_x = 0.0f;
-        float new_y = 0.0f;
-
-        if (x < 0.0f)
-        {
-            if (DEBUG == 1)
-                Log.d("Player.boundsCheck", "X < 0");
-
-            new_x = 0.0f;
-        }
-
-        else if (x + getWidth() > getMaxBounds().getX())
-        {
-            if (DEBUG == 1)
-                Log.d("Player.boundsCheck", "X > max");
-
-            new_x = getMaxBounds().getX() - getWidth();
-        }
-
-        else if (new_x == 0.0f)
-        {
-            new_x = x;
-        }
-
-        if (y < 0.0f)
-        {
-            if (DEBUG == 1)
-                Log.d("Player.boundsCheck", "Y < 0");
-
-            new_y = 0.0f;
-        }
-
-        else if (y + getHeight() > getMaxBounds().getY())
-        {
-            if (DEBUG == 1)
-                Log.d("Player.boundsCheck", "Y > max");
-
-            new_y = getMaxBounds().getY() - getHeight();
-        }
-
-        else if (new_y == 0.0f)
-        {
-            new_y = y;
-        }
-
-        if (DEBUG == 1)
-            Log.d("Player.boundsCheck", "Checking bounds for Player with [X, Y]: " + new_x + ", " + new_y);
-
-        setPosition(new_x, new_y);
-
     }
 
     public double getRadians(float x, float y, float z)
@@ -249,6 +131,51 @@ public class Player extends MovableEntity
 
         return f;
 
+    }
+
+    public String convertAngleToString(double angle)
+    {
+        if (angle == 0.0d)
+        {
+            setDirection("E");
+        }
+
+        else if (angle == 45.0d)
+        {
+            setDirection("NE");
+        }
+
+        else if (angle == 90.0d)
+        {
+            setDirection("N");
+        }
+
+        else if (angle == 135.0d)
+        {
+            setDirection("NW");
+        }
+
+        else if (angle == 180.0d)
+        {
+            setDirection("W");
+        }
+
+        else if (angle == 225.0d)
+        {
+            setDirection("SW");
+        }
+
+        else if (angle == 270.0d)
+        {
+            setDirection("S");
+        }
+
+        else if (angle == 315.0d)
+        {
+            setDirection("SE");
+        }
+
+        return getDirection();
     }
 
     // adjustAngle(double)

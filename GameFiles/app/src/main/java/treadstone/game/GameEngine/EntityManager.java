@@ -1,14 +1,12 @@
 package treadstone.game.GameEngine;
 
-import android.content.Context;
-import android.graphics.Bitmap;
+import android.util.Log;
+import java.util.Iterator;
+import java.util.ArrayList;
 import android.graphics.Rect;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.util.Log;
-
-import java.util.ArrayList;
-import java.util.Iterator;
+import android.content.Context;
 
 public class EntityManager extends Manager
 {
@@ -25,6 +23,7 @@ public class EntityManager extends Manager
         start_point = start;
         end_point = end;
         addBuffer(c, list);
+        initDirections();
     }
 
     public void update(float x, float y)
@@ -100,6 +99,30 @@ public class EntityManager extends Manager
                 }
             }
         }
+    }
+
+    public void initDirections()
+    {
+        if  (DEBUG == 1)
+            Log.d("GameView/initDir", "Initializing directions for entities");
+
+        for (Iterator<Entity> iterator = getList().iterator(); iterator.hasNext();)
+        {
+            Entity e = iterator.next();
+
+            if (e.movementType().equals("dynamic"))
+            {
+                MovableEntity m = (MovableEntity) e;
+
+                if (m.getObjInfo().getType() == 'p')
+                {
+                    //m.setDirection();
+                }
+
+            }
+
+        }
+
     }
 
 }
