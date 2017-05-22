@@ -5,7 +5,7 @@ import android.util.Log;
 public abstract class MovableEntity extends Entity
 {
     // Debug toggle
-    private int                     DEBUG = 1;
+    private int                     DEBUG = 0;
 
     private float                   speed, x_dir, y_dir;
     private String                  direction;
@@ -54,7 +54,6 @@ public abstract class MovableEntity extends Entity
 
     public void calcDisplacement(String d)
     {
-
         if (d.equals(("E")))
         {
             x_dir = getSpeed();
@@ -67,10 +66,22 @@ public abstract class MovableEntity extends Entity
             x_dir = getSpeed() * 0.75f;
         }
 
+        else if (d.equals("SE"))
+        {
+            x_dir = getSpeed() * 0.75f;
+            y_dir = getSpeed() * 0.75f;
+        }
+
         else if (d.equals("N"))
         {
             x_dir = 0.0f;
             y_dir = 0 - getSpeed();
+        }
+
+        else if (d.equals("S"))
+        {
+            x_dir = 0.0f;
+            y_dir = getSpeed();
         }
 
         else if (d.equals("NW"))
@@ -91,24 +102,10 @@ public abstract class MovableEntity extends Entity
             y_dir = getSpeed() * 0.75f;
         }
 
-        else if (d.equals("S"))
-        {
-            x_dir = 0.0f;
-            y_dir = getSpeed();
-            direction = "S";
-        }
-
-        else if (d.equals("SE"))
-        {
-            x_dir = getSpeed() * 0.75f;
-            y_dir = getSpeed() * 0.75f;
-            direction = "SE";
-        }
-
         if (DEBUG == 1)
-            Log.d("MovableE/calcD", "x_dir, y_dir: " + x_dir + ", " + y_dir);
+            Log.d("MovableE/calcD", "New Direction: " + direction);
 
-        // Change position
+        // Update position with movement increases
         setPosition(getPosition().getX() + x_dir, getPosition().getY() + y_dir);
     }
 
@@ -177,4 +174,5 @@ public abstract class MovableEntity extends Entity
 
         setPosition(new_x, new_y);
     }
+
 }

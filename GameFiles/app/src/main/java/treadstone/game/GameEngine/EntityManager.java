@@ -38,19 +38,20 @@ public class EntityManager extends Manager
 
                 if (viewport.clipObject(e.getPosition()))
                 {
-                    Log.d("GameView/UpdateE", "ENTITY SHOULD BE INVISIBLE");
+                    if (DEBUG == 1)
+                        Log.d("GameView/UpdateE", "ENTITY SHOULD BE INVISIBLE");
                     e.setInvisible();
                 }
 
                 else
                 {
-                    Log.d("GameView/UpdateE", "ENTITY SHOULD BE VISIBLE");
+                    if (DEBUG == 1)
+                        Log.d("GameView/UpdateE", "ENTITY SHOULD BE VISIBLE");
                     e.setVisible();
 
                     if (e.movementType().equals("dynamic"))
                     {
                         MovableEntity m = (MovableEntity) e;
-                        // m.setDirection(dir_finder.findDirection(e.getObjInfo().getType()));
                         m.update();
 
                         if (m.getObjInfo().getType() == 'p')
@@ -101,6 +102,8 @@ public class EntityManager extends Manager
         }
     }
 
+    // initDirections()
+    // This function initializes the directions of all the entities at run-time
     public void initDirections()
     {
         if  (DEBUG == 1)
@@ -109,20 +112,25 @@ public class EntityManager extends Manager
         for (Iterator<Entity> iterator = getList().iterator(); iterator.hasNext();)
         {
             Entity e = iterator.next();
-
             if (e.movementType().equals("dynamic"))
             {
                 MovableEntity m = (MovableEntity) e;
 
                 if (m.getObjInfo().getType() == 'p')
                 {
-                    //m.setDirection();
+                    m.setDirection("E");
+                    if (DEBUG == 1)
+                        Log.d("EntityMgr/initDir", "Initiated Player direction to: " + m.getDirection());
                 }
 
+                else
+                {
+                    m.setDirection("W");
+                    if (DEBUG == 1)
+                        Log.d("EntityMgr/initDir", "Initiated Entity direction to: " + m.getDirection());
+                }
             }
-
         }
-
     }
 
 }

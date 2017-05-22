@@ -5,11 +5,13 @@ import android.util.Log;
 public class Bullet extends Projectile
 {
     // Debug toggle
-    private int     DEBUG = 0;
+    private int         DEBUG = 0;
+    private String      init_direction;
 
-    public Bullet(Entity o, Position pos, Position max, Position p, char t)
+    public Bullet(MovableEntity o, Position pos, Position max, Position p, char t)
     {
         super(o, pos, max, p, t);
+        init_direction = o.getDirection();
     }
 
     public boolean inBounds()
@@ -33,9 +35,10 @@ public class Bullet extends Projectile
         if (DEBUG == 1)
             Log.d("Projectile/CTOR", "Before update: " + getPosition().toString());
 
-        setPosition(getPosition().getX() + getObjInfo().getSpeed(), getPosition().getY());
+        calcDisplacement(init_direction);
 
         if (DEBUG == 1)
             Log.d("Prj/update", " === New position: " + getPosition().toString());
     }
+
 }

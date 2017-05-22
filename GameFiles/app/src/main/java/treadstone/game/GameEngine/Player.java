@@ -4,7 +4,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-public class Player extends MovableEntity
+public class Player extends MovableEntity implements Shooter
 {
     private float                       spanX, spanY, spanZ;
     private ArrayList<Projectile>       projectiles;
@@ -230,7 +230,16 @@ public class Player extends MovableEntity
         {
             return 0.0d;
         }
+    }
 
-    } // end : adjustAngle
+    public void adjustDirection(float x, float y)
+    {
+
+    }
+
+    public void fireProjectile()
+    {
+        //
+    }
 
 }

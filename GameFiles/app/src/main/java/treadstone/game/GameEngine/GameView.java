@@ -14,7 +14,7 @@ import android.view.SurfaceHolder;
 public class GameView extends SurfaceView implements Runnable
 {
     // Debug toggle
-    private int                             DEBUG = 0;
+    private int                             DEBUG = 1;
 
     // Thread
     Thread                                  game_thread = null;
@@ -203,7 +203,9 @@ public class GameView extends SurfaceView implements Runnable
 
         else if (curr_motion.getAction() == MotionEvent.ACTION_MOVE)
         {
-            // To do
+            if (DEBUG == 1)
+                Log.d("GameView/onTouch", "ACTION_MOVE triggered!");
+            curr_player.adjustDirection(curr_motion.getX(), curr_motion.getY());
         }
 
         return true;
