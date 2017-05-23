@@ -185,20 +185,19 @@ public class GameView extends SurfaceView implements Runnable
         if (curr_motion.getAction() == MotionEvent.ACTION_UP)
         {
             if (DEBUG == 1)
-                Log.d("GV.onTouch", "Touch ended!");
-        }
-
-        else if (curr_motion.getAction() == MotionEvent.ACTION_DOWN)
-        {
-            if (DEBUG == 1)
-                Log.d("entering_action_move", "ProcessMovement to be called with Displacement values calculated");
+                Log.d("entering_action_up", "ProcessMovement to be called with Displacement values calculated");
 
             curr_player.processMovement(curr_motion.getX() + displacementX, curr_motion.getY() + displacementY);
             viewport.setViewPortCentre(curr_player.getPosition());
 
             if (DEBUG == 1)
                 Log.d("GameView.onTouch", "Current Centre: " + viewport.getViewPortCentre().toString());
+        }
 
+        else if (curr_motion.getAction() == MotionEvent.ACTION_DOWN)
+        {
+            if (DEBUG == 1)
+                Log.d("entering_action_down", "Screen touched");
         }
 
         else if (curr_motion.getAction() == MotionEvent.ACTION_MOVE)

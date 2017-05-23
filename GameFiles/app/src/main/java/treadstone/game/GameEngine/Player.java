@@ -66,14 +66,10 @@ public class Player extends MovableEntity implements Shooter
         double radians = 0.0d;
 
             if (x >= y)
-            {
                 radians = y/z;
-            }
 
             else if (x < y)
-            {
                 radians = x/z;
-            }
 
         return radians;
     }
