@@ -44,8 +44,12 @@ The ultimate goal of this project is to have a fully functioning 2D space shoote
   
   ## Phase 3 (Current)
   [x] Consolidate *Manager classes  
+  
+  [ ] Player Movement 2.0
 
   [ ] Add Projectile reaction to Entities/Boundaries
+  
+  ## Phase 4 (Pending)
   
   [ ] Enemy Projectiles
   
