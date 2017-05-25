@@ -197,4 +197,49 @@ public abstract class MovableEntity extends Entity
         return moving;
     }
 
+    public String convertAngleToString(double angle)
+    {
+        if (angle == 0.0d)
+        {
+            setDirection("E");
+        }
+
+        else if (angle == 45.0d)
+        {
+            setDirection("NE");
+        }
+
+        else if (angle == 90.0d)
+        {
+            setDirection("N");
+        }
+
+        else if (angle == 135.0d)
+        {
+            setDirection("NW");
+        }
+
+        else if (angle == 180.0d)
+        {
+            setDirection("W");
+        }
+
+        else if (angle == 225.0d)
+        {
+            setDirection("SW");
+        }
+
+        else if (angle == 270.0d)
+        {
+            setDirection("S");
+        }
+
+        else if (angle == 315.0d)
+        {
+            setDirection("SE");
+        }
+
+        return getDirection();
+    }
+
 }

@@ -4,7 +4,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-public class Player extends MovableEntity implements Shooter
+public class Player extends ArmedEntity implements Shooter
 {
     // Debug info
     private int                         DEBUG = 1;
@@ -54,6 +54,11 @@ public class Player extends MovableEntity implements Shooter
         // Apply to Object using move speed
         calcDisplacement(convertAngleToString(angle_of_movement));
         boundsCheck(getX(), getY());
+    }
+
+    public double calcAngle(float x, float y)
+    {
+        return 0.0d;
     }
 
     @Override
@@ -244,10 +249,11 @@ public class Player extends MovableEntity implements Shooter
         }
     }
 
-    public void adjustDirection(float x, float y)
+    public void adjustAimDirection(float x, float y)
     {
         if (DEBUG == 1)
             Log.d(DEBUG_TAG, "Adjustting player aim direction wrt: " + x + ", " + y);
+        setAimAngle(calcAngle(x, y));
     }
 
     public void fireProjectile()

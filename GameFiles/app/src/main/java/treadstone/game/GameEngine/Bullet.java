@@ -5,13 +5,13 @@ import android.util.Log;
 public class Bullet extends Projectile
 {
     // Debug toggle
-    private int         DEBUG = 0;
+    private int         DEBUG = 1;
     private String      init_direction;
 
-    public Bullet(MovableEntity o, Position pos, Position max, Position p, char t)
+    public Bullet(ArmedEntity o, Position pos, Position max, Position p, char t)
     {
         super(o, pos, max, p, t);
-        init_direction = o.getDirection();
+        init_direction = convertAngleToString(o.getAimAngle());
     }
 
     public boolean inBounds()
