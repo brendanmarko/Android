@@ -6,12 +6,12 @@ public class Bullet extends Projectile
 {
     // Debug toggle
     private int         DEBUG = 1;
-    private String      init_direction;
+    private double      init_direction;
 
     public Bullet(ArmedEntity o, Position pos, Position max, Position p, char t)
     {
         super(o, pos, max, p, t);
-        init_direction = convertAngleToString(o.getAimAngle());
+        init_direction = o.getAimAngle();
     }
 
     public boolean inBounds()

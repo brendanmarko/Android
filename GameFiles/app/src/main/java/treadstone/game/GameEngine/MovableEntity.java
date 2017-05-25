@@ -55,6 +55,20 @@ public abstract class MovableEntity extends Entity
         direction = d;
     }
 
+    public void calcDisplacement(double a)
+    {
+        float x = (float) (getSpeed() * Math.sin(a));
+        float y = (float) (getSpeed() * Math.sin(a));
+
+        if (DEBUG == 1)
+        {
+            Log.d(DEBUG_TAG, "calcDisplacement value X: " + x);
+            Log.d(DEBUG_TAG, "calcDisplacement value Y: " + y);
+        }
+
+        setPosition(getPosition().getX() + x, getPosition().getY() + y);
+    }
+
     public void calcDisplacement(String d)
     {
         if (d.equals(("E")))

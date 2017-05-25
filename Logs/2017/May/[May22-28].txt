@@ -1,0 +1,32 @@
+Summary
+=======
+The goal of this week is to overhaul the Player movement mechanism from using simple touch events to utilizing Gestures.
+This allows much greater freedom wrt the ability of the Player to move themselves.
+The secondary function of this development leg is to find the angle of single_tap events from the event that is invoking it.
+
+May 24
+======
+With the addition and integration of Gestures, the Player is now able to move and interact using Gestures
+
+Completed
+=========
+1. Added custom GestureDetector class
+2. Added handlers for Gesture events
+
+To do
+=====
+1. Find angle from invoking Entity to target location 
+
+May 25
+======
+Today I added in the ability to find the angle from an Entity to a target location on the screen. I had removed similar code earlier
+in favour of using the cardinal movement system only to need it again to find angles!
+
+Completed
+=========
+1. Find angle from Entity wrt target location
+2. Consolidate MovableEntity functions into ArmedEntity
+
+To do
+=====
+1. Apply the angle found from single_tap to the trajectory of projectiles

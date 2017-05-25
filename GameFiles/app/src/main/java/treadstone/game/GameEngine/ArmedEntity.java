@@ -53,7 +53,6 @@ public abstract class ArmedEntity extends MovableEntity
 
         if (DEBUG == 1)
             Log.d(DEBUG_TAG, "calcWorldAngle value (entity): " + aim_angle);
-
         return aim_angle;
     }
 

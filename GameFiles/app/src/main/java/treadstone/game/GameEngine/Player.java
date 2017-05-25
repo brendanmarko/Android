@@ -84,9 +84,4 @@ public class Player extends ArmedEntity implements Shooter
         setAimAngle(calcWorldAngle(x, y));
     }
 
-    public void fireProjectile()
-    {
-        //
-    }
-
 }
