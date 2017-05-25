@@ -106,7 +106,7 @@ public abstract class MovableEntity extends Entity
         }
 
         if (DEBUG == 1)
-            Log.d("MovableE/calcD", "New Direction: " + direction);
+            Log.d(DEBUG_TAG, "New Direction: " + direction + " & values: " + x_dir + ", " + y_dir);
 
         // Update position with movement increases
         setPosition(getPosition().getX() + x_dir, getPosition().getY() + y_dir);
