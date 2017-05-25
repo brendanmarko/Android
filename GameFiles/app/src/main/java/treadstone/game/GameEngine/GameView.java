@@ -1,8 +1,8 @@
 package treadstone.game.GameEngine;
 
 import android.util.Log;
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.ArrayList;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.content.Context;
@@ -10,11 +10,12 @@ import android.graphics.Canvas;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
+import android.support.v4.view.GestureDetectorCompat;
 
 public class GameView extends SurfaceView implements Runnable
 {
     // Debug toggle
-    private int                             DEBUG = 1;
+    private int                             DEBUG = 0;
 
     // Thread
     Thread                                  game_thread = null;
@@ -37,6 +38,10 @@ public class GameView extends SurfaceView implements Runnable
     private HitboxManager                   hitbox_manager;
     private ProjectileManager               projectile_manager;
     private CollisionManager                collision_manager;
+    private TouchManager                    touch_manager;
+
+    // Gestures
+    private GestureDetectorCompat           gesture_detector;
 
     // Temp buffers
     private ArrayList<Projectile>           projectile_buffer;
@@ -58,21 +63,33 @@ public class GameView extends SurfaceView implements Runnable
         viewport.setMapDimens(level_manager.getMapDimens());
 
         // Mgr init
+        touch_manager = new TouchManager(curr_player, viewport);
         hitbox_manager = new HitboxManager();
         collision_manager = new CollisionManager();
         projectile_manager = new ProjectileManager(viewport);
         entity_manager = new EntityManager(c, viewport, level_manager.getStartPoint(), level_manager.getEndpoint(), level_manager.getList());
 
+        // Assign TouchManager to GestureDetector
+        gesture_detector = new GestureDetectorCompat(c, touch_manager);
+        gesture_detector.setOnDoubleTapListener(touch_manager);
+
         // Temp buffers
         entity_buffer = new ArrayList<>();
         projectile_buffer = new ArrayList<>();
-
     }
 
     public void loadLevel(Context c, String n)
     {
         level_manager = null;
         level_manager = new LevelManager(c, n, pixels_per_metre);
+    }
+
+    // onTouchEvent
+    // This function handles the transfer of on-screen events
+    @Override
+    public boolean onTouchEvent(MotionEvent event)
+    {
+        return gesture_detector.onTouchEvent(event);
     }
 
     @Override
@@ -175,39 +192,6 @@ public class GameView extends SurfaceView implements Runnable
         view_active = true;
         game_thread = new Thread(this);
         game_thread.start();
-    }
-
-    public boolean onTouchEvent(MotionEvent curr_motion)
-    {
-        if (DEBUG == 1)
-            Log.d("on_touch_event+++", "GameView onTouch called!");
-
-        if (curr_motion.getAction() == MotionEvent.ACTION_UP)
-        {
-            if (DEBUG == 1)
-                Log.d("entering_action_up", "ProcessMovement to be called with Displacement values calculated");
-
-            curr_player.processMovement(curr_motion.getX() + displacementX, curr_motion.getY() + displacementY);
-            viewport.setViewPortCentre(curr_player.getPosition());
-
-            if (DEBUG == 1)
-                Log.d("GameView.onTouch", "Current Centre: " + viewport.getViewPortCentre().toString());
-        }
-
-        else if (curr_motion.getAction() == MotionEvent.ACTION_DOWN)
-        {
-            if (DEBUG == 1)
-                Log.d("entering_action_down", "Screen touched");
-        }
-
-        else if (curr_motion.getAction() == MotionEvent.ACTION_MOVE)
-        {
-            if (DEBUG == 1)
-                Log.d("GameView/onTouch", "ACTION_MOVE triggered!");
-            curr_player.adjustDirection(curr_motion.getX(), curr_motion.getY());
-        }
-
-        return true;
     }
 
     public void addProjectileToPlayer(ControllerFragment.ProjectileType p)

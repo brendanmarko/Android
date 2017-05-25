@@ -6,10 +6,13 @@ import java.util.ArrayList;
 
 public class Player extends MovableEntity implements Shooter
 {
+    // Debug info
+    private int                         DEBUG = 1;
+    private String                      DEBUG_TAG = "Player";
+
     private float                       spanX, spanY, spanZ;
     private ArrayList<Projectile>       projectiles;
     private double                      angle_of_movement;
-    private int                         DEBUG = 0;
 
     Player(Position s, Position m, Position ppm, char t)
     {
@@ -29,6 +32,8 @@ public class Player extends MovableEntity implements Shooter
             Log.d("Player/processMove", "Target location: " + x_location + ", " + y_location);
             Log.d("Player/processMove", "Current Player location: " + getX() + ", " + getY());
         }
+
+        startMovement();
 
         // Get lengths of sides
         spanX = x_location - getX();
@@ -55,10 +60,21 @@ public class Player extends MovableEntity implements Shooter
     public void update()
     {
         if (DEBUG == 1)
-            Log.d("Player_update", "update() called in Player");
+            //Log.d("Player_update", "update() called in Player");
 
-        setPosition(getPosition().getX() + directionX(), getPosition().getY() + directionY());
-        boundsCheck(getX(), getY());
+        if (isMoving())
+        {
+            setPosition(getPosition().getX() + directionX(), getPosition().getY() + directionY());
+            boundsCheck(getX(), getY());
+        }
+
+        else
+        {
+            if (DEBUG == 1)
+                Log.d(DEBUG_TAG, "Player is stopped currently!");
+            setPosition(getPosition().getX(), getPosition().getY());
+            boundsCheck(getX(), getY());
+        }
     }
 
     public double getRadians(float x, float y, float z)
@@ -230,7 +246,8 @@ public class Player extends MovableEntity implements Shooter
 
     public void adjustDirection(float x, float y)
     {
-
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "Adjustting player aim direction wrt: " + x + ", " + y);
     }
 
     public void fireProjectile()

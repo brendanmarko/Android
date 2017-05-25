@@ -19,6 +19,7 @@ public abstract class Projectile extends MovableEntity
         super(pos, max, p, t);
         owner = o;
         range = getObjInfo().getEffectiveRange();
+        startMovement();
 
         if (DEBUG == 1)
             Log.d("Projectile/CTOR", "Projectile created!");

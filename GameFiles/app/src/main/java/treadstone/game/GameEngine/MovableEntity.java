@@ -6,9 +6,11 @@ public abstract class MovableEntity extends Entity
 {
     // Debug toggle
     private int                     DEBUG = 0;
+    private String                  DEBUG_TAG = "MovableEntity";
 
     private float                   speed, x_dir, y_dir;
     private String                  direction;
+    private boolean                 moving;
 
     public abstract void update();
 
@@ -26,6 +28,7 @@ public abstract class MovableEntity extends Entity
         {
             speed = getObjInfo().getSpeed();
             direction = "";
+            moving = false;
         }
     }
 
@@ -173,6 +176,25 @@ public abstract class MovableEntity extends Entity
             Log.d("Player.boundsCheck", "Checking bounds for Player with [X, Y]: " + new_x + ", " + new_y);
 
         setPosition(new_x, new_y);
+    }
+
+    public void stopMovement()
+    {
+        moving = false;
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "Stopping MovableEntity movement!, moving = " + moving);
+    }
+
+    public void startMovement()
+    {
+        moving = true;
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "Starting MovableEntity movement, moving = " + moving);
+    }
+
+    public boolean isMoving()
+    {
+        return moving;
     }
 
 }
