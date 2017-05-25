@@ -5,7 +5,7 @@ import android.util.Log;
 public abstract class MovableEntity extends Entity
 {
     // Debug toggle
-    private int                     DEBUG = 0;
+    private int                     DEBUG = 1;
     private String                  DEBUG_TAG = "MovableEntity";
 
     private float                   speed, x_dir, y_dir;
@@ -57,8 +57,37 @@ public abstract class MovableEntity extends Entity
 
     public void calcDisplacement(double a)
     {
-        float x = (float) (getSpeed() * Math.sin(a));
-        float y = (float) (getSpeed() * Math.sin(a));
+        double x;
+
+        if ((90.0d <= a && a >= 0) || (a >= 270.0d && a <= 360.0d))
+        {
+            if (DEBUG == 1)
+                Log.d(DEBUG_TAG, "[X] Angle is within (0<x<90) || (270<x<360) -> POSITIVE");
+            x = Math.abs(Math.cos(a)) * getSpeed();
+        }
+
+        else
+        {
+            if (DEBUG == 1)
+                Log.d(DEBUG_TAG, "[X] Angle is within (90<x<270) -> NEGATIVE");
+            x = 0 - Math.abs(Math.cos(a)) * getSpeed();
+        }
+
+        double y;
+
+        if (180.0d <= a && a <= 360)
+        {
+            if (DEBUG == 1)
+                Log.d(DEBUG_TAG, "[Y] Angle is within (180<x<360) -> POSITIVE");
+            y = Math.abs(Math.sin(a)) * getSpeed();
+        }
+
+        else
+        {
+            if (DEBUG == 1)
+                Log.d(DEBUG_TAG, "[Y] Angle is within (0<x<180) -> NEGATIVE");
+            y = 0 - Math.abs(Math.sin(a)) * getSpeed();
+        }
 
         if (DEBUG == 1)
         {

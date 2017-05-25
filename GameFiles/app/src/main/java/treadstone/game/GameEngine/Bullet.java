@@ -11,6 +11,7 @@ public class Bullet extends Projectile
     public Bullet(ArmedEntity o, Position pos, Position max, Position p, char t)
     {
         super(o, pos, max, p, t);
+        startMovement();
         init_direction = o.getAimAngle();
     }
 
