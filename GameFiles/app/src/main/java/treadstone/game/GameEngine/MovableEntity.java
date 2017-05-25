@@ -95,7 +95,7 @@ public abstract class MovableEntity extends Entity
             Log.d(DEBUG_TAG, "calcDisplacement value Y: " + y);
         }
 
-        setPosition(getPosition().getX() + x, getPosition().getY() + y);
+        setPosition(getPosition().getX() + (float) x, getPosition().getY() + (float) y);
     }
 
     public void calcDisplacement(String d)
