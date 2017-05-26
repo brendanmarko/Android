@@ -13,6 +13,7 @@ public class Bullet extends Projectile
     public Bullet(ArmedEntity o, Position pos, Position max, Position p, char t)
     {
         super(o, pos, max, p, t);
+        startMovement();
         init_direction = o.getAimAngle();
         if (DEBUG == 1)
             Log.d(DEBUG_TAG, "Angle bullet is created with: " + init_direction);
