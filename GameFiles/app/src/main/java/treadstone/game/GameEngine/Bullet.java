@@ -4,20 +4,24 @@ import android.util.Log;
 
 public class Bullet extends Projectile
 {
-    // Debug toggle
+    // Debug info
     private int         DEBUG = 1;
+    private String      DEBUG_TAG = "Bullet";
+
     private double      init_direction;
 
     public Bullet(ArmedEntity o, Position pos, Position max, Position p, char t)
     {
         super(o, pos, max, p, t);
         init_direction = o.getAimAngle();
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "Angle bullet is created with: " + init_direction);
     }
 
     public boolean inBounds()
     {
         if (DEBUG == 1)
-            Log.d("Bullet/inBounds", "Position inBounds: " + getPosition().toString());
+            // Log.d("Bullet/inBounds", "Position inBounds: " + getPosition().toString());
 
         if (getPosition().getX() + getWidth() > getMaxBounds().getX())
         {
@@ -32,13 +36,13 @@ public class Bullet extends Projectile
 
     public void update()
     {
-        if (DEBUG == 1)
-            Log.d("Projectile/CTOR", "Before update: " + getPosition().toString());
+        //if (DEBUG == 1)
+            //Log.d("Projectile/CTOR", "Before update: " + getPosition().toString());
 
         calcDisplacement(init_direction);
 
-        if (DEBUG == 1)
-            Log.d("Prj/update", " === New position: " + getPosition().toString());
+        //if (DEBUG == 1)
+            //Log.d("Prj/update", " === New position: " + getPosition().toString());
     }
 
 }

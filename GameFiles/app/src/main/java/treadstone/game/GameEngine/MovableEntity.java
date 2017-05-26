@@ -5,7 +5,7 @@ import android.util.Log;
 public abstract class MovableEntity extends Entity
 {
     // Debug toggle
-    private int                     DEBUG = 0;
+    private int                     DEBUG = 1;
     private String                  DEBUG_TAG = "MovableEntity";
 
     private float                   speed, x_dir, y_dir;
@@ -55,10 +55,21 @@ public abstract class MovableEntity extends Entity
         direction = d;
     }
 
+
+    /
     public void calcDisplacement(double a)
     {
-        float x = (float) (getSpeed() * Math.sin(a));
-        float y = (float) (getSpeed() * Math.sin(a));
+        float x = 0.0f;
+        float y = 0.0f;
+
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "calcDisplacement Angle: " + a);
+
+        if (0.0d <= a && a <= 90.0d)
+        {
+            y = (float) Math.asin(a) * getSpeed();
+            x = (float) Math.sqrt(getSpeed() * getSpeed() - (y * y));
+        }
 
         if (DEBUG == 1)
         {
@@ -68,6 +79,8 @@ public abstract class MovableEntity extends Entity
 
         setPosition(getPosition().getX() + x, getPosition().getY() + y);
     }
+
+
 
     public void calcDisplacement(String d)
     {

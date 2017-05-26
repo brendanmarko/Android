@@ -2,8 +2,6 @@ package treadstone.game.GameEngine;
 
 import android.util.Log;
 
-import java.util.ArrayList;
-
 public class Player extends ArmedEntity implements Shooter
 {
     // Debug info
@@ -30,16 +28,6 @@ public class Player extends ArmedEntity implements Shooter
         }
 
         startMovement();
-
-        /*
-        // Get lengths of sides
-        spanX = x_location - getX();
-        spanY = y_location - getY() + (0.5f * getHeight());
-        spanZ = (float) Math.sqrt((spanX * spanX) + (spanY * spanY));
-
-        // Find angle for movement
-        angle_of_movement = calcAngle(Math.toDegrees(Math.asin(Math.abs(getRadians(spanX, spanY, spanZ)))));
-        */
         angle_of_movement = calcWorldAngle(x_location, y_location);
 
         if (DEBUG == 1)
@@ -70,7 +58,7 @@ public class Player extends ArmedEntity implements Shooter
         else
         {
             if (DEBUG == 1)
-                Log.d(DEBUG_TAG, "Player is stopped currently!");
+                //Log.d(DEBUG_TAG, "Player is stopped currently!");
             setPosition(getPosition().getX(), getPosition().getY());
             boundsCheck(getX(), getY());
         }
