@@ -10,14 +10,15 @@ public abstract class ArmedEntity extends MovableEntity
     private int                     DEBUG = 1;
     private String                  DEBUG_TAG = "ArmedEntity";
 
-    private float                   spanX, spanY, spanZ;
+    private Position                aim_bounds;
     private double                  aim_angle;
+    private String                  aim_direction;
     private ArrayList<Projectile>   projectiles;
-
 
     public ArmedEntity(Position p, Position m, Position ppm, char t)
     {
         super(p, m, ppm, t);
+        aim_bounds = new Position(0.0f, 0.0f);
         projectiles = new ArrayList<>();
     }
 
@@ -31,196 +32,148 @@ public abstract class ArmedEntity extends MovableEntity
         aim_angle = d;
     }
 
-    public double calcWorldAngle(float x, float y)
+    public void setAimDirection(String s)
     {
-        spanX = x - getX();
-        spanY = y - getY() + (0.5f * getHeight());
-        spanZ = (float) Math.sqrt((spanX * spanX) + (spanY * spanY));
-        aim_angle = calcAngle(Math.toDegrees(Math.asin(Math.abs(getRadians(spanX, spanY, spanZ)))));
+        aim_direction = s;
+    }
+
+    public double playerAimAngle(double f, int quadrant)
+    {
+        double temp = 0.0d;
 
         if (DEBUG == 1)
-            Log.d(DEBUG_TAG, "calcWorldAngle value (point): " + aim_angle);
+            Log.d(DEBUG_TAG, "Angle passed to CalcAngle: " + f);
 
-        return aim_angle;
-    }
-
-    public double calcWorldAngle(Entity e)
-    {
-        spanX = e.getX() - getX();
-        spanY = e.getY() - getY() + (0.5f * getHeight());
-        spanZ = (float) Math.sqrt((spanX * spanX) + (spanY * spanY));
-        aim_angle = calcAngle(Math.toDegrees(Math.asin(Math.abs(getRadians(spanX, spanY, spanZ)))));
-
-        if (DEBUG == 1)
-            Log.d(DEBUG_TAG, "calcWorldAngle value (entity): " + aim_angle);
-        return aim_angle;
-    }
-
-    public double getRadians(float x, float y, float z)
-    {
-        double radians = 0.0d;
-
-        if (x >= y)
-            radians = y/z;
-
-        else if (x < y)
-            radians = x/z;
-
-        return radians;
-    }
-
-    // adjustAngle(double)
-    // This function takes an angle as a parameter and rounds it to the closest value of the 8 cardinal
-    // directions to move the Player.
-    public double adjustAngle(double f)
-    {
-        // Between [22.5, 67.5]
-        if (22.5d < f  && f <= 67.5d)
-        {
-            return 45.0d;
-        }
-
-        // Between [67.5, 112.5]
-        else if (67.5d < f && f <= 112.5d)
-        {
-            return 90.0d;
-        }
-
-        // Between [112.5, 157.5]
-        else if (112.5d < f && f <= 157.5d)
-        {
-            return 135.0d;
-        }
-
-        // Between [157.5, 202.5]
-        else if (157.5d < f && f <= 202.5d)
-        {
-            return 180.0d;
-        }
-
-        // Between [202.5, 247.5]
-        else if (202.5d < f && f <= 247.5d)
-        {
-            return 225.0d;
-        }
-
-        // Between [247.5, 292.5]
-        else if (247.5d < f && f <= 292.5d)
-        {
-            return 270.0d;
-        }
-
-        // Between [292.5, 337.5]
-        else if (292.5d < f && f <= 337.5d)
-        {
-            return 315.0d;
-        }
-
-        // Between [337.5, 22.5]
-        else
-        {
-            return 0.0d;
-        }
-    }
-
-    public String convertAngleToString(double angle)
-    {
-        if (angle == 0.0d)
-        {
-            setDirection("E");
-        }
-
-        else if (angle == 45.0d)
-        {
-            setDirection("NE");
-        }
-
-        else if (angle == 90.0d)
-        {
-            setDirection("N");
-        }
-
-        else if (angle == 135.0d)
-        {
-            setDirection("NW");
-        }
-
-        else if (angle == 180.0d)
-        {
-            setDirection("W");
-        }
-
-        else if (angle == 225.0d)
-        {
-            setDirection("SW");
-        }
-
-        else if (angle == 270.0d)
-        {
-            setDirection("S");
-        }
-
-        else if (angle == 315.0d)
-        {
-            setDirection("SE");
-        }
-
-        return getDirection();
-    }
-
-    public double calcAngle(double f)
-    {
-        if (spanX >= 0 && spanY <= 0)
+        if (quadrant == 1)
         {
             if (DEBUG == 1)
                 Log.d(DEBUG_TAG, "Tapped into Q1");
-
-            f += 0.0d;
+            temp = f;
         }
 
-        else if (spanX < 0 && spanY < 0)
+        else if (quadrant == 2)
         {
             if (DEBUG == 1)
                 Log.d(DEBUG_TAG, "Tapped into Q2");
-
-            if (Math.abs(spanX) < Math.abs(spanY))
-                f = 180.0d - f;
-
-            else
-                f = 90.0d + f;
+            temp = 180.0d - f;
         }
 
-        else if (spanX <= 0 && spanY >= 0)
+        else if (quadrant == 3)
         {
             if (DEBUG == 1)
                 Log.d(DEBUG_TAG, "Tapped into Q3");
-
-            if (Math.abs(spanX) < Math.abs(spanY))
-                f = 180.0d + f;
-
-            else
-                f = 270.0d - f;
+            temp = 180.0d + f;
         }
 
-        else if (spanX > 0 & spanY > 0)
+        else if (quadrant == 4)
         {
             if (DEBUG == 1)
                 Log.d(DEBUG_TAG, "Tapped into Q4");
-
-            if (Math.abs(spanX) < Math.abs(spanY))
-                f = 270.0d + f;
-
-            else
-                f = 360.0d - f;
+            temp = 360.0d - f;
         }
 
-        return f;
+        else if (quadrant == 5)
+        {
+            if (DEBUG == 1)
+                Log.d(DEBUG_TAG, "Tapped into Q4 with special case");
+            temp = 270.0d + f;
+        }
 
+        return temp;
     }
 
-    public ArrayList<Projectile> getProjectiles()
+    public double calcAimAngle(float x, float y)
     {
-        return projectiles;
+        double  xDiff, yDiff, zDiff, temp;
+        int     quadrant = 0;
+
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "Current direction for aim: " + aim_direction + " @ " + convertDirectionToAngle(aim_direction));
+
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "Aim bounds = " + currentAimBounds().toString());
+
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "Input values into calcAimAngle: " + x + ", " + y + ", Position: " + getPosition().toString());
+
+        xDiff = x - (getX() + getWidth());
+        yDiff = y - (getY() + getHeight()/2);
+
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "Span values in calcAimAngle: " + xDiff + ", " + yDiff);
+
+        // Decides which Q the tap occurred in
+        if (xDiff > 0 && yDiff < 0)
+        {
+            quadrant = 1;
+
+            // Perform naive check
+            if (yDiff < 0 && (y - getY() > 0))
+            {
+                yDiff = Math.abs(yDiff);
+                Log.d(DEBUG_TAG, "Special case found where yDiff < 0 and y-getY > 0 : " + yDiff);
+                quadrant = 4;
+            }
+        }
+
+        else if (xDiff < 0 && yDiff < 0)
+        {
+            quadrant = 2;
+        }
+
+        else if (xDiff < 0 && yDiff > 0)
+        {
+            quadrant = 3;
+        }
+
+        else if (xDiff > 0 && yDiff > 0)
+            quadrant = 4;
+
+        temp = Math.toDegrees(Math.atan(Math.abs(yDiff/xDiff)));
+        temp = playerAimAngle(temp, quadrant);
+
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "calcWorldAngle value (point): " + temp);
+
+        return temp;
+    }
+
+    public Position currentAimBounds()
+    {
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "Current aiming boundaries: " + aim_bounds.toString());
+        return aim_bounds;
+    }
+
+    public void updateAimBounds(String s)
+    {
+        float aim_dir = (float) convertDirectionToAngle(s);
+
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "Direction to update aim bounds wrt: " + s + " (angle = " + aim_dir + ")");
+
+        aim_bounds = new Position(wrapAroundValue(aim_dir + 90.0f), wrapAroundValue(aim_dir - 90.0f));
+    }
+
+    public float wrapAroundValue(float x)
+    {
+        if (x < 0)
+            return 360.0f + x;
+
+        else if (x > 360)
+            return x - 360.0f;
+
+        else
+            return x;
+    }
+
+    public boolean withinAimBounds(double a)
+    {
+        if (a > aim_bounds.getX() && a < aim_bounds.getY())
+            return false;
+
+        else
+            return true;
     }
 
 }

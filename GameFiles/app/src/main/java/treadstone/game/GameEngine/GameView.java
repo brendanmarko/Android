@@ -265,7 +265,7 @@ public class GameView extends SurfaceView implements Runnable
     public void initPlayer()
     {
         curr_player = level_manager.getPlayer();
-        curr_player.initCenter(viewport.getCentre());
+        curr_player.initCenter(viewport.getCentre(), pixels_per_metre);
     }
 
     public void collisionCheck()

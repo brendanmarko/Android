@@ -97,7 +97,7 @@ public class TouchManager implements OnGestureListener, OnDoubleTapListener
     {
         if (DEBUG == 1)
             Log.d(DEBUG_TAG, "onSingleTapConfirmed: " + curr_motion.toString());
-        curr_player.processMovement(curr_motion.getX() + displacementX, curr_motion.getY() + displacementY);
+        curr_player.adjustAimDirection(curr_motion.getX() + displacementX, curr_motion.getY() + displacementY);
         return true;
     }
 
