@@ -2,8 +2,6 @@ package treadstone.game.GameEngine;
 
 import android.util.Log;
 
-import java.util.ArrayList;
-
 public class Player extends ArmedEntity implements Shooter
 {
     // Debug info
@@ -11,13 +9,11 @@ public class Player extends ArmedEntity implements Shooter
     private String                      DEBUG_TAG = "Player";
 
     private float                       spanX, spanY, spanZ;
-    private ArrayList<Projectile>       projectiles;
     private double                      angle_of_movement;
 
     Player(Position s, Position m, Position ppm, char t)
     {
         super(s, m, ppm, t);
-        projectiles = new ArrayList<>();
     }
 
     public void initCenter(Position p, Position ppm)
@@ -41,7 +37,7 @@ public class Player extends ArmedEntity implements Shooter
         spanZ = (float) Math.sqrt((spanX * spanX) + (spanY * spanY));
 
         // Find angle for movement
-        angle_of_movement = calcAngle(Math.toDegrees(Math.asin(Math.abs(getRadians(spanX, spanY, spanZ)))));
+        angle_of_movement = calcAngle(Math.toDegrees(Math.asin(Math.abs(radianFinder(spanX, spanY, spanZ)))));
 
         if (DEBUG == 1)
             Log.d("player.movement", "Angle before adjust: " + angle_of_movement);
@@ -75,22 +71,13 @@ public class Player extends ArmedEntity implements Shooter
             }
     }
 
-    public double getRadians(float x, float y, float z)
+    public double radianFinder(float x, float y, float z)
     {
-        double radians = 0.0d;
-
         if (x >= y)
-            radians = y/z;
+            return y/z;
 
-        else if (x < y)
-            radians = x/z;
-
-        return radians;
-    }
-
-    public ArrayList<Projectile> getProjectiles()
-    {
-        return projectiles;
+        else
+            return x/z;
     }
 
     private double calcAngle(double f)
@@ -141,51 +128,6 @@ public class Player extends ArmedEntity implements Shooter
 
         return f;
 
-    }
-
-    public String convertAngleToString(double angle)
-    {
-        if (angle == 0.0d)
-        {
-            setDirection("E");
-        }
-
-        else if (angle == 45.0d)
-        {
-            setDirection("NE");
-        }
-
-        else if (angle == 90.0d)
-        {
-            setDirection("N");
-        }
-
-        else if (angle == 135.0d)
-        {
-            setDirection("NW");
-        }
-
-        else if (angle == 180.0d)
-        {
-            setDirection("W");
-        }
-
-        else if (angle == 225.0d)
-        {
-            setDirection("SW");
-        }
-
-        else if (angle == 270.0d)
-        {
-            setDirection("S");
-        }
-
-        else if (angle == 315.0d)
-        {
-            setDirection("SE");
-        }
-
-        return getDirection();
     }
 
     // adjustAngle(double)
@@ -254,11 +196,6 @@ public class Player extends ArmedEntity implements Shooter
                 Log.d(DEBUG_TAG, "Angle within bounds, re-assigning aim_dir!");
             setAimAngle(angle);
         }
-    }
-
-    public void fireProjectile()
-    {
-        //
     }
 
 }

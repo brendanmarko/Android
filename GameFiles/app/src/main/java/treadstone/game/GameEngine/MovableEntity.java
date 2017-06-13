@@ -56,57 +56,6 @@ public abstract class MovableEntity extends Entity
         direction = d;
     }
 
-    public void calcDisplacement(double a)
-    {
-        double x = 0.0d;
-        double y = 0.0d;
-
-        if (DEBUG == 1)
-            Log.d(DEBUG_TAG, "calcDisplacement Angle: " + a);
-
-        if (0.0d <= a && a <= 90.0d)
-        {
-            y = (float) Math.asin(a) * getSpeed();
-            x = (float) Math.sqrt(getSpeed() * getSpeed() - (y * y));
-        }
-
-        if ((90.0d <= a && a >= 0) || (a >= 270.0d && a <= 360.0d))
-        {
-            if (DEBUG == 1)
-                Log.d(DEBUG_TAG, "[X] Angle is within (0<x<90) || (270<x<360) -> POSITIVE");
-            x = Math.abs(Math.cos(a)) * getSpeed();
-        }
-
-        else
-        {
-            if (DEBUG == 1)
-                Log.d(DEBUG_TAG, "[X] Angle is within (90<x<270) -> NEGATIVE");
-            x = 0 - Math.abs(Math.cos(a)) * getSpeed();
-        }
-
-        if (180.0d <= a && a <= 360)
-        {
-            if (DEBUG == 1)
-                Log.d(DEBUG_TAG, "[Y] Angle is within (180<x<360) -> POSITIVE");
-            y = Math.abs(Math.sin(a)) * getSpeed();
-        }
-
-        else
-        {
-            if (DEBUG == 1)
-                Log.d(DEBUG_TAG, "[Y] Angle is within (0<x<180) -> NEGATIVE");
-            y = 0 - Math.abs(Math.sin(a)) * getSpeed();
-        }
-
-        if (DEBUG == 1)
-        {
-            Log.d(DEBUG_TAG, "calcDisplacement value X: " + x);
-            Log.d(DEBUG_TAG, "calcDisplacement value Y: " + y);
-        }
-
-        setPosition(getPosition().getX() + (float) x, getPosition().getY() + (float) y);
-    }
-
     public void calcDirDisplacement(String d)
     {
         if (d.equals(("E")))

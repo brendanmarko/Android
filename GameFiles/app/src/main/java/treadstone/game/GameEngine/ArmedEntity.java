@@ -37,7 +37,7 @@ public abstract class ArmedEntity extends MovableEntity
         aim_direction = s;
     }
 
-    public double playerAimAngle(double f, int quadrant)
+    public double quadrantAngleAdjust(double f, int quadrant)
     {
         double temp = 0.0d;
 
@@ -84,7 +84,7 @@ public abstract class ArmedEntity extends MovableEntity
 
     public double calcAimAngle(float x, float y)
     {
-        double  xDiff, yDiff, zDiff, temp;
+        double  xDiff, yDiff, temp;
         int     quadrant = 0;
 
         if (DEBUG == 1)
@@ -104,33 +104,19 @@ public abstract class ArmedEntity extends MovableEntity
 
         // Decides which Q the tap occurred in
         if (xDiff > 0 && yDiff < 0)
-        {
             quadrant = 1;
 
-            // Perform naive check
-            if (yDiff < 0 && (y - getY() > 0))
-            {
-                yDiff = Math.abs(yDiff);
-                Log.d(DEBUG_TAG, "Special case found where yDiff < 0 and y-getY > 0 : " + yDiff);
-                quadrant = 4;
-            }
-        }
-
         else if (xDiff < 0 && yDiff < 0)
-        {
             quadrant = 2;
-        }
 
         else if (xDiff < 0 && yDiff > 0)
-        {
             quadrant = 3;
-        }
 
         else if (xDiff > 0 && yDiff > 0)
             quadrant = 4;
 
         temp = Math.toDegrees(Math.atan(Math.abs(yDiff/xDiff)));
-        temp = playerAimAngle(temp, quadrant);
+        temp = quadrantAngleAdjust(temp, quadrant);
 
         if (DEBUG == 1)
             Log.d(DEBUG_TAG, "calcWorldAngle value (point): " + temp);
@@ -174,6 +160,11 @@ public abstract class ArmedEntity extends MovableEntity
 
         else
             return true;
+    }
+
+    public ArrayList<Projectile> getProjectiles()
+    {
+        return projectiles;
     }
 
 }
