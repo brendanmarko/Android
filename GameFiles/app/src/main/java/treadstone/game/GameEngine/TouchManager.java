@@ -12,6 +12,7 @@ public class TouchManager implements OnGestureListener, OnDoubleTapListener
     private String      DEBUG_TAG = "TouchMgr";
     private Player      curr_player;
     private ViewPort    viewport;
+    private float       displacementX, displacementY;
 
     TouchManager(Player p, ViewPort v)
     {
@@ -19,6 +20,8 @@ public class TouchManager implements OnGestureListener, OnDoubleTapListener
             Log.d(DEBUG_TAG, "TouchMgr created!");
         curr_player = p;
         viewport = v;
+        displacementX = 0.0f;
+        displacementY = 0.0f;
     }
 
     @Override
@@ -47,7 +50,7 @@ public class TouchManager implements OnGestureListener, OnDoubleTapListener
     }
 
     @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent curr_motion, float displacementX, float displacementY)
+    public boolean onScroll(MotionEvent e1, MotionEvent curr_motion, float dX, float dY)
     {
         if (DEBUG == 1)
             Log.d(DEBUG_TAG, "onScroll: " + e1.toString() + curr_motion.toString());
@@ -84,7 +87,7 @@ public class TouchManager implements OnGestureListener, OnDoubleTapListener
     {
         if (DEBUG == 1)
             Log.d(DEBUG_TAG, "onFling: " + event1.toString() + curr_motion.toString());
-        curr_player.processMovement(curr_motion.getX() + (velocityX * viewport.getPixelsPerMetre().getX()), curr_motion.getY() + (velocityY * viewport.getPixelsPerMetre().getY()));
+        curr_player.processMovement(curr_motion.getX() + displacementX, curr_motion.getY() + displacementY);
         viewport.setViewPortCentre(curr_player.getPosition());
         return true;
     }
@@ -94,8 +97,14 @@ public class TouchManager implements OnGestureListener, OnDoubleTapListener
     {
         if (DEBUG == 1)
             Log.d(DEBUG_TAG, "onSingleTapConfirmed: " + curr_motion.toString());
-        curr_player.adjustAimDirection(curr_motion.getX(), curr_motion.getY());
+        curr_player.processMovement(curr_motion.getX() + displacementX, curr_motion.getY() + displacementY);
         return true;
+    }
+
+    public void updateTouchDisplacement(float dX, float dY)
+    {
+        displacementX = dX;
+        displacementY = dY;
     }
 
 }

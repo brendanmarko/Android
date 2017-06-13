@@ -55,13 +55,10 @@ public abstract class MovableEntity extends Entity
         direction = d;
     }
 
-
-    /
     public void calcDisplacement(double a)
     {
-<<<<<<< HEAD
-        float x = 0.0f;
-        float y = 0.0f;
+        double x = 0.0d;
+        double y = 0.0d;
 
         if (DEBUG == 1)
             Log.d(DEBUG_TAG, "calcDisplacement Angle: " + a);
@@ -70,8 +67,7 @@ public abstract class MovableEntity extends Entity
         {
             y = (float) Math.asin(a) * getSpeed();
             x = (float) Math.sqrt(getSpeed() * getSpeed() - (y * y));
-=======
-        double x;
+        }
 
         if ((90.0d <= a && a >= 0) || (a >= 270.0d && a <= 360.0d))
         {
@@ -87,8 +83,6 @@ public abstract class MovableEntity extends Entity
             x = 0 - Math.abs(Math.cos(a)) * getSpeed();
         }
 
-        double y;
-
         if (180.0d <= a && a <= 360)
         {
             if (DEBUG == 1)
@@ -101,7 +95,6 @@ public abstract class MovableEntity extends Entity
             if (DEBUG == 1)
                 Log.d(DEBUG_TAG, "[Y] Angle is within (0<x<180) -> NEGATIVE");
             y = 0 - Math.abs(Math.sin(a)) * getSpeed();
->>>>>>> b41371fbd1fef4fd42d9466e2db87ce186f38d54
         }
 
         if (DEBUG == 1)
@@ -112,8 +105,6 @@ public abstract class MovableEntity extends Entity
 
         setPosition(getPosition().getX() + (float) x, getPosition().getY() + (float) y);
     }
-
-
 
     public void calcDisplacement(String d)
     {
