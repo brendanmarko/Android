@@ -15,6 +15,7 @@ public class Bullet extends Projectile
         super(o, pos, max, p, t);
         startMovement();
         init_direction = o.getAimAngle();
+        calcAngleDisplacement(init_direction);
         if (DEBUG == 1)
             Log.d(DEBUG_TAG, "Angle bullet is created with: " + init_direction);
     }
@@ -40,7 +41,7 @@ public class Bullet extends Projectile
         //if (DEBUG == 1)
             //Log.d("Projectile/CTOR", "Before update: " + getPosition().toString());
 
-        calcDisplacement(init_direction);
+        setPosition(getPosition().getX() + getTravelVector().getX(), getPosition().getY() + getTravelVector().getY());
 
         //if (DEBUG == 1)
             //Log.d("Prj/update", " === New position: " + getPosition().toString());

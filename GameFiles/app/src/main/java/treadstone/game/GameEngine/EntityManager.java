@@ -118,7 +118,11 @@ public class EntityManager extends Manager
 
                 if (m.getObjInfo().getType() == 'p')
                 {
-                    m.setDirection("E");
+                    ArmedEntity a = (ArmedEntity) m;
+                    a.setDirection("E");
+                    a.setAimDirection(a.getDirection());
+                    a.updateAimBounds(a.getDirection());
+
                     if (DEBUG == 1)
                         Log.d("EntityMgr/initDir", "Initiated Player direction to: " + m.getDirection());
                 }
