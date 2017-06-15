@@ -14,8 +14,9 @@ import android.support.v4.view.GestureDetectorCompat;
 
 public class GameView extends SurfaceView implements Runnable
 {
-    // Debug toggle
+    // Debug info
     private int                             DEBUG = 0;
+    private String                          DEBUG_TAG = "GameView";
 
     // Thread
     Thread                                  game_thread = null;
@@ -38,10 +39,13 @@ public class GameView extends SurfaceView implements Runnable
     private HitboxManager                   hitbox_manager;
     private ProjectileManager               projectile_manager;
     private CollisionManager                collision_manager;
+
+    // Touch handlers
     private TouchManager                    touch_manager;
+    private MultiTouchManager               multi_touch_manager;
 
     // Gestures
-    private GestureDetectorCompat           gesture_detector;
+    private GestureDetectorCompat           single_touch_detector;
 
     // Temp buffers
     private ArrayList<Projectile>           projectile_buffer;
@@ -62,16 +66,18 @@ public class GameView extends SurfaceView implements Runnable
         // Pass ViewPort max pixel dimensions
         viewport.setMapDimens(level_manager.getMapDimens());
 
-        // Mgr init
+        // Touch handlers
         touch_manager = new TouchManager(curr_player, viewport);
+        multi_touch_manager = new MultiTouchManager(curr_player, viewport);
+
+        // Mgr init
         hitbox_manager = new HitboxManager();
         collision_manager = new CollisionManager();
         projectile_manager = new ProjectileManager(viewport);
         entity_manager = new EntityManager(c, viewport, level_manager.getStartPoint(), level_manager.getEndpoint(), level_manager.getList());
 
-        // Assign TouchManager to GestureDetector
-        gesture_detector = new GestureDetectorCompat(c, touch_manager);
-        gesture_detector.setOnDoubleTapListener(touch_manager);
+        // Assign Touch handlers
+        single_touch_detector = new GestureDetectorCompat(c, touch_manager);
 
         // Temp buffers
         entity_buffer = new ArrayList<>();
@@ -89,7 +95,17 @@ public class GameView extends SurfaceView implements Runnable
     @Override
     public boolean onTouchEvent(MotionEvent event)
     {
-        return gesture_detector.onTouchEvent(event);
+        if (event.getPointerCount() > 1)
+        {
+            Log.d(DEBUG_TAG, "Multiple touches found with value = " + event.getPointerCount());
+            return multi_touch_manager.handleEvent(event);
+        }
+
+        else
+        {
+            Log.d(DEBUG_TAG, "Single touch found!");
+            return single_touch_detector.onTouchEvent(event);
+        }
     }
 
     @Override
@@ -128,7 +144,7 @@ public class GameView extends SurfaceView implements Runnable
     public void updateProjectiles()
     {
         if (DEBUG == 1)
-            Log.d("GameView/UpdateP", "Updating Projectiles @ GameView");
+            Log.d(DEBUG_TAG, "Updating Projectiles @ GameView");
 
         projectile_manager.addBuffer(this.getContext(), projectile_buffer);
         projectile_manager.update(displacementX, displacementY);
@@ -166,7 +182,7 @@ public class GameView extends SurfaceView implements Runnable
 
         catch (InterruptedException e)
         {
-            Log.d("GameView/Control", "Interrupt from control()");
+            Log.d(DEBUG_TAG, "Interrupt from control()");
         }
 
     }
@@ -200,7 +216,7 @@ public class GameView extends SurfaceView implements Runnable
         Projectile  x;
 
         if (DEBUG == 1)
-            Log.d("GameView.addP2P", "AddProjectile2Player called with p = " + p.toString());
+            Log.d(DEBUG_TAG, "AddProjectile2Player called with p = " + p.toString());
 
         switch (p)
         {
@@ -224,13 +240,13 @@ public class GameView extends SurfaceView implements Runnable
         }
 
         if (DEBUG == 1)
-            Log.d("GameView.addP2P", "Projectile added to Buffer");
+            Log.d(DEBUG_TAG, "Projectile added to Buffer");
     }
 
     public void updateEntities()
     {
         if (DEBUG == 1)
-            Log.d("GameView/UpdateP", "Updating Entities @ GameView");
+            Log.d(DEBUG_TAG, "Updating Entities @ GameView");
 
         entity_manager.addBuffer(this.getContext(), entity_buffer);
         entity_manager.update(displacementX, displacementY);
@@ -246,7 +262,7 @@ public class GameView extends SurfaceView implements Runnable
         displacementY = viewport.getViewPortCentre().getY() - viewport.getCentre().getY();
 
         if (DEBUG == 1)
-            Log.d("GameView/calcD", "Displacements: " + displacementX + ", " + displacementY);
+            Log.d(DEBUG_TAG, "Displacements: " + displacementX + ", " + displacementY);
     }
 
     // void preUpdate()
@@ -272,19 +288,19 @@ public class GameView extends SurfaceView implements Runnable
     {
         if (DEBUG == 1)
         {
-            Log.d("GameView/CollChk", "Checking for collisions wrt Entities");
+            Log.d(DEBUG_TAG, "Checking for collisions wrt Entities");
             showObjects();
         }
 
         collision_manager.entityCollisions(level_manager.getList());
 
         if (DEBUG == 1)
-            Log.d("GameView/CollChk", "Checking for collisions wrt Entities/Projectiles");
+            Log.d(DEBUG_TAG, "Checking for collisions wrt Entities/Projectiles");
 
         collision_manager.projectileCollisions(level_manager.getList(), projectile_manager.getList());
 
         if (DEBUG == 1)
-            Log.d("GameView/CollChk", "Collision check completed.");
+            Log.d(DEBUG_TAG, "Collision check completed.");
     }
 
 }

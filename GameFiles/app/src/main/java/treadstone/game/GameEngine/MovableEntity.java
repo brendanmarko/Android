@@ -5,7 +5,7 @@ import android.util.Log;
 public abstract class MovableEntity extends Entity
 {
     // Debug toggle
-    private int                     DEBUG = 1;
+    private int                     DEBUG = 0;
     private String                  DEBUG_TAG = "MovableEntity";
 
     private float                   speed, x_dir, y_dir;
@@ -14,12 +14,6 @@ public abstract class MovableEntity extends Entity
     public Position                 travel_vector;
 
     public abstract void update();
-
-    public MovableEntity()
-    {
-        if (DEBUG == 1)
-            Log.d("MovableE/CTOR", "Empty MovableE created.");
-    }
 
     public MovableEntity(Position p, Position m, Position ppm, char t)
     {
@@ -135,7 +129,6 @@ public abstract class MovableEntity extends Entity
         {
             if (DEBUG == 1)
                 Log.d("MovableE.boundsCheck", "X < 0");
-
             new_x = 0.0f;
         }
 
@@ -143,7 +136,6 @@ public abstract class MovableEntity extends Entity
         {
             if (DEBUG == 1)
                 Log.d("MovableE.boundsCheck", "X > max");
-
             new_x = getMaxBounds().getX() - getWidth();
         }
 
@@ -156,7 +148,6 @@ public abstract class MovableEntity extends Entity
         {
             if (DEBUG == 1)
                 Log.d("Player.boundsCheck", "Y < 0");
-
             new_y = 0.0f;
         }
 
@@ -164,7 +155,6 @@ public abstract class MovableEntity extends Entity
         {
             if (DEBUG == 1)
                 Log.d("Player.boundsCheck", "Y > max");
-
             new_y = getMaxBounds().getY() - getHeight();
         }
 

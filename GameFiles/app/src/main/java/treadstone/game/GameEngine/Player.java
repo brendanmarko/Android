@@ -5,7 +5,7 @@ import android.util.Log;
 public class Player extends ArmedEntity implements Shooter
 {
     // Debug info
-    private int                         DEBUG = 1;
+    private int                         DEBUG = 0;
     private String                      DEBUG_TAG = "Player";
 
     private float                       spanX, spanY, spanZ;
@@ -55,20 +55,17 @@ public class Player extends ArmedEntity implements Shooter
     @Override
     public void update()
     {
-        if (DEBUG == 1)
-            //Log.d("Player_update", "update() called in Player");
+        if (isMoving())
+        {
+            setPosition(getPosition().getX() + directionX(), getPosition().getY() + directionY());
+            boundsCheck(getX(), getY());
+        }
 
-            if (isMoving())
-            {
-                setPosition(getPosition().getX() + directionX(), getPosition().getY() + directionY());
-                boundsCheck(getX(), getY());
-            }
-
-            else
-            {
-                setPosition(getPosition().getX(), getPosition().getY());
-                boundsCheck(getX(), getY());
-            }
+        else
+        {
+            setPosition(getPosition().getX(), getPosition().getY());
+            boundsCheck(getX(), getY());
+        }
     }
 
     public double radianFinder(float x, float y, float z)

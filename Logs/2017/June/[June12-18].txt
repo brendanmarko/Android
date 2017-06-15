@@ -1,0 +1,41 @@
+June 12
+=======
+
+Summary
+=======
+The last week had presented itself with a lot of coding challenges that focused around 2 specific problems:
+1. The Player movement hitting invisible walls
+2. The Player aim not functioning properly when the ViewPort shifted
+
+These 2 problems compounded and no matter how much I attempted to fix one, the problems both remained. Plugging away at them for a week with little progress was demoralizing and I decided to step back and take a break.
+Hitting that wall in development made me realize that I needed a fresh perspective and re-evaluate the issue. I took out pen/paper and spent a few days working out all the problems on paper, and voila the errors became clear.
+I had not been properly accounting for displacement within the TouchEvents wrt aiming/movement and hence there was an error associated with the angles. This error became exaggerated the further from (0,0) the event was 
+and revealed the nature of the problem upon inspection. Another problem I encountered was the totally mess I had made of some of my commits and I really learned a lot about git over this week while fixing the repo up,
+it proved to be invaluable with restoring my code to a working point and I feel a lot more comfortable with it now!
+
+Completed
+=========
+1. Fixed angle exaggeration error when Player moved from (0,0)
+2. Player movement no longer hits invisible walls
+3. Player movement improved also due to AEE
+
+To do
+=====
+1. Implement Player rotation
+
+June 14
+=======
+
+Summary
+=======
+Well, as it turns out, implementing multi-touch gestures is not quite as easy as I initially thought (of course!) and will require some further research and hunting online for resources. I have laid out a new
+MultiTouchMgr class that will need some work, but as things sit now, I can detect multiple touches and can count how many touch events occur at a time! Now, I must properly handle them!
+
+Completed
+=========
+1. Added MultiTouchMgr class
+
+To do
+=====
+1. Implement Player rotation
+2. Handle multi-touch events within MultiTouchMgr

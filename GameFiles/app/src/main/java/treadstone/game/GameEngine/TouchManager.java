@@ -7,17 +7,16 @@ import android.view.GestureDetector.OnDoubleTapListener;
 
 public class TouchManager implements OnGestureListener, OnDoubleTapListener
 {
-    // Debug toggle
+    // Debug info
     private int         DEBUG = 1;
     private String      DEBUG_TAG = "TouchMgr";
+
     private Player      curr_player;
     private ViewPort    viewport;
     private float       displacementX, displacementY;
 
     TouchManager(Player p, ViewPort v)
     {
-        if (DEBUG == 1)
-            Log.d(DEBUG_TAG, "TouchMgr created!");
         curr_player = p;
         viewport = v;
         displacementX = 0.0f;
