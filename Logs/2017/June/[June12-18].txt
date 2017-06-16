@@ -1,6 +1,5 @@
 June 12
 =======
-
 Summary
 =======
 The last week had presented itself with a lot of coding challenges that focused around 2 specific problems:
@@ -25,7 +24,6 @@ To do
 
 June 14
 =======
-
 Summary
 =======
 Well, as it turns out, implementing multi-touch gestures is not quite as easy as I initially thought (of course!) and will require some further research and hunting online for resources. I have laid out a new
@@ -39,3 +37,20 @@ To do
 =====
 1. Implement Player rotation
 2. Handle multi-touch events within MultiTouchMgr
+
+June 16
+=======
+Summary
+=======
+Great success! After reading through a lot of information (some helpful, some... not so helpful) I was finally able to get the Positions of multiple TouchEvents on the screen! I am going to abandon using the
+interface 'OnTouchListener' and fully implement my own handler for TouchEvents involving multiple fingers. I will still have to plan out how I am going to handle position changes wrt the individual pointers
+regarding each TouchEvent but it will likely involve calculating which direction each pointer is moving to properly deduce if a CW/CCW rotation is occuring.
+
+Completed
+=========
+1. Store Positions wrt TouchEvents involving multiple fingers (for the time being 2)
+
+To do
+=====
+1. Calculate whether the action is a rotation
+2. Possible extension wrt Pinch motions w/o ScaleGestureDetector
