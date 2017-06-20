@@ -1,10 +1,7 @@
 package treadstone.game.GameEngine;
 
-import android.content.Context;
-import android.graphics.Bitmap;
 import android.util.Log;
-
-import java.util.ArrayList;
+import android.content.Context;
 
 public class LevelManager extends Manager
 {

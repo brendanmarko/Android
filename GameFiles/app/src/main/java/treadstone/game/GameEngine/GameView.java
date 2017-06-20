@@ -271,6 +271,7 @@ public class GameView extends SurfaceView implements Runnable
     {
         calcDisplacement();
         touch_manager.updateTouchDisplacement(displacementX, displacementY);
+        multi_touch_manager.updateTouchDisplacement(displacementX, displacementY);
     }
 
     public void initLevel(Context c)

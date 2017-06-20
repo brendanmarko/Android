@@ -4,6 +4,12 @@ public class Position
 {
     private float position[] = {0.0f, 0.0f};
 
+    Position()
+    {
+        position[0] = 0.0f;
+        position[1] = 0.0f;
+    }
+
     Position(float x, float y)
     {
         position[0] = x;

@@ -124,6 +124,8 @@ public abstract class ArmedEntity extends MovableEntity
         return temp;
     }
 
+    // currentAimBounds()
+    // Returns the current aim bounds the ArmedEntity can aim, form: [L, R]
     public Position currentAimBounds()
     {
         if (DEBUG == 1)
@@ -139,6 +141,15 @@ public abstract class ArmedEntity extends MovableEntity
             Log.d(DEBUG_TAG, "Direction to update aim bounds wrt: " + s + " (angle = " + aim_dir + ")");
 
         aim_bounds = new Position(wrapAroundValue(aim_dir + 90.0f), wrapAroundValue(aim_dir - 90.0f));
+    }
+
+    public void updateAimBounds(float s)
+    {
+
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "Direction to update aim bounds wrt: " + s);
+
+        aim_bounds = new Position(wrapAroundValue(s + 90.0f), wrapAroundValue(s - 90.0f));
     }
 
     public float wrapAroundValue(float x)

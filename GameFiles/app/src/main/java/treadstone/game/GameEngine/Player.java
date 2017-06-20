@@ -2,7 +2,7 @@ package treadstone.game.GameEngine;
 
 import android.util.Log;
 
-public class Player extends ArmedEntity implements Shooter
+public class Player extends ArmedEntity implements Shooter, AngleFinder
 {
     // Debug info
     private int                         DEBUG = 0;
@@ -77,7 +77,7 @@ public class Player extends ArmedEntity implements Shooter
             return x/z;
     }
 
-    private double calcAngle(double f)
+    public double calcAngle(double f)
     {
         if (spanX >= 0 && spanY <= 0)
         {
@@ -130,7 +130,7 @@ public class Player extends ArmedEntity implements Shooter
     // adjustAngle(double)
     // This function takes an angle as a parameter and rounds it to the closest value of the 8 cardinal
     // directions to move the Player.
-    private double adjustAngle(double f)
+    public double adjustAngle(double f)
     {
         // Between [22.5, 67.5]
         if (22.5d < f  && f <= 67.5d)
