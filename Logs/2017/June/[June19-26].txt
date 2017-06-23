@@ -1,0 +1,14 @@
+June 23
+=======
+Summary 
+=======
+After a lot of painstaking research and countless archived posts on StackOverflow... I have successfully worked out the primitive rotation of the Player Bitmap! This is a huge step in moving forward!
+
+Completed
+=========
+1. Player Bitmap now rotates according to the position that the fingers move them
+
+To do
+=====
+1. Update Hitbox to rotate with the Player as well
+2. Handle updates to aim angle and other misc things

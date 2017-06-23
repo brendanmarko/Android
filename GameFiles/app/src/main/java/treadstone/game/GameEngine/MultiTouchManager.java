@@ -73,6 +73,9 @@ public class MultiTouchManager implements AngleFinder
             Log.d(DEBUG_TAG, "New aim bounds = " + curr_player.currentAimBounds().toString());
             Log.d(DEBUG_TAG, "New aim angle  = " + curr_player.getAimAngle());
         }
+
+        curr_player.rotateBitmap(angle_of_rotation);
+
     }
 
     private void calcRotationTheta(Position[] touches)
@@ -89,12 +92,14 @@ public class MultiTouchManager implements AngleFinder
 
         // Find angle for movement
         angle_of_rotation = adjustAngle(Math.toDegrees(Math.asin(Math.abs(radianFinder(spanX, spanY, spanZ)))));
+        curr_player.setRotationAngle(angle_of_rotation);
 
         if (DEBUG == 1)
         {
             Log.d(DEBUG_TAG, "Angle found wrt Player: " + angle_of_rotation);
             Log.d(DEBUG_TAG, "Player aim angle: " + curr_player.getAimAngle());
         }
+
     }
 
         // adjustAngle(double)

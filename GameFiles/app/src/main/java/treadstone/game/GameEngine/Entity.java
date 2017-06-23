@@ -3,13 +3,15 @@ package treadstone.game.GameEngine;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.util.Log;
 
 public abstract class Entity
 {
-    // Debug toggle
-    private int                 DEBUG = 0;
+    // Debug info
+    private int                 DEBUG = 2;
+    private String              DEBUG_TAG = "Entity";
 
     private Position            pixels_per_metre;
     private Position            position;
@@ -23,19 +25,22 @@ public abstract class Entity
 
     private RectangleHitbox     hitbox_object;
 
+    // Rotation angle
+    private double              angle_of_rotation;
+
     // Abstract functions
     public abstract void update();
 
     Entity()
     {
         if (DEBUG == 1)
-            Log.d("Entity/CTOR", "Empty Entity created.");
+            Log.d(DEBUG_TAG, "Empty Entity created.");
     }
 
     Entity(Position pos, Position max, Position p, char t)
     {
         if (DEBUG == 1)
-            Log.d("Entity/CTOR", "Entity created @ " + pos.toString() + ", type = " + t);
+            Log.d(DEBUG_TAG, "Entity created @ " + pos.toString() + ", type = " + t);
 
         max_bounds = new Position(max.getX() * p.getX(), max.getY() * p.getY());
         pixels_per_metre = p;
@@ -45,20 +50,21 @@ public abstract class Entity
         height = info.getDimensions().getY() * p.getY();
         active = true;
         visible = false;
+        angle_of_rotation = 0.0d;
 
         if (DEBUG == 1)
-            Log.d("Entity/obj", "Info For Object: " + info.toString());
+            Log.d(DEBUG_TAG, "Info For Object: " + info.toString());
 
         position = pos;
 
         if (t == 'p')
-            Log.d("Entity/PlayerDims", "Player max location = " + max.toString());
+            Log.d(DEBUG_TAG, "Player max location = " + max.toString());
 
         // Set hitbox
         hitbox_object = new RectangleHitbox(pos, pixels_per_metre, info.getDimensions());
 
         if (DEBUG == 1)
-            Log.d("Entity/obj", "Hitbox set properly");
+            Log.d(DEBUG_TAG, "Hitbox set properly");
     }
 
     public Bitmap createBitmap(Context c, String s)
@@ -67,6 +73,31 @@ public abstract class Entity
         image = BitmapFactory.decodeResource(c.getResources(), id);
         image = Bitmap.createScaledBitmap(image, (int) (width * info.getFrameCount()), (int) (height * info.getFrameCount()), false);
         return image;
+    }
+
+    public void rotateBitmap(double a)
+    {
+        if (DEBUG == 2)
+            Log.d(DEBUG_TAG, "Enter rotateBitmap with " + a);
+
+        Matrix m = new Matrix();
+        m.postRotate((int) a);
+        Bitmap.createBitmap(image, 0, 0, image.getWidth(), image.getHeight(), m, true);
+
+        if (DEBUG == 2)
+            Log.d(DEBUG_TAG, "Exiting rotateBitmap");
+    }
+
+    public double getRotationAngle()
+    {
+        return angle_of_rotation;
+    }
+
+    public void setRotationAngle(double a)
+    {
+        angle_of_rotation = a;
+        if (DEBUG == 2)
+            Log.d(DEBUG_TAG, "Rotation angle: " + angle_of_rotation);
     }
 
     public int getLayer()
@@ -96,6 +127,20 @@ public abstract class Entity
         position = new Position(x, y);
     }
 
+    public void setBitmap(Bitmap b)
+    {
+        if (DEBUG == 2)
+            Log.d(DEBUG_TAG, "Image info: " + image.getWidth() + ", " + image.getHeight());
+        image = b;
+        if (DEBUG == 2)
+            Log.d(DEBUG_TAG, "Image info: " + image.getWidth() + ", " + image.getHeight());
+    }
+
+    public Bitmap getBitmap()
+    {
+        return image;
+    }
+
     public Position getPPM()
     {
         return pixels_per_metre;
@@ -114,11 +159,6 @@ public abstract class Entity
     public float getWidth()
     {
         return width;
-    }
-
-    public Bitmap getImage()
-    {
-        return image;
     }
 
     public String getImageName()
@@ -159,7 +199,7 @@ public abstract class Entity
     public String toString()
     {
         if (DEBUG == 1)
-            Log.d("entity_to_string", "POS: " + position.toString() + " isVisible = " + isVisible() + " Type: " + info.getType());
+            Log.d(DEBUG_TAG, "POS: " + position.toString() + " isVisible = " + isVisible() + " Type: " + info.getType());
 
         return "POS: " + position.toString() + "isVisible = " + visible + " Type: " + info.getType();
     }
@@ -173,9 +213,9 @@ public abstract class Entity
     {
         if (DEBUG == 1)
         {
-            Log.d("Entity/updateHB", "Values within updateHB: " + "POS: " + getPosition().toString());
-            Log.d("Entity/updateHB", "Values within updateHB: " + "PPM: " + getPPM().toString());
-            Log.d("Entity/updateHB", "Values within updateHB: " + "DIMENS: " + getObjInfo().getDimensions().toString());
+            Log.d(DEBUG_TAG, "Values within updateHB: " + "POS: " + getPosition().toString());
+            Log.d(DEBUG_TAG, "Values within updateHB: " + "PPM: " + getPPM().toString());
+            Log.d(DEBUG_TAG, "Values within updateHB: " + "DIMENS: " + getObjInfo().getDimensions().toString());
         }
 
         Position temp = new Position(getPosition().getX() - x, getPosition().getY() - y);
