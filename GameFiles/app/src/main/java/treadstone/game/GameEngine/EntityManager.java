@@ -13,7 +13,7 @@ import android.content.Context;
 public class EntityManager extends Manager
 {
     // Debug info
-    private int                 DEBUG = 2;
+    private int                 DEBUG = 0;
     private String              DEBUG_TAG = "EntityMgr";
 
     private ViewPort            viewport;

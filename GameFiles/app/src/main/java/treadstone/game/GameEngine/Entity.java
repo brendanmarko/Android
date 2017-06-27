@@ -127,15 +127,6 @@ public abstract class Entity
         position = new Position(x, y);
     }
 
-    public void setBitmap(Bitmap b)
-    {
-        if (DEBUG == 2)
-            Log.d(DEBUG_TAG, "Image info: " + image.getWidth() + ", " + image.getHeight());
-        image = b;
-        if (DEBUG == 2)
-            Log.d(DEBUG_TAG, "Image info: " + image.getWidth() + ", " + image.getHeight());
-    }
-
     public Bitmap getBitmap()
     {
         return image;

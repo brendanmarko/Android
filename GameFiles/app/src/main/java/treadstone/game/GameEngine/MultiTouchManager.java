@@ -14,7 +14,10 @@ public class MultiTouchManager implements AngleFinder
     private ViewPort    viewport;
     private float       displacementX, displacementY, spanX, spanY, spanZ;
     private double      angle_of_rotation;
+    private Position    prevPoints[] = {new Position(), new Position(), new Position()};
     private Position    pointerPos[] = {new Position(), new Position(), new Position()};
+    private boolean     active_touch, direction_found;
+    private String      movement_direction;
 
     MultiTouchManager(Player p, ViewPort v)
     {
@@ -24,6 +27,9 @@ public class MultiTouchManager implements AngleFinder
         displacementY = 0.0f;
         top_finger = new Position();
         bot_finger = new Position();
+        active_touch = false;
+        direction_found = false;
+        movement_direction = "None";
     }
 
     public boolean handleEvent(MotionEvent event)
@@ -36,23 +42,20 @@ public class MultiTouchManager implements AngleFinder
             {
                 for (int i = 0; i < event.getPointerCount(); i++)
                 {
-                    if (DEBUG == 1)
-                    {
-                        Log.d(DEBUG_TAG, "=========================================================================================================");
-                        Log.d(DEBUG_TAG, "Pre-change co-ordinates: " + pointerPos[i].toString());
-                    }
-
+                    prevPoints[i] = pointerPos[i];
                     pointerPos[i] = new Position(event.getX(i) + displacementX, event.getY(i) + displacementY);
 
                     if (DEBUG == 1)
                     {
+                        Log.d(DEBUG_TAG, "=========================================================================================================");
+                        Log.d(DEBUG_TAG, "Pre-change co-ordinates: " + prevPoints[i].toString());
                         Log.d(DEBUG_TAG, "Post-change co-ordinates: " + pointerPos[i].toString());
                         Log.d(DEBUG_TAG, "=========================================================================================================");
                     }
 
                 }
 
-                calcRotationTheta(pointerPos);
+                calcRotationTheta();
                 applyRotation();
 
             }
@@ -78,13 +81,13 @@ public class MultiTouchManager implements AngleFinder
 
     }
 
-    private void calcRotationTheta(Position[] touches)
+    private void calcRotationTheta()
     {
         if (DEBUG == 1)
-            Log.d(DEBUG_TAG, "calcRotationTheta with " + touches.length + " touches.");
+            Log.d(DEBUG_TAG, "calcRotationTheta entered.");
 
-        spanX = touches[0].getX() - touches[1].getX();
-        spanY = touches[0].getY() - touches[1].getY();
+        spanX = pointerPos[0].getX() - pointerPos[1].getX();
+        spanY = pointerPos[0].getY() - pointerPos[1].getY();
         spanZ = (float) Math.sqrt((spanX * spanX) + (spanY * spanY));
 
         if (DEBUG == 1)
@@ -92,6 +95,15 @@ public class MultiTouchManager implements AngleFinder
 
         // Find angle for movement
         angle_of_rotation = adjustAngle(Math.toDegrees(Math.asin(Math.abs(radianFinder(spanX, spanY, spanZ)))));
+
+        // Determine finger positions
+        if (!active_touch)
+            fingerAnalysis(pointerPos[0], pointerPos[1]);
+
+        // Determine direction of rotation
+        else if (active_touch)
+            calcDirectionOfMovement(prevPoints[0], pointerPos[0]);
+
         curr_player.setRotationAngle(angle_of_rotation);
 
         if (DEBUG == 1)
@@ -99,6 +111,58 @@ public class MultiTouchManager implements AngleFinder
             Log.d(DEBUG_TAG, "Angle found wrt Player: " + angle_of_rotation);
             Log.d(DEBUG_TAG, "Player aim angle: " + curr_player.getAimAngle());
         }
+
+    }
+
+    public void calcDirectionOfMovement(Position p1, Position p2)
+    {
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "Inside calcDirectionOfMovement()");
+
+        if (p2.getX() - p1.getX() < 0 && p2.getY() - p1.getY() > 0)
+        {
+            if (DEBUG == 1)
+                Log.d(DEBUG_TAG, "CCW found.");
+            movement_direction = "CCW";
+        }
+
+        else if (p2.getX() - p1.getX() > 0 && p2.getY() - p1.getY() < 0)
+        {
+            if (DEBUG == 1)
+                Log.d(DEBUG_TAG, "CCW found.");
+            movement_direction = "CCW";
+        }
+
+        else
+        {
+            if (DEBUG == 1)
+                Log.d(DEBUG_TAG, "CW found.");
+            movement_direction = "CW";
+        }
+
+    }
+
+    public void fingerAnalysis(Position p1, Position p2)
+    {
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "Positions entered: " + p1.toString() + ", " + p2.toString());
+
+        if (p1.getY() > p2.getY())
+        {
+            top_finger = p2;
+            bot_finger = p1;
+        }
+
+        else
+        {
+            top_finger = p1;
+            bot_finger = p2;
+        }
+
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "Top finger: " + top_finger.toString() + " Bot finger: " + bot_finger.toString());
+
+        active_touch = true;
 
     }
 
@@ -220,6 +284,5 @@ public class MultiTouchManager implements AngleFinder
         displacementX = dX;
         displacementY = dY;
     }
-
 
 }

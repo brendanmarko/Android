@@ -12,3 +12,18 @@ To do
 =====
 1. Update Hitbox to rotate with the Player as well
 2. Handle updates to aim angle and other misc things
+
+June 26
+=======
+Summary
+=======
+Having to map out the rotation of the Bitmap/Hitboxes has proven to be quite a task, but I finally now can discern if the rotation of the Player's fingers moving is in the clockwise
+or counter-clockwise direction!
+
+Completed
+=========
+1. Identiying if the motion of the Player's fingers is CW/CCW
+
+To do
+=====
+1. Identify proper angle direction wrt CW/CCW motions

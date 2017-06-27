@@ -6,8 +6,9 @@ import android.graphics.Bitmap;
 
 public class RectangleHitbox
 {
-    // Debug toggle
+    // Debug info
     private int         DEBUG = 0;
+    private String      DEBUG_TAG = "RectangleHitbox";
 
     private Rect        hitbox;
     private int         l, b, r, t;
@@ -25,7 +26,7 @@ public class RectangleHitbox
         b = t + (int) (dimens.getY() * ppm.getY());
 
         if (DEBUG == 1)
-            Log.d("RHBOX/CTOR", "Creating rect with: " + l + ", " + t + ", " + r + ", " + b);
+            Log.d(DEBUG_TAG, "Creating rect with: " + l + ", " + t + ", " + r + ", " + b);
 
         hitbox = new Rect(l, t, r, b);
     }
@@ -40,4 +41,10 @@ public class RectangleHitbox
         hitbox.set(x, y, x + curr_bitmap.getWidth(), y + curr_bitmap.getHeight());
     }
 
+    public String toString()
+    {
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "Left: " + l + ", Right: " + r + ", Top: " + t + ", Bottom: " + b);
+        return "Left: " + l + ", Right: " + r + ", Top: " + t + ", Bottom: " + b;
+    }
 }
