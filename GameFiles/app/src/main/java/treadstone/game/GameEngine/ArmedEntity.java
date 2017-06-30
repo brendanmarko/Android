@@ -135,12 +135,34 @@ public abstract class ArmedEntity extends MovableEntity
 
     public void updateAimBounds(String s)
     {
-        float aim_dir = (float) convertDirectionToAngle(s);
+        double aim_dir = convertDirectionToAngle(s);
 
         if (DEBUG == 1)
             Log.d(DEBUG_TAG, "Direction to update aim bounds wrt: " + s + " (angle = " + aim_dir + ")");
 
-        aim_bounds = new Position(wrapAroundValue(aim_dir + 90.0f), wrapAroundValue(aim_dir - 90.0f));
+        if (aim_dir < 0.0f)
+        {
+            aim_dir = getAimAngle() - aim_dir;
+
+            if (aim_dir < 0.0f)
+                aim_dir = 360.0d + aim_dir;
+
+            if (DEBUG == 1)
+                Log.d(DEBUG_TAG, "New aim_dir value: " + aim_dir);
+        }
+
+        else
+        {
+            if (DEBUG == 1)
+                Log.d(DEBUG_TAG, "Aim_dir > 0");
+            aim_dir = wrapAroundValue((float) (getAimAngle() + aim_dir));
+
+            if (DEBUG == 1)
+                Log.d(DEBUG_TAG, "New aim_dir value: " + aim_dir);
+        }
+
+        setAimAngle(aim_dir);
+        aim_bounds = new Position(wrapAroundValue((float) aim_dir + 90.0f), wrapAroundValue((float) aim_dir - 90.0f));
     }
 
     public void updateAimBounds(float s)

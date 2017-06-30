@@ -62,13 +62,25 @@ public class MultiTouchManager implements AngleFinder
 
         }
 
+        // Terminate touch action
+        // active_touch = false;
+
         return true;
         
     }
 
     private void applyRotation()
     {
-        curr_player.updateAimBounds((float) angle_of_rotation);
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "Entering applyRotation with direction: " + movement_direction);
+
+        // If motion is CW: Angle +, CCW: Angle -
+        if (movement_direction.equals("CCW"))
+            curr_player.updateAimBounds((float) angle_of_rotation);
+
+        else if (movement_direction.equals("CW"))
+            curr_player.updateAimBounds((float) (0.0f - angle_of_rotation));
+
         curr_player.setAimAngle(curr_player.currentAimBounds().getX() - 90.0f);
 
         if (DEBUG == 1)
@@ -77,7 +89,43 @@ public class MultiTouchManager implements AngleFinder
             Log.d(DEBUG_TAG, "New aim angle  = " + curr_player.getAimAngle());
         }
 
-        curr_player.rotateBitmap(angle_of_rotation);
+        // If motion is CW: Angle +, CCW: Angle -
+        if (movement_direction.equals("CW"))
+            curr_player.rotateBitmap(matrixRotationConversion(angle_of_rotation));
+
+        else if (movement_direction.equals("CCW"))
+            curr_player.rotateBitmap(matrixRotationConversion(angle_of_rotation));
+
+    }
+
+    public double matrixRotationConversion(double a)
+    {
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "Entered matrixRotationConversion with: " + a);
+
+        if (a == 0.0d || a == 360.0d)
+            return 90;
+
+        else
+        {
+            if (DEBUG == 1)
+                Log.d(DEBUG_TAG, "Value other than 0/360 entered.");
+
+            double result = 90 - (45 * (a/45));
+
+            if (result < 0.0d)
+                result += 360.0d;
+
+            if (DEBUG == 1)
+                Log.d(DEBUG_TAG, "Value before adjustAngle: " + result);
+
+            result = adjustAngle(result);
+
+            if (DEBUG == 1)
+                Log.d(DEBUG_TAG, "Value after adjustAngle: " + result);
+
+            return result;
+        }
 
     }
 

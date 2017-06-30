@@ -107,11 +107,7 @@ public class EntityManager extends Manager
                     {
                         if (DEBUG == 2)
                             Log.d(DEBUG_TAG, "Rotation angle = " + e.getRotationAngle());
-                        Matrix matrix = new Matrix();
-                        matrix.postRotate((int) e.getRotationAngle());
-                        Bitmap rotated;
-                        rotated = Bitmap.createBitmap(getBitmap(e.getObjInfo().getType()), 0, 0, (int) e.getWidth(), (int) e.getHeight(), matrix, true);
-                        canvas.drawBitmap(rotated, r.left, r.top, paint);
+                        canvas.drawBitmap(e.rotateBitmap(e.getRotationAngle()), r.left, r.top, paint);
                     }
                 }
             }

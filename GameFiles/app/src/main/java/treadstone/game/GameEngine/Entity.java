@@ -75,17 +75,14 @@ public abstract class Entity
         return image;
     }
 
-    public void rotateBitmap(double a)
+    public Bitmap rotateBitmap(double angle)
     {
-        if (DEBUG == 2)
-            Log.d(DEBUG_TAG, "Enter rotateBitmap with " + a);
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "Enter rotateBitmap with " + angle);
 
         Matrix m = new Matrix();
-        m.postRotate((int) a);
-        Bitmap.createBitmap(image, 0, 0, image.getWidth(), image.getHeight(), m, true);
-
-        if (DEBUG == 2)
-            Log.d(DEBUG_TAG, "Exiting rotateBitmap");
+        m.postRotate((int) angle);
+        return Bitmap.createBitmap(image, 0, 0, image.getWidth(), image.getHeight(), m, true);
     }
 
     public double getRotationAngle()
