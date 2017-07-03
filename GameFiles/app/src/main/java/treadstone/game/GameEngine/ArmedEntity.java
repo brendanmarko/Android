@@ -165,13 +165,19 @@ public abstract class ArmedEntity extends MovableEntity
         aim_bounds = new Position(wrapAroundValue((float) aim_dir + 90.0f), wrapAroundValue((float) aim_dir - 90.0f));
     }
 
-    public void updateAimBounds(float s)
+    public void updateAimBounds(float s, String m)
     {
 
         if (DEBUG == 1)
-            Log.d(DEBUG_TAG, "Direction to update aim bounds wrt: " + s);
+            Log.d(DEBUG_TAG, "Direction to update aim bounds wrt: " + s + " with direction: " + m);
 
-        aim_bounds = new Position(wrapAroundValue(s + 90.0f), wrapAroundValue(s - 90.0f));
+        aim_bounds = new Position(s, wrapAroundValue(s - 180.0f));
+        aim_angle = s - 90.0f;
+
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "New aim angle: " + aim_angle);
+
+        // aim_bounds = new Position(wrapAroundValue(s + 90.0f), wrapAroundValue(s - 90.0f));
     }
 
     public float wrapAroundValue(float x)
@@ -188,11 +194,11 @@ public abstract class ArmedEntity extends MovableEntity
 
     public boolean withinAimBounds(double a)
     {
-        if (a > aim_bounds.getX() && a < aim_bounds.getY())
-            return false;
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "Current bounds: " + aim_bounds.toString() + ", with angle passed: " + a + " and aim-angle = " + aim_angle);
 
-        else
-            return true;
+        return true;
+
     }
 
     public ArrayList<Projectile> getProjectiles()

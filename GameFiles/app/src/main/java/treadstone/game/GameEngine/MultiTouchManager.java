@@ -18,6 +18,7 @@ public class MultiTouchManager implements AngleFinder
     private Position    pointerPos[] = {new Position(), new Position(), new Position()};
     private boolean     active_touch, direction_found;
     private String      movement_direction;
+    private int         top_finger_index;
 
     MultiTouchManager(Player p, ViewPort v)
     {
@@ -56,7 +57,8 @@ public class MultiTouchManager implements AngleFinder
                 }
 
                 calcRotationTheta();
-                applyRotation();
+                if (rotationNeeded())
+                    applyRotation();
 
             }
 
@@ -69,6 +71,33 @@ public class MultiTouchManager implements AngleFinder
         
     }
 
+    // This functions checks that a rotation of at least 45 degrees occurred, else no rotation is needed
+    private boolean rotationNeeded()
+    {
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "Entering rotationNeeded with angle: " + angle_of_rotation + " and aim_bounds: " + curr_player.currentAimBounds().toString());
+
+        // check rotation against aim_bounds
+        if (Math.abs(angle_of_rotation - curr_player.currentAimBounds().getX()) == 45.0d)
+        {
+            if (DEBUG == 1)
+                Log.d(DEBUG_TAG, "Change in angle from bounds.X == 45");
+            curr_player.setRotationAngle(matrixRotationConversion(angle_of_rotation));
+            return true;
+        }
+
+        else if (Math.abs(angle_of_rotation - curr_player.currentAimBounds().getY()) == 45.0d)
+        {
+            if (DEBUG == 1)
+                Log.d(DEBUG_TAG, "Change in angle from bounds.Y == 45");
+            curr_player.setRotationAngle(matrixRotationConversion(angle_of_rotation));
+            return true;
+        }
+
+        else
+            return false;
+    }
+
     private void applyRotation()
     {
         if (DEBUG == 1)
@@ -76,12 +105,10 @@ public class MultiTouchManager implements AngleFinder
 
         // If motion is CW: Angle +, CCW: Angle -
         if (movement_direction.equals("CCW"))
-            curr_player.updateAimBounds((float) angle_of_rotation);
+            curr_player.updateAimBounds((float) angle_of_rotation, movement_direction);
 
         else if (movement_direction.equals("CW"))
-            curr_player.updateAimBounds((float) (0.0f - angle_of_rotation));
-
-        curr_player.setAimAngle(curr_player.currentAimBounds().getX() - 90.0f);
+            curr_player.updateAimBounds((float) (0.0f - angle_of_rotation), movement_direction);
 
         if (DEBUG == 1)
         {
@@ -134,25 +161,29 @@ public class MultiTouchManager implements AngleFinder
         if (DEBUG == 1)
             Log.d(DEBUG_TAG, "calcRotationTheta entered.");
 
-        spanX = pointerPos[0].getX() - pointerPos[1].getX();
-        spanY = pointerPos[0].getY() - pointerPos[1].getY();
+        // Determine finger positions
+        if (!active_touch)
+            fingerAnalysis(pointerPos[0], pointerPos[1]);
+
+            // Determine direction of rotation
+        else if (active_touch)
+        {
+            updateTopFinger();
+            calcDirectionOfMovement(prevPoints[0], pointerPos[0]);
+        }
+
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "Top finger: " + top_finger.toString());
+
+        spanX = top_finger.getX() - curr_player.getX();
+        spanY = top_finger.getY() - curr_player.getY();
         spanZ = (float) Math.sqrt((spanX * spanX) + (spanY * spanY));
 
         if (DEBUG == 1)
             Log.d(DEBUG_TAG, "spanX: " + spanX + ", spanY: " + spanY + ", spanZ: " + spanZ);
 
         // Find angle for movement
-        angle_of_rotation = adjustAngle(Math.toDegrees(Math.asin(Math.abs(radianFinder(spanX, spanY, spanZ)))));
-
-        // Determine finger positions
-        if (!active_touch)
-            fingerAnalysis(pointerPos[0], pointerPos[1]);
-
-        // Determine direction of rotation
-        else if (active_touch)
-            calcDirectionOfMovement(prevPoints[0], pointerPos[0]);
-
-        curr_player.setRotationAngle(angle_of_rotation);
+        angle_of_rotation = adjustAngle(calcAngle(Math.toDegrees(Math.asin(Math.abs(radianFinder(spanX, spanY, spanZ))))));
 
         if (DEBUG == 1)
         {
@@ -162,19 +193,28 @@ public class MultiTouchManager implements AngleFinder
 
     }
 
-    public void calcDirectionOfMovement(Position p1, Position p2)
+    public void updateTopFinger()
+    {
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "Updating top_finger value: " + top_finger.toString());
+        top_finger = pointerPos[top_finger_index];
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "Updated top_finger value: " + top_finger.toString());
+    }
+
+    public void calcDirectionOfMovement(Position p0, Position p1)
     {
         if (DEBUG == 1)
             Log.d(DEBUG_TAG, "Inside calcDirectionOfMovement()");
 
-        if (p2.getX() - p1.getX() < 0 && p2.getY() - p1.getY() > 0)
+        if (p1.getX() - p0.getX() < 0 && p1.getY() - p0.getY() > 0)
         {
             if (DEBUG == 1)
                 Log.d(DEBUG_TAG, "CCW found.");
             movement_direction = "CCW";
         }
 
-        else if (p2.getX() - p1.getX() > 0 && p2.getY() - p1.getY() < 0)
+        else if (p1.getX() - p0.getX() > 0 && p1.getY() - p0.getY() < 0)
         {
             if (DEBUG == 1)
                 Log.d(DEBUG_TAG, "CCW found.");
@@ -190,21 +230,23 @@ public class MultiTouchManager implements AngleFinder
 
     }
 
-    public void fingerAnalysis(Position p1, Position p2)
+    public void fingerAnalysis(Position p0, Position p1)
     {
         if (DEBUG == 1)
-            Log.d(DEBUG_TAG, "Positions entered: " + p1.toString() + ", " + p2.toString());
+            Log.d(DEBUG_TAG, "Positions entered: " + p0.toString() + ", " + p1.toString());
 
-        if (p1.getY() > p2.getY())
+        if (p0.getY() > p1.getY())
         {
-            top_finger = p2;
-            bot_finger = p1;
+            top_finger = p1;
+            bot_finger = p0;
+            top_finger_index = 1;
         }
 
         else
         {
-            top_finger = p1;
-            bot_finger = p2;
+            top_finger = p0;
+            bot_finger = p1;
+            top_finger_index = 0;
         }
 
         if (DEBUG == 1)
