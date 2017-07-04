@@ -171,8 +171,25 @@ public abstract class ArmedEntity extends MovableEntity
         if (DEBUG == 1)
             Log.d(DEBUG_TAG, "Direction to update aim bounds wrt: " + s + " with direction: " + m);
 
-        aim_bounds = new Position(s, wrapAroundValue(s - 180.0f));
-        aim_angle = s - 90.0f;
+        if (m.equals("CCW"))
+        {
+            if (DEBUG == 1)
+                Log.d(DEBUG_TAG, "Counter-clockwise motion detected within updateAimBounds @ " + aim_bounds.toString());
+            aim_bounds = new Position(wrapAroundValue(aim_bounds.getX() + 45.0f), wrapAroundValue(aim_bounds.getY() + 45.0f));
+            aim_angle = wrapAroundValue(aim_bounds.getX() - 90.0f);
+            if (DEBUG == 1)
+                Log.d(DEBUG_TAG, "Counter-clockwise motion updateAimBounds @ " + aim_bounds.toString());
+        }
+
+        else if (m.equals("CW"))
+        {
+            if (DEBUG == 1)
+                Log.d(DEBUG_TAG, "Clockwise motion detected within updateAimBounds @ " + aim_bounds.toString());
+            aim_bounds = new Position(wrapAroundValue(aim_bounds.getX() - 45.0f), wrapAroundValue(aim_bounds.getY() - 45.0f));
+            aim_angle = wrapAroundValue(aim_bounds.getX() - 90.0f);
+            if (DEBUG == 1)
+                Log.d(DEBUG_TAG, "Clockwise motion updateAimBounds @ " + aim_bounds.toString());
+        }
 
         if (DEBUG == 1)
             Log.d(DEBUG_TAG, "New aim angle: " + aim_angle);
