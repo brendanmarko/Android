@@ -1,7 +1,5 @@
 package treadstone.game.GameEngine;
 
-import android.graphics.Bitmap;
-import android.graphics.Matrix;
 import android.util.Log;
 import java.util.Iterator;
 import java.util.ArrayList;
@@ -106,8 +104,8 @@ public class EntityManager extends Manager
                     else
                     {
                         if (DEBUG == 2)
-                            Log.d(DEBUG_TAG, "Rotation angle = " + e.getRotationAngle());
-                        canvas.drawBitmap(e.rotateBitmap(matrixRotationConversion(e.getRotationAngle())), r.left, r.top, paint);
+                            Log.d(DEBUG_TAG, "Rotation angle = " + e.getRotationAngle() + " transposed into: " + matrixRotationConversion(e.getRotationAngle()));
+                        canvas.drawBitmap(e.rotateBitmap(rotationValue(e.getRotationAngle())), r.left, r.top, paint);
                     }
                 }
             }
@@ -147,6 +145,11 @@ public class EntityManager extends Manager
                 }
             }
         }
+    }
+
+    public double rotationValue(double f)
+    {
+        return matrixRotationConversion(wrapAroundValue((float) f + 90.0f));
     }
 
 }

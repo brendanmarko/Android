@@ -181,4 +181,16 @@ public abstract class Manager<T>
 
     }
 
+    public float wrapAroundValue(float x)
+    {
+        if (x < 0)
+            return 360.0f + x;
+
+        else if (x > 360)
+            return x - 360.0f;
+
+        else
+            return x;
+    }
+
 }

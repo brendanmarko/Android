@@ -196,6 +196,9 @@ public abstract class ArmedEntity extends MovableEntity
         return projectiles;
     }
 
+    // void continueRotation
+    // This function performs a 45-degree rotation of the selected Entity in the same
+    // direction it was moving previously.
     public void continueRotation(String dir)
     {
         if (DEBUG == 1)
@@ -212,12 +215,16 @@ public abstract class ArmedEntity extends MovableEntity
         }
 
         aim_bounds = new Position(wrapAroundValue((float) getRotationAngle() + 90.0f), wrapAroundValue((float) getRotationAngle() - 90.0f));
+        setAimAngle(getRotationAngle());
 
         if (DEBUG == 1)
             Log.d(DEBUG_TAG, "CNT: Value of rotation " + getRotationAngle() + " and aim_bounds: " + aim_bounds.toString());
 
     }
 
+    // void reverseRotation
+    // This function performs a 45-degree rotation of the selected Entity in the opposite
+    // direction it was moving previously, caused by switching rotation direction.
     public void reverseRotation(String dir)
     {
         if (DEBUG == 1)
@@ -234,6 +241,7 @@ public abstract class ArmedEntity extends MovableEntity
         }
 
         aim_bounds = new Position(wrapAroundValue((float) getRotationAngle() + 90.0f), wrapAroundValue((float) getRotationAngle() - 90.0f));
+        setAimAngle(getRotationAngle());
 
         if (DEBUG == 1)
             Log.d(DEBUG_TAG, "REV: Value of aim_angle " + getRotationAngle() + " and aim_bounds: " + aim_bounds.toString());
