@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public abstract class Manager<T>
 {
     // Debug info
-    private int             DEBUG = 1;
+    private int             DEBUG = 0;
     private String          DEBUG_TAG = "Mgr";
 
     private Bitmap[]        bitmaps;

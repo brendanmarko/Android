@@ -5,7 +5,7 @@ import android.util.Log;
 public abstract class MovableEntity extends Entity
 {
     // Debug toggle
-    private int                     DEBUG = 0;
+    private int                     DEBUG = 2;
     private String                  DEBUG_TAG = "MovableEntity";
 
     private float                   speed, x_dir, y_dir;
@@ -282,7 +282,7 @@ public abstract class MovableEntity extends Entity
 
     public void calcAngleDisplacement(double a)
     {
-        if (DEBUG == 1)
+        if (DEBUG == 2)
             Log.d(DEBUG_TAG, "Input angle into calcDisp: " + a);
 
         double x;
@@ -291,15 +291,15 @@ public abstract class MovableEntity extends Entity
         if ((a >= 0.0d && a <= 90.0d) || (a >= 270.0d && a <= 360.0d))
         {
             x = Math.cos(Math.toRadians(a)) * getSpeed();
-            if (DEBUG == 1)
+            if (DEBUG == 2)
                 Log.d(DEBUG_TAG, "[X] Angle is within (0<x<90) OR (270<x<360) -> POSITIVE: " + x);
         }
 
         // Q2 && Q3
         else
         {
-            x = 0 - Math.cos(Math.toRadians(a)) * getSpeed();
-            if (DEBUG == 1)
+            x = Math.cos(Math.toRadians(a)) * getSpeed();
+            if (DEBUG == 2)
                 Log.d(DEBUG_TAG, "[X] Angle is within (90<x<270) -> NEGATIVE: " + x);
         }
 
@@ -309,7 +309,7 @@ public abstract class MovableEntity extends Entity
         if (a >= 180.0d && a <= 360.0d)
         {
             y = Math.abs(Math.sin(Math.toRadians(a)) * getSpeed());
-            if (DEBUG == 1)
+            if (DEBUG == 2)
                 Log.d(DEBUG_TAG, "[Y] Angle is within (180<x<360) -> POSITIVE: " + y);
         }
 
@@ -317,11 +317,11 @@ public abstract class MovableEntity extends Entity
         else
         {
             y = 0 - Math.sin(Math.toRadians(a)) * getSpeed();
-            if (DEBUG == 1)
+            if (DEBUG == 2)
                 Log.d(DEBUG_TAG, "[Y] Angle is within (0<x<180) -> NEGATIVE: " + y);
         }
 
-        if (DEBUG == 1)
+        if (DEBUG == 2)
         {
             Log.d(DEBUG_TAG, "calcDisplacement value X: " + x + " converted into float: " + (float) x);
             Log.d(DEBUG_TAG, "calcDisplacement value Y: " + y + " converted into float: " + (float) y);
