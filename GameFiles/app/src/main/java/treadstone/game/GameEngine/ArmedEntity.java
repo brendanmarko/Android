@@ -168,36 +168,9 @@ public abstract class ArmedEntity extends MovableEntity
     public void updateAimBounds(float s, String m)
     {
 
-        if (DEBUG == 1)
-            Log.d(DEBUG_TAG, "Direction to update aim bounds wrt: " + s + " with direction: " + m);
-
-        if (m.equals("CCW"))
-        {
-            if (DEBUG == 1)
-                Log.d(DEBUG_TAG, "Counter-clockwise motion detected within updateAimBounds @ " + aim_bounds.toString());
-            aim_bounds = new Position(wrapAroundValue(aim_bounds.getX() + 45.0f), wrapAroundValue(aim_bounds.getY() + 45.0f));
-            aim_angle = wrapAroundValue(aim_bounds.getX() - 90.0f);
-            if (DEBUG == 1)
-                Log.d(DEBUG_TAG, "Counter-clockwise motion updateAimBounds @ " + aim_bounds.toString());
-        }
-
-        else if (m.equals("CW"))
-        {
-            if (DEBUG == 1)
-                Log.d(DEBUG_TAG, "Clockwise motion detected within updateAimBounds @ " + aim_bounds.toString());
-            aim_bounds = new Position(wrapAroundValue(aim_bounds.getX() - 45.0f), wrapAroundValue(aim_bounds.getY() - 45.0f));
-            aim_angle = wrapAroundValue(aim_bounds.getX() - 90.0f);
-            if (DEBUG == 1)
-                Log.d(DEBUG_TAG, "Clockwise motion updateAimBounds @ " + aim_bounds.toString());
-        }
-
-        if (DEBUG == 1)
-            Log.d(DEBUG_TAG, "New aim angle: " + aim_angle);
-
-        // aim_bounds = new Position(wrapAroundValue(s + 90.0f), wrapAroundValue(s - 90.0f));
     }
 
-    public float wrapAroundValue(float x)
+    private float wrapAroundValue(float x)
     {
         if (x < 0)
             return 360.0f + x;
@@ -221,6 +194,49 @@ public abstract class ArmedEntity extends MovableEntity
     public ArrayList<Projectile> getProjectiles()
     {
         return projectiles;
+    }
+
+    public void continueRotation(String dir)
+    {
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "CNT: Value of rotation " + getRotationAngle() + " and aim_bounds: " + aim_bounds.toString());
+
+        if (dir.equals("CW"))
+        {
+            setRotationAngle(wrapAroundValue((float) getRotationAngle() - 45.0f));
+        }
+
+        else if (dir.equals("CCW"))
+        {
+            setRotationAngle(wrapAroundValue((float) getRotationAngle() + 45.0f));
+        }
+
+        aim_bounds = new Position(wrapAroundValue((float) getRotationAngle() + 90.0f), wrapAroundValue((float) getRotationAngle() - 90.0f));
+
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "CNT: Value of rotation " + getRotationAngle() + " and aim_bounds: " + aim_bounds.toString());
+
+    }
+
+    public void reverseRotation(String dir)
+    {
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "REV: Value of aim_angle " + getRotationAngle() + " and aim_bounds: " + aim_bounds.toString());
+
+        if (dir.equals("CW"))
+        {
+            setRotationAngle(wrapAroundValue((float) getRotationAngle() + 45.0f));
+        }
+
+        else if (dir.equals("CCW"))
+        {
+            setRotationAngle(wrapAroundValue((float) getRotationAngle() - 45.0f));
+        }
+
+        aim_bounds = new Position(wrapAroundValue((float) getRotationAngle() + 90.0f), wrapAroundValue((float) getRotationAngle() - 90.0f));
+
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "REV: Value of aim_angle " + getRotationAngle() + " and aim_bounds: " + aim_bounds.toString());
     }
 
 }

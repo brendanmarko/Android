@@ -411,4 +411,9 @@ public class ViewPort
         return max_view_pixels;
     }
 
+    public Position getViewableSize()
+    {
+        return viewable_size;
+    }
+
 }

@@ -1,0 +1,13 @@
+June 9
+======
+Summary
+=======
+Good news! After completely stripping the previous rotation implementation I have moved to a more practical means to rotate the Player!
+
+Completed
+=========
+1. Switched over the method of rotation to something more intuitive!
+
+To do
+=====
+1. Correc the transpose from rotation angle to the proper matrix equivalent

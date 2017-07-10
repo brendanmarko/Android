@@ -30,7 +30,7 @@ public class GameObject
                 image_name = "bob";
                 frame_count = 1;
                 dimensions = new Position(2.0f, 3.0f);
-                speed = 7.0f;
+                speed = 5.0f;
                 movementType = "dynamic";
                 break;
             }

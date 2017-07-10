@@ -97,13 +97,11 @@ public class GameView extends SurfaceView implements Runnable
     {
         if (event.getPointerCount() > 1)
         {
-            Log.d(DEBUG_TAG, "Multiple touches found with value = " + event.getPointerCount());
             return multi_touch_manager.handleEvent(event);
         }
 
         else
         {
-            Log.d(DEBUG_TAG, "Single touch found!");
             return single_touch_detector.onTouchEvent(event);
         }
     }

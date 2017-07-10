@@ -10,7 +10,7 @@ import android.util.Log;
 public abstract class Entity
 {
     // Debug info
-    private int                 DEBUG = 2;
+    private int                 DEBUG = 0;
     private String              DEBUG_TAG = "Entity";
 
     private Position            pixels_per_metre;
@@ -77,7 +77,7 @@ public abstract class Entity
 
     public Bitmap rotateBitmap(double angle)
     {
-        if (DEBUG == 1)
+        if (DEBUG == 2)
             Log.d(DEBUG_TAG, "Enter rotateBitmap with " + angle);
 
         Matrix m = new Matrix();

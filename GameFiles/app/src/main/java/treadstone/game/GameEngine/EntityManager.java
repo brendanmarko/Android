@@ -107,7 +107,7 @@ public class EntityManager extends Manager
                     {
                         if (DEBUG == 2)
                             Log.d(DEBUG_TAG, "Rotation angle = " + e.getRotationAngle());
-                        canvas.drawBitmap(e.rotateBitmap(e.getRotationAngle()), r.left, r.top, paint);
+                        canvas.drawBitmap(e.rotateBitmap(matrixRotationConversion(e.getRotationAngle())), r.left, r.top, paint);
                     }
                 }
             }
