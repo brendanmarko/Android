@@ -191,10 +191,12 @@ public class MultiTouchManager
         }
 
         if (DEBUG == 1)
-            Log.d(DEBUG_TAG, "Num of rotations " + curr_rotation_num + " in the direction: " + movement_direction);
+            Log.d(DEBUG_TAG, "Num of rotations " + curr_rotation_num + " in the direction: " + movement_direction + " against " + getNumRotations() + " rotations.");
 
         if (curr_rotation_num != getNumRotations())
+        {
             adjustRotationAmount(curr_rotation_num);
+        }
     }
 
     // void calculateRotationAmount()

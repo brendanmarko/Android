@@ -1,0 +1,11 @@
+July 4
+======
+Summary
+=======
+Continued work upon the rotation of the Bitmap wrt Player rotations regarding MultiTouch Events
+
+Completed
+=========
+
+To-do
+=====

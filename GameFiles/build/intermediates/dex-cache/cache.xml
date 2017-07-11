@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/home/brendan/Desktop/Misc/Game/AndroidGame/GameFiles/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
+        <dex dex="/home/brendan/Desktop/Misc/Game/AndroidGame/GameFiles/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_fb66a637d1d16830f1af9996e2c8121b20fe7a20/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/brendan/Desktop/Misc/Game/AndroidGame/GameFiles/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="cfe12ff4fb7d5a15617b4be15bfeefaf6b18c621">
+        <dex dex="/home/brendan/Desktop/Misc/Game/AndroidGame/GameFiles/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_cc0720d68394d1e364d4612c4e0dfd290f7a6e59/classes.dex" />
+    </item>
+
+</items>
