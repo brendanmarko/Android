@@ -7,7 +7,7 @@ import java.util.Random;
 public class GameObject
 {
     private char            type;
-    private int             frame_count, layer;
+    private int             frame_count, layer, boost_factor;
     private float           speed, effective_range;
     private String          movementType;
     private String          image_name;
@@ -30,8 +30,9 @@ public class GameObject
                 image_name = "bob";
                 frame_count = 1;
                 dimensions = new Position(2.0f, 3.0f);
-                speed = 5.0f;
+                speed = 3.5f;
                 movementType = "dynamic";
+                boost_factor = 3;
                 break;
             }
 
@@ -164,5 +165,10 @@ public class GameObject
     public float getEffectiveRange()
     {
         return effective_range;
+    }
+
+    public int getBoostFactor()
+    {
+        return boost_factor;
     }
 }

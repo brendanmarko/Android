@@ -21,7 +21,7 @@ public class Player extends ArmedEntity implements Shooter, AngleFinder
         setPosition(p.getX() - (getObjInfo().getDimensions().getX() * ppm.getX())/2, p.getY() - (getObjInfo().getDimensions().getY() * ppm.getY())/2);
     }
 
-    public void processMovement(float x_location, float y_location)
+    public void processMovement(float x_location, float y_location, boolean boosted)
     {
         if (DEBUG == 1)
         {
@@ -48,7 +48,12 @@ public class Player extends ArmedEntity implements Shooter, AngleFinder
             Log.d("player.movement", "Angle after adjust: " + angle_of_movement);
 
         // Apply to Object using move speed
-        calcDirDisplacement(convertAngleToString(angle_of_movement));
+        if (boosted)
+            calcDisplacementBoosted(convertAngleToString(angle_of_movement));
+
+        else
+            calcDirDisplacement(convertAngleToString(angle_of_movement));
+
         boundsCheck(getX(), getY());
     }
 

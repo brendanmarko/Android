@@ -107,6 +107,65 @@ public abstract class MovableEntity extends Entity
         setPosition(getPosition().getX() + x_dir, getPosition().getY() + y_dir);
     }
 
+    public void calcDisplacementBoosted(String d)
+    {
+        float boost_speed = speed * getObjInfo().getBoostFactor();
+
+        if (d.equals(("E")))
+        {
+            x_dir = boost_speed;
+            y_dir = 0.0f;
+        }
+
+        else if (d.equals("NE"))
+        {
+            y_dir = (0 - boost_speed) * 0.75f;
+            x_dir = boost_speed * 0.75f;
+        }
+
+        else if (d.equals("SE"))
+        {
+            x_dir = boost_speed * 0.75f;
+            y_dir = boost_speed * 0.75f;
+        }
+
+        else if (d.equals("N"))
+        {
+            x_dir = 0.0f;
+            y_dir = 0 - boost_speed;
+        }
+
+        else if (d.equals("S"))
+        {
+            x_dir = 0.0f;
+            y_dir = boost_speed;
+        }
+
+        else if (d.equals("NW"))
+        {
+            x_dir = (0 - boost_speed) * 0.75f;
+            y_dir = (0 - boost_speed) * 0.75f;
+        }
+
+        else if (d.equals("W"))
+        {
+            x_dir = 0 - boost_speed;
+            y_dir = 0.0f;
+        }
+
+        else if (d.equals("SW"))
+        {
+            x_dir = (0 - boost_speed) * 0.75f;
+            y_dir = speed * 0.75f;
+        }
+
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "New Direction: " + direction + " & values: " + x_dir + ", " + y_dir);
+
+        // Update position with movement increases
+        setPosition(getPosition().getX() + x_dir, getPosition().getY() + y_dir);
+    }
+
     public float directionX()
     {
         return x_dir;

@@ -37,6 +37,11 @@ public class MultiTouchManager
     {
         int action = event.getActionMasked();
 
+        if (DEBUG == 1)
+        {
+            Log.d(DEBUG_TAG, "Event: " + event.toString());
+        }
+
         switch(action)
         {
             case MotionEvent.ACTION_MOVE:
@@ -45,8 +50,7 @@ public class MultiTouchManager
                 positionUpdates(event);
 
                 // 1) Capture fingers
-                if (!active_touch)
-                    fingerAnalysis(pointerPos[0], pointerPos[1]);
+                fingerAnalysis(pointerPos[0], pointerPos[1]);
 
                 // 2) Calculate direction of rotation
                 if (!direction_found)
@@ -66,15 +70,28 @@ public class MultiTouchManager
                     displacementHandler();
 
                 updateTouchPositions();
-
                 return true;
             }
 
             case MotionEvent.ACTION_POINTER_UP:
             {
+                if (DEBUG == 1)
+                    Log.d(DEBUG_TAG, "Testing ACTION_POINTER_UP");
                 fingerReset();
                 touchReset();
                 return true;
+            }
+
+            case MotionEvent.ACTION_POINTER_DOWN:
+            {
+                if (DEBUG == 1)
+                    Log.d(DEBUG_TAG, "Testing ACTION_POINTER_DOWN");
+
+                positionUpdates(event);
+                fingerAnalysis(pointerPos[0], pointerPos[1]);
+                curr_player.adjustAimDirection(right_finger.getX() + displacementX, right_finger.getY() + displacementY);
+
+                return false;
             }
 
         }
@@ -201,23 +218,23 @@ public class MultiTouchManager
 
     // void calculateRotationAmount()
     // This function calculates the necessary rotation wrt finger movement
-    private void adjustRotationAmount(int r)
+    private void adjustRotationAmount(int current_rotations)
     {
         if (DEBUG == 1)
-            Log.d(DEBUG_TAG, "Inside calculateRotationAmount with direction: " + movement_direction + " and rotations: " + r + ", against: " + num_rotations);
+            Log.d(DEBUG_TAG, "Inside calculateRotationAmount with direction: " + movement_direction + " and rotations: " + current_rotations + ", against: " + num_rotations);
 
-        if (r - num_rotations > 0)
+        if (current_rotations - num_rotations > 0)
         {
-            for (int i = 0; i < r - num_rotations; i++)
+            for (int i = 0; i < current_rotations - num_rotations; i++)
             {
                 curr_player.continueRotation(movement_direction);
                 num_rotations++;
             }
         }
 
-        else if (r - num_rotations < 0)
+        else if (current_rotations - num_rotations <= 0)
         {
-            for (int i = 0; i > r - num_rotations; i--)
+            for (int i = 0; i > current_rotations - num_rotations; i--)
             {
                 curr_player.reverseRotation(movement_direction);
                 num_rotations--;
@@ -285,6 +302,16 @@ public class MultiTouchManager
         direction_found = false;
         movement_direction = "None";
         num_rotations = 0;
+        refreshArrays();
+    }
+
+    public void refreshArrays()
+    {
+        for (int i = 0; i < prevPoints.length; i++)
+            prevPoints[i] = new Position();
+
+        for (int j = 0; j < pointerPos.length; j++)
+            pointerPos[j] = new Position();
     }
 
     public int getNumRotations()

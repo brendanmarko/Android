@@ -53,7 +53,7 @@ public class TouchManager implements OnGestureListener, OnDoubleTapListener
     {
         if (DEBUG == 1)
             Log.d(DEBUG_TAG, "onScroll: " + e1.toString() + curr_motion.toString());
-        curr_player.processMovement(curr_motion.getX() + displacementX, curr_motion.getY() + displacementY);
+        curr_player.processMovement(curr_motion.getX() + displacementX, curr_motion.getY() + displacementY, false);
         viewport.setViewPortCentre(curr_player.getPosition());
         return true;
     }
@@ -86,7 +86,7 @@ public class TouchManager implements OnGestureListener, OnDoubleTapListener
     {
         if (DEBUG == 1)
             Log.d(DEBUG_TAG, "onFling: " + event1.toString() + curr_motion.toString());
-        curr_player.processMovement(curr_motion.getX() + displacementX, curr_motion.getY() + displacementY);
+        curr_player.processMovement(curr_motion.getX() + displacementX, curr_motion.getY() + displacementY, true);
         viewport.setViewPortCentre(curr_player.getPosition());
         return true;
     }

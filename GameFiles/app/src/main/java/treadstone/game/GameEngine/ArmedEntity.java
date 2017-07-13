@@ -182,6 +182,8 @@ public abstract class ArmedEntity extends MovableEntity
         if (DEBUG == 1)
             Log.d(DEBUG_TAG, "Current bounds: " + aim_bounds.toString() + ", with angle passed: " + a + " and aim-angle = " + aim_angle);
 
+        if ()
+        return false;
         return true;
 
     }
