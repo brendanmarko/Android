@@ -50,6 +50,7 @@ public class MultiTouchManager
                 positionUpdates(event);
 
                 // 1) Capture fingers
+                if (!active_touch)
                 fingerAnalysis(pointerPos[0], pointerPos[1]);
 
                 // 2) Calculate direction of rotation
