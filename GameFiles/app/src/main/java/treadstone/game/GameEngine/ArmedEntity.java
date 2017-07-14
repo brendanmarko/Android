@@ -15,6 +15,9 @@ public abstract class ArmedEntity extends MovableEntity
     private String                  aim_direction;
     private ArrayList<Projectile>   projectiles;
 
+    // AimBound Handler
+    private AimBoundHandler         aim_handler;
+
     public ArmedEntity(Position p, Position m, Position ppm, char t)
     {
         super(p, m, ppm, t);

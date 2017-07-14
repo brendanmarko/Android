@@ -319,4 +319,5 @@ public class MultiTouchManager
     {
         return num_rotations;
     }
+
 }
