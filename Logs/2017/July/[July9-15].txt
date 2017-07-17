@@ -10,4 +10,20 @@ Completed
 
 To do
 =====
-1. Correc the transpose from rotation angle to the proper matrix equivalent
+1. Correct the transpose from rotation angle to the proper matrix equivalent
+
+June 15
+=======
+Summary
+=======
+The player now can aim only within their 180-degree arc as defined by aim_bounds
+
+Completed
+=========
+1. Player aim restricted to within 180-degrees of rotation angle
+2. Player boost from fling adjusted, field added to ObjectInfo called "boostFactor"
+3. Added helper class called 'AimBoundsHandler' that will be extended from later for detection fields
+
+To do
+=====
+1. Investigate for any other Player adjustment/changes before working on Projectile interactions

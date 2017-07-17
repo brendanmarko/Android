@@ -10,7 +10,6 @@ public abstract class ArmedEntity extends MovableEntity
     private int                     DEBUG = 1;
     private String                  DEBUG_TAG = "ArmedEntity";
 
-    private Position                aim_bounds;
     private double                  aim_angle;
     private String                  aim_direction;
     private ArrayList<Projectile>   projectiles;
@@ -21,7 +20,7 @@ public abstract class ArmedEntity extends MovableEntity
     public ArmedEntity(Position p, Position m, Position ppm, char t)
     {
         super(p, m, ppm, t);
-        aim_bounds = new Position(0.0f, 0.0f);
+        aim_handler = new AimBoundHandler();
         projectiles = new ArrayList<>();
     }
 
@@ -132,40 +131,15 @@ public abstract class ArmedEntity extends MovableEntity
     public Position currentAimBounds()
     {
         if (DEBUG == 1)
-            Log.d(DEBUG_TAG, "Current aiming boundaries: " + aim_bounds.toString());
-        return aim_bounds;
+            Log.d(DEBUG_TAG, "Current aiming boundaries: " + aim_handler.getAimBounds().toString());
+        return aim_handler.getAimBounds();
     }
 
     public void updateAimBounds(String s)
     {
         double aim_dir = convertDirectionToAngle(s);
-
-        if (DEBUG == 1)
-            Log.d(DEBUG_TAG, "Direction to update aim bounds wrt: " + s + " (angle = " + aim_dir + ")");
-
-        if (aim_dir < 0.0f)
-        {
-            aim_dir = getAimAngle() - aim_dir;
-
-            if (aim_dir < 0.0f)
-                aim_dir = 360.0d + aim_dir;
-
-            if (DEBUG == 1)
-                Log.d(DEBUG_TAG, "New aim_dir value: " + aim_dir);
-        }
-
-        else
-        {
-            if (DEBUG == 1)
-                Log.d(DEBUG_TAG, "Aim_dir > 0");
-            aim_dir = wrapAroundValue((float) (getAimAngle() + aim_dir));
-
-            if (DEBUG == 1)
-                Log.d(DEBUG_TAG, "New aim_dir value: " + aim_dir);
-        }
-
         setAimAngle(aim_dir);
-        aim_bounds = new Position(wrapAroundValue((float) aim_dir + 90.0f), wrapAroundValue((float) aim_dir - 90.0f));
+        aim_handler.updateAimBounds(aim_dir);
     }
 
     private float wrapAroundValue(float x)
@@ -183,11 +157,22 @@ public abstract class ArmedEntity extends MovableEntity
     public boolean withinAimBounds(double a)
     {
         if (DEBUG == 1)
-            Log.d(DEBUG_TAG, "Current bounds: " + aim_bounds.toString() + ", with angle passed: " + a + " and aim-angle = " + aim_angle);
+            Log.d(DEBUG_TAG, "Current bounds: " + aim_handler.getAimBounds().toString() + ", with angle passed: " + a + " and aim-angle = " + aim_angle + " with result: " + aim_handler.angleBoundsTest(a));
 
-        //if ()
-        //return false;
-        return true;
+        if (aim_handler.angleBoundsTest(a))
+        {
+            if (DEBUG == 1)
+                Log.d(DEBUG_TAG, "Aim updated successfully with angle: " + a);
+            aim_angle = a;
+            return true;
+        }
+
+        else
+        {
+            if (DEBUG == 1)
+                Log.d(DEBUG_TAG, "Aim angle outside of acceptable range, not changing value.");
+            return false;
+        }
 
     }
 
@@ -202,7 +187,7 @@ public abstract class ArmedEntity extends MovableEntity
     public void continueRotation(String dir)
     {
         if (DEBUG == 1)
-            Log.d(DEBUG_TAG, "CNT: Value of rotation " + getRotationAngle() + " and aim_bounds: " + aim_bounds.toString());
+            Log.d(DEBUG_TAG, "CNT: Value of rotation " + getRotationAngle() + " and aim_bounds: " + aim_handler.getAimBounds().toString());
 
         if (dir.equals("CW"))
         {
@@ -214,11 +199,11 @@ public abstract class ArmedEntity extends MovableEntity
             setRotationAngle(wrapAroundValue((float) getRotationAngle() + 45.0f));
         }
 
-        aim_bounds = new Position(wrapAroundValue((float) getRotationAngle() + 90.0f), wrapAroundValue((float) getRotationAngle() - 90.0f));
+        aim_handler.updateAimBounds(getRotationAngle());
         setAimAngle(getRotationAngle());
 
         if (DEBUG == 1)
-            Log.d(DEBUG_TAG, "CNT: Value of rotation " + getRotationAngle() + " and aim_bounds: " + aim_bounds.toString() + " aim = " + getAimAngle());
+            Log.d(DEBUG_TAG, "CNT: Value of rotation " + getRotationAngle() + " and aim_bounds: " +aim_handler.getAimBounds().toString() + " aim = " + getAimAngle());
 
     }
 
@@ -228,7 +213,7 @@ public abstract class ArmedEntity extends MovableEntity
     public void reverseRotation(String dir)
     {
         if (DEBUG == 1)
-            Log.d(DEBUG_TAG, "REV: Value of aim_angle " + getRotationAngle() + " and aim_bounds: " + aim_bounds.toString());
+            Log.d(DEBUG_TAG, "REV: Value of aim_angle " + getRotationAngle() + " and aim_bounds: " + aim_handler.getAimBounds().toString());
 
         if (dir.equals("CW"))
         {
@@ -240,11 +225,11 @@ public abstract class ArmedEntity extends MovableEntity
             setRotationAngle(wrapAroundValue((float) getRotationAngle() - 45.0f));
         }
 
-        aim_bounds = new Position(wrapAroundValue((float) getRotationAngle() + 90.0f), wrapAroundValue((float) getRotationAngle() - 90.0f));
+        aim_handler.updateAimBounds(getRotationAngle());
         setAimAngle(getRotationAngle());
 
         if (DEBUG == 1)
-            Log.d(DEBUG_TAG, "REV: Value of aim_angle " + getRotationAngle() + " and aim_bounds: " + aim_bounds.toString() + " aim = " + getAimAngle());
+            Log.d(DEBUG_TAG, "REV: Value of aim_angle " + getRotationAngle() + " and aim_bounds: " + aim_handler.getAimBounds().toString() + " aim = " + getAimAngle());
     }
 
 }

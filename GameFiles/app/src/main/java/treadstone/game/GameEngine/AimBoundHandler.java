@@ -8,7 +8,7 @@ public class AimBoundHandler
     private String      DEBUG_TAG = "AimBounds";
     private int         DEBUG     = 1;
 
-    private double      aim_angle;
+    private double      rotation_angle;
     private Position    aim_bounds;
 
     AimBoundHandler()
@@ -21,12 +21,12 @@ public class AimBoundHandler
     private void init()
     {
         aim_bounds = new Position();
-        aim_angle = 0.0f;
+        rotation_angle = 0.0f;
     }
 
-    public double getAimAngle()
+    public double getRotationAngle()
     {
-        return aim_angle;
+        return rotation_angle;
     }
 
     public Position getAimBounds()
@@ -37,7 +37,25 @@ public class AimBoundHandler
     //
     public boolean angleBoundsTest(double test_angle)
     {
-        return true;
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "Angle testing within ABT: " + test_angle);
+
+        if (aim_bounds.getY() > aim_bounds.getX())
+        {
+            if (DEBUG == 1)
+                Log.d(DEBUG_TAG, "[Special case where (ab.y > ab.x)]");
+
+            if (test_angle > 0.0f && test_angle < aim_bounds.getX())
+                return true;
+
+            else if (test_angle < 360.0f && test_angle > aim_bounds.getY())
+                return true;
+        }
+
+        if (test_angle > aim_bounds.getY() && test_angle < aim_bounds.getX())
+            return true;
+
+        return false;
     }
 
     //
@@ -46,29 +64,11 @@ public class AimBoundHandler
         if (DEBUG == 1)
             Log.d(DEBUG_TAG, "Direction to update aim bounds wrt (angle = " + new_angle + ")");
 
-        if (new_angle < 0.0f)
-        {
-            new_angle = getAimAngle() - new_angle;
-
-            if (new_angle < 0.0f)
-                new_angle = 360.0d + new_angle;
-
-            if (DEBUG == 1)
-                Log.d(DEBUG_TAG, "New aim_dir value: " + new_angle);
-        }
-
-        else
-        {
-            if (DEBUG == 1)
-                Log.d(DEBUG_TAG, "Aim_dir > 0");
-            new_angle = wrapAroundValue((float) (getAimAngle() + new_angle));
-
-            if (DEBUG == 1)
-                Log.d(DEBUG_TAG, "New aim_dir value: " + new_angle);
-        }
-
-        aim_angle = new_angle;
+        rotation_angle = new_angle;
         aim_bounds = new Position(wrapAroundValue((float) new_angle + 90.0f), wrapAroundValue((float) new_angle - 90.0f));
+
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG, "New aim_dir value: " + rotation_angle);
     }
 
     //

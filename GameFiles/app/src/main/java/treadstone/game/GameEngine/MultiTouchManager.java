@@ -51,7 +51,7 @@ public class MultiTouchManager
 
                 // 1) Capture fingers
                 if (!active_touch)
-                fingerAnalysis(pointerPos[0], pointerPos[1]);
+                    fingerAnalysis(pointerPos[0], pointerPos[1]);
 
                 // 2) Calculate direction of rotation
                 if (!direction_found)
@@ -283,8 +283,8 @@ public class MultiTouchManager
                 Log.d(DEBUG_TAG, "Post-change co-ordinates: " + pointerPos[i].toString());
                 Log.d(DEBUG_TAG, "=========================================================================================================");
             }
-
         }
+
     }
 
     private void fingerReset()
