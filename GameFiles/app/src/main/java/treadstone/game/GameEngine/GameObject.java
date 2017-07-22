@@ -111,6 +111,17 @@ public class GameObject
                 break;
             }
 
+            // Planet
+            case ('P'):
+            {
+                layer = 1;
+                image_name = "planet_small";
+                speed = 0.0f;
+                movementType = "static";
+                dimensions = new Position(4.0f, 4.0f);
+                frame_count = 1;
+            }
+
             default:
                 layer = 0;
                 frame_count = 1;

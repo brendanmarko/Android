@@ -339,7 +339,7 @@ public abstract class MovableEntity extends Entity
 
     }
 
-    public void calcAngleDisplacement(double a)
+    public void buildTravelVector(double a)
     {
         if (DEBUG == 2)
             Log.d(DEBUG_TAG, "Input angle into calcDisp: " + a);

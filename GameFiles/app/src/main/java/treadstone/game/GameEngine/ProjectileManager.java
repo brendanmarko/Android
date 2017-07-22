@@ -11,25 +11,29 @@ import java.util.Iterator;
 
 public class ProjectileManager extends Manager
 {
-    // Debug toggle
+    // Debug info
+    private String                  DEBUG_TAG = "PrjMgr/";
     private int                     DEBUG = 0;
 
     private ViewPort                viewport;
     private int                     index;
 
+    private RefractionHandler       refraction_handler;
+
     public ProjectileManager(ViewPort v)
     {
         super();
         viewport = v;
+        refraction_handler = new RefractionHandler();
 
         if (DEBUG == 1)
-            Log.d("PMgr/CTOR", "ProjectileManager initialized!");
+            Log.d(DEBUG_TAG + "CTOR", "ProjectileManager initialized!");
     }
 
     public void addBuffer(Context c, ArrayList<Projectile> buffer)
     {
         if (DEBUG == 1)
-            Log.d("PrjMgr/addBuffer" , "Adding buffer to projectiles!");
+            Log.d(DEBUG_TAG + "addBuffer" , "Adding buffer to projectiles!");
 
         for (Projectile p : buffer)
             checkBitmap(c, p, p.getObjInfo().getType());
@@ -37,7 +41,7 @@ public class ProjectileManager extends Manager
         getList().addAll(buffer);
 
         if (DEBUG == 1)
-            Log.d("PrjMgr/addBuffer" , "New Size of projectiles: " + getList().size());
+            Log.d(DEBUG_TAG + "addBuffer" , "New Size of projectiles: " + getList().size());
     }
 
     public void update(float x, float y)
@@ -47,36 +51,33 @@ public class ProjectileManager extends Manager
             Projectile e = iterator.next();
             if (e.isActive())
             {
+                // Checks if Projectile is needed within the ViewPort
                 if (viewport.clipObject(e.getPosition()))
                 {
                     e.setInvisible();
                     if (DEBUG == 1)
-                        Log.d("PrjMgr/update", "Projectile set as Invisible");
+                        Log.d(DEBUG_TAG + "update", "Projectile set as Invisible");
                 }
 
                 else
                 {
                     e.setVisible();
                     if (DEBUG == 1)
-                        Log.d("PrjMgr/update", "Projectile set as Visible");
+                        Log.d(DEBUG_TAG + "update", "Projectile set as Visible");
                 }
 
-                if (e.inBounds())
+                // If projectile is valid; update it
+                refraction_handler.refractionChange(e, e.inBounds());
+
+                if (e.inBounds() != 0)
                 {
                     if (DEBUG == 1)
-                        Log.d("PrjMgr/update", "Projectile in bounds.");
+                        Log.d(DEBUG_TAG + "!OB", "Prj found to need refracting.");
 
-                    e.update();
-                    e.updateHitbox(x, y);
                 }
 
-                else
-                {
-                    if (DEBUG == 1)
-                        Log.d("PrjMgr/update", "Projectile OUT of bounds, removing from projectiles");
-
-                    iterator.remove();
-                }
+                e.update();
+                e.updateHitbox(x, y);
             }
     	}
     }
@@ -141,7 +142,7 @@ public class ProjectileManager extends Manager
         Rect r = new Rect();
 
         if  (DEBUG == 1)
-            Log.d("GameView/DrawPrj", "Drawing Projectiles with size: " + getList().size());
+            Log.d(DEBUG_TAG + "DrawPrj", "Drawing Projectiles with size: " + getList().size());
 
         for (int layer = 0; layer < 3; layer++)
         {
