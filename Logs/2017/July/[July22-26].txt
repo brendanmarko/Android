@@ -1,0 +1,15 @@
+July 22
+=======
+Projectiles 2.001
+=================
+a. Added angle refraction capability wrt "RefractionHandler"; handles angle changes when hitting boundaries
+b. Still requires some work with adjusting the Projectile's TravelVector; angular change reflected
+c. Moved around some variables to ease use within classes
+
+July 23
+=======
+Projectile 2.002
+================
+a) Projectiles now properly bounce off the world boundaries (perpindicular or reversal)
+b) Cleaned up MovableEntity
+c) Issue with objects not detecting bounds properly when colliding (calculating too soon!)

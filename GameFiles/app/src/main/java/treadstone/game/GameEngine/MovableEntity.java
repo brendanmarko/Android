@@ -6,12 +6,13 @@ public abstract class MovableEntity extends Entity
 {
     // Debug toggle
     private int                     DEBUG = 2;
-    private String                  DEBUG_TAG = "MovableEntity";
+    private String                  DEBUG_TAG = "MovableEntity/";
 
     private float                   speed, x_dir, y_dir;
     private String                  direction;
     private boolean                 moving;
     public Position                 travel_vector;
+    private float                   SPEED_REDUCTION_FACTOR = 0.75f;
 
     public abstract void update();
 
@@ -31,7 +32,7 @@ public abstract class MovableEntity extends Entity
     public String toString()
     {
         if (DEBUG == 1)
-            Log.d("MovableE/toString", "Current MovableE @" + getPosition().toString() + " w/ speed " + getSpeed());
+            Log.d(DEBUG_TAG, "Current MovableE @" + getPosition().toString() + " w/ speed " + getSpeed());
         return "Current MovableE @" + getPosition().toString() + " w/ speed " + getSpeed();
     }
 
@@ -60,14 +61,14 @@ public abstract class MovableEntity extends Entity
 
         else if (d.equals("NE"))
         {
-            y_dir = (0 - getSpeed()) * 0.75f;
-            x_dir = getSpeed() * 0.75f;
+            y_dir = (0 - getSpeed()) * SPEED_REDUCTION_FACTOR;
+            x_dir = getSpeed() * SPEED_REDUCTION_FACTOR;
         }
 
         else if (d.equals("SE"))
         {
-            x_dir = getSpeed() * 0.75f;
-            y_dir = getSpeed() * 0.75f;
+            x_dir = getSpeed() * SPEED_REDUCTION_FACTOR;
+            y_dir = getSpeed() * SPEED_REDUCTION_FACTOR;
         }
 
         else if (d.equals("N"))
@@ -84,8 +85,8 @@ public abstract class MovableEntity extends Entity
 
         else if (d.equals("NW"))
         {
-            x_dir = (0 - getSpeed()) * 0.75f;
-            y_dir = (0 - getSpeed()) * 0.75f;
+            x_dir = (0 - getSpeed()) * SPEED_REDUCTION_FACTOR;
+            y_dir = (0 - getSpeed()) * SPEED_REDUCTION_FACTOR;
         }
 
         else if (d.equals("W"))
@@ -96,12 +97,12 @@ public abstract class MovableEntity extends Entity
 
         else if (d.equals("SW"))
         {
-            x_dir = (0 - getSpeed()) * 0.75f;
-            y_dir = getSpeed() * 0.75f;
+            x_dir = (0 - getSpeed()) * SPEED_REDUCTION_FACTOR;
+            y_dir = getSpeed() * SPEED_REDUCTION_FACTOR;
         }
 
         if (DEBUG == 1)
-            Log.d(DEBUG_TAG, "New Direction: " + direction + " & values: " + x_dir + ", " + y_dir);
+            Log.d(DEBUG_TAG + "calcD", "New Direction: " + direction + " & values: " + x_dir + ", " + y_dir);
 
         // Update position with movement increases
         setPosition(getPosition().getX() + x_dir, getPosition().getY() + y_dir);
@@ -119,14 +120,14 @@ public abstract class MovableEntity extends Entity
 
         else if (d.equals("NE"))
         {
-            y_dir = (0 - boost_speed) * 0.75f;
-            x_dir = boost_speed * 0.75f;
+            y_dir = (0 - boost_speed) * SPEED_REDUCTION_FACTOR;
+            x_dir = boost_speed * SPEED_REDUCTION_FACTOR;
         }
 
         else if (d.equals("SE"))
         {
-            x_dir = boost_speed * 0.75f;
-            y_dir = boost_speed * 0.75f;
+            x_dir = boost_speed * SPEED_REDUCTION_FACTOR;
+            y_dir = boost_speed * SPEED_REDUCTION_FACTOR;
         }
 
         else if (d.equals("N"))
@@ -143,8 +144,8 @@ public abstract class MovableEntity extends Entity
 
         else if (d.equals("NW"))
         {
-            x_dir = (0 - boost_speed) * 0.75f;
-            y_dir = (0 - boost_speed) * 0.75f;
+            x_dir = (0 - boost_speed) * SPEED_REDUCTION_FACTOR;
+            y_dir = (0 - boost_speed) * SPEED_REDUCTION_FACTOR;
         }
 
         else if (d.equals("W"))
@@ -155,12 +156,12 @@ public abstract class MovableEntity extends Entity
 
         else if (d.equals("SW"))
         {
-            x_dir = (0 - boost_speed) * 0.75f;
-            y_dir = speed * 0.75f;
+            x_dir = (0 - boost_speed) * SPEED_REDUCTION_FACTOR;
+            y_dir = speed * SPEED_REDUCTION_FACTOR;
         }
 
         if (DEBUG == 1)
-            Log.d(DEBUG_TAG, "New Direction: " + direction + " & values: " + x_dir + ", " + y_dir);
+            Log.d(DEBUG_TAG + "calcDB", "New Direction: " + direction + " & values: " + x_dir + ", " + y_dir);
 
         // Update position with movement increases
         setPosition(getPosition().getX() + x_dir, getPosition().getY() + y_dir);
@@ -179,7 +180,7 @@ public abstract class MovableEntity extends Entity
     public void boundsCheck(float x, float y)
     {
         if (DEBUG == 1)
-            Log.d("MovableE.boundsCheck", "Checking bounds for Player with [X, Y]: " + x + ", " + y);
+            Log.d(DEBUG_TAG + "bounds", "Checking bounds for Player with [X, Y]: " + x + ", " + y);
 
         float new_x = 0.0f;
         float new_y = 0.0f;
@@ -187,14 +188,14 @@ public abstract class MovableEntity extends Entity
         if (x < 0.0f)
         {
             if (DEBUG == 1)
-                Log.d("MovableE.boundsCheck", "X < 0");
+                Log.d(DEBUG_TAG + "bounds", "X < 0");
             new_x = 0.0f;
         }
 
         else if (x + getWidth() > getMaxBounds().getX())
         {
             if (DEBUG == 1)
-                Log.d("MovableE.boundsCheck", "X > max");
+                Log.d(DEBUG_TAG + "bounds", "X > max");
             new_x = getMaxBounds().getX() - getWidth();
         }
 
@@ -206,14 +207,14 @@ public abstract class MovableEntity extends Entity
         if (y < 0.0f)
         {
             if (DEBUG == 1)
-                Log.d("Player.boundsCheck", "Y < 0");
+                Log.d(DEBUG_TAG + "bounds", "Y < 0");
             new_y = 0.0f;
         }
 
         else if (y + getHeight() > getMaxBounds().getY())
         {
             if (DEBUG == 1)
-                Log.d("Player.boundsCheck", "Y > max");
+                Log.d(DEBUG_TAG + "bounds", "Y > max");
             new_y = getMaxBounds().getY() - getHeight();
         }
 
@@ -223,7 +224,7 @@ public abstract class MovableEntity extends Entity
         }
 
         if (DEBUG == 1)
-            Log.d("Player.boundsCheck", "Checking bounds for Player with [X, Y]: " + new_x + ", " + new_y);
+            Log.d(DEBUG_TAG + "bounds", "Checking bounds for Player with [X, Y]: " + new_x + ", " + new_y);
 
         setPosition(new_x, new_y);
     }
@@ -249,45 +250,29 @@ public abstract class MovableEntity extends Entity
 
     public String convertAngleToString(double angle)
     {
-        if (angle == 0.0d)
-        {
+        if (angle == 0.0d || angle == 360.0d)
             setDirection("E");
-        }
 
         else if (angle == 45.0d)
-        {
             setDirection("NE");
-        }
 
         else if (angle == 90.0d)
-        {
             setDirection("N");
-        }
 
         else if (angle == 135.0d)
-        {
             setDirection("NW");
-        }
 
         else if (angle == 180.0d)
-        {
             setDirection("W");
-        }
 
         else if (angle == 225.0d)
-        {
             setDirection("SW");
-        }
 
         else if (angle == 270.0d)
-        {
             setDirection("S");
-        }
 
         else if (angle == 315.0d)
-        {
             setDirection("SE");
-        }
 
         return getDirection();
     }
@@ -295,89 +280,86 @@ public abstract class MovableEntity extends Entity
     public double convertDirectionToAngle(String s)
     {
         if (s.equals("E"))
-        {
             return 0.0d;
-        }
 
         else if (s.equals("NE"))
-        {
             return 45.0d;
-        }
 
         else if (s.equals("N"))
-        {
             return 90.0d;
-        }
 
         else if (s.equals("NW"))
-        {
             return 135.0d;
-        }
 
         else if (s.equals("W"))
-        {
             return 180.0d;
-        }
 
         else if (s.equals("SW"))
-        {
             return 225.0d;
-        }
 
         else if (s.equals("S"))
-        {
             return 270.0d;
-        }
 
         else if (s.equals("SE"))
-        {
             return 315.0d;
-        }
 
         else
             return 0.0d;
-
     }
 
     public void buildTravelVector(double a)
     {
         if (DEBUG == 2)
-            Log.d(DEBUG_TAG, "Input angle into calcDisp: " + a);
+            Log.d(DEBUG_TAG + "travelV", "Input angle into buildTravelVector " + a);
 
-        double x;
+        double x, y;
 
-        // Q1 && Q4
-        if ((a >= 0.0d && a <= 90.0d) || (a >= 270.0d && a <= 360.0d))
+        if ((a >= 0.0d && a <= 90.0d) || (a >= 270.0d && a <= 360.0d)) // Q1 && Q4
         {
             x = Math.cos(Math.toRadians(a)) * getSpeed();
             if (DEBUG == 2)
                 Log.d(DEBUG_TAG, "[X] Angle is within (0<x<90) OR (270<x<360) -> POSITIVE: " + x);
         }
 
-        // Q2 && Q3
-        else
+        else // Q2 && Q3
         {
             x = Math.cos(Math.toRadians(a)) * getSpeed();
             if (DEBUG == 2)
                 Log.d(DEBUG_TAG, "[X] Angle is within (90<x<270) -> NEGATIVE: " + x);
         }
 
-        double y;
-
-        // Q3 && Q4
-        if (a >= 180.0d && a <= 360.0d)
+        // Checks if x consumes entire displacement
+        if (Math.abs(x) == getSpeed())
         {
-            y = Math.abs(Math.sin(Math.toRadians(a)) * getSpeed());
+            y = 0.0d;
             if (DEBUG == 2)
-                Log.d(DEBUG_TAG, "[Y] Angle is within (180<x<360) -> POSITIVE: " + y);
+                Log.d(DEBUG_TAG + "S=TV", "Projectile speed is focused in one direction; y = 0");
         }
 
-        // Q1 && Q2
         else
         {
-            y = 0 - Math.sin(Math.toRadians(a)) * getSpeed();
+            if (a >= 180.0d && a <= 360.0d) // Q3 && Q4
+            {
+                y = Math.abs(Math.sin(Math.toRadians(a)) * getSpeed());
+                if (DEBUG == 2)
+                    Log.d(DEBUG_TAG, "[Y] Angle is within (180<x<360) -> POSITIVE: " + y);
+            }
+
+            else // Q1 && Q2
+            {
+                y = 0 - Math.sin(Math.toRadians(a)) * getSpeed();
+                if (DEBUG == 2)
+                    Log.d(DEBUG_TAG, "[Y] Angle is within (0<x<180) -> NEGATIVE: " + y);
+            }
+
+        }
+
+        // Checks if y consumes entire displacement
+        if (Math.abs(y) == getSpeed())
+        {
+            x = 0.0d;
             if (DEBUG == 2)
-                Log.d(DEBUG_TAG, "[Y] Angle is within (0<x<180) -> NEGATIVE: " + y);
+                Log.d(DEBUG_TAG + "S=TV", "Projectile speed is focused in one direction; x = 0");
         }
 
         if (DEBUG == 2)

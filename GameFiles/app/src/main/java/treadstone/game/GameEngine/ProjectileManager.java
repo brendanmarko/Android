@@ -66,14 +66,14 @@ public class ProjectileManager extends Manager
                         Log.d(DEBUG_TAG + "update", "Projectile set as Visible");
                 }
 
-                // If projectile is valid; update it
-                refraction_handler.refractionChange(e, e.inBounds());
+                int temp = e.inBounds();
 
-                if (e.inBounds() != 0)
+                if (temp != 0)
                 {
                     if (DEBUG == 1)
                         Log.d(DEBUG_TAG + "!OB", "Prj found to need refracting.");
-
+                    refraction_handler.refractionChange(e, temp);
+                    e.buildTravelVector(e.getMovementAngle());
                 }
 
                 e.update();

@@ -22,58 +22,73 @@ public class RefractionHandler
         else
         {
             double temp = 0.0d;
+            double move_angle = p.getMovementAngle();
 
             // Tests angle 0<x<90
-            if (p.getMovementAngle() > 0.0f && p.getMovementAngle() < 90.0f)
+            if (move_angle > 0.0d && move_angle < 90.0d)
             {
                 if (DEBUG == 1)
                     Log.d(DEBUG_TAG + "refract", "Q=" + q + " passed into Q1");
 
                 if (q == 2)
-                    temp = p.getMovementAngle() + 90.0f;
+                    temp = move_angle + 90.0d;
 
                 if (q == 3)
-                    temp = p.getMovementAngle() - 90.0f;
+                    temp = move_angle - 90.0d;
             }
 
             // Tests angle 90<x<180
-            else if (p.getMovementAngle() > 90.0f && p.getMovementAngle() < 180.0f)
+            else if (move_angle > 90.0d && move_angle < 180.0d)
             {
                 if (DEBUG == 1)
                     Log.d(DEBUG_TAG + "refract", "Q=" + q + " passed into Q2");
 
                 if (q == 1)
-                    temp = p.getMovementAngle() - 90.0f;
+                    temp = move_angle - 90.0d;
 
                 if (q == 3)
-                    temp = p.getMovementAngle() + 90.0f;
+                    temp = move_angle + 90.0d;
 
             }
 
             // Tests angle 180<x<270
-            else if (p.getMovementAngle() > 180.0f && p.getMovementAngle() < 270.0f)
+            else if (move_angle > 180.0d && move_angle < 270.0d)
             {
                 if (DEBUG == 1)
                     Log.d(DEBUG_TAG + "refract", "Q=" + q + " passed into Q3");
 
                 if (q == 1)
-                    temp = p.getMovementAngle() + 90.0f;
+                    temp = move_angle + 90.0d;
 
                 if (q == 4)
-                    temp = p.getMovementAngle() - 90.0f;
+                    temp = move_angle - 90.0d;
             }
 
             // Tests angle 270<x<360
-            else if (p.getMovementAngle() > 270.0f && p.getMovementAngle() < 360.0f)
+            else if (move_angle > 270.0d && move_angle < 360.0d)
             {
                 if (DEBUG == 1)
                     Log.d(DEBUG_TAG + "refract", "Q=" + q + " passed into Q4");
 
                 if (q == 2)
-                    temp = p.getMovementAngle() - 90.0f;
+                    temp = move_angle - 90.0d;
 
                 if (q == 4)
-                    temp = p.getMovementAngle() + 90.0f;
+                    temp = move_angle + 90.0d;
+            }
+
+            // Tests angles 0, 90, 180, 270, 360
+            else
+            {
+                if (DEBUG == 1)
+                    Log.d(DEBUG_TAG + "90ref", "Factor of 90 entered.");
+
+                for (double d = 0.0d; d <= 360.0d; d += 90.0d)
+                {
+                    if (d == move_angle)
+                        temp = wrapAroundValue(move_angle + 180.0d);
+                }
+
             }
 
             p.setMovementAngle(wrapAroundValue(temp));
@@ -88,7 +103,7 @@ public class RefractionHandler
         if (x < 0.0d)
             return 360.0d + x;
 
-        else if (x > 360.0d)
+        else if (x >= 360.0d)
             return x - 360.0d;
 
         else
