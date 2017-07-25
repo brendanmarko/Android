@@ -10,7 +10,7 @@ import android.graphics.Canvas;
 public class HitboxManager extends Manager
 {
     // Debug info
-    private int         DEBUG = 0;
+    private int         DEBUG = 2;
     private String      DEBUG_TAG = "HitboxMgr";
 
     HitboxManager()

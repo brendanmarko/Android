@@ -4,8 +4,8 @@ import android.util.Log;
 
 public abstract class MovableEntity extends Entity
 {
-    // Debug toggle
-    private int                     DEBUG = 2;
+    // Debug info
+    private int                     DEBUG = 0;
     private String                  DEBUG_TAG = "MovableEntity/";
 
     private float                   speed, x_dir, y_dir;
@@ -179,22 +179,22 @@ public abstract class MovableEntity extends Entity
 
     public void boundsCheck(float x, float y)
     {
-        if (DEBUG == 1)
-            Log.d(DEBUG_TAG + "bounds", "Checking bounds for Player with [X, Y]: " + x + ", " + y);
+        if (DEBUG == 2)
+            Log.d(DEBUG_TAG + "bounds", "Checking bounds for MovableEntity with [X, Y]: " + x + ", " + y);
 
         float new_x = 0.0f;
         float new_y = 0.0f;
 
         if (x < 0.0f)
         {
-            if (DEBUG == 1)
+            if (DEBUG == 2)
                 Log.d(DEBUG_TAG + "bounds", "X < 0");
             new_x = 0.0f;
         }
 
         else if (x + getWidth() > getMaxBounds().getX())
         {
-            if (DEBUG == 1)
+            if (DEBUG == 2)
                 Log.d(DEBUG_TAG + "bounds", "X > max");
             new_x = getMaxBounds().getX() - getWidth();
         }
@@ -206,14 +206,14 @@ public abstract class MovableEntity extends Entity
 
         if (y < 0.0f)
         {
-            if (DEBUG == 1)
+            if (DEBUG == 2)
                 Log.d(DEBUG_TAG + "bounds", "Y < 0");
             new_y = 0.0f;
         }
 
         else if (y + getHeight() > getMaxBounds().getY())
         {
-            if (DEBUG == 1)
+            if (DEBUG == 2)
                 Log.d(DEBUG_TAG + "bounds", "Y > max");
             new_y = getMaxBounds().getY() - getHeight();
         }
@@ -223,7 +223,7 @@ public abstract class MovableEntity extends Entity
             new_y = y;
         }
 
-        if (DEBUG == 1)
+        if (DEBUG == 2)
             Log.d(DEBUG_TAG + "bounds", "Checking bounds for Player with [X, Y]: " + new_x + ", " + new_y);
 
         setPosition(new_x, new_y);

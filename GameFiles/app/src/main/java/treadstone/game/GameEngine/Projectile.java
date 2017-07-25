@@ -5,7 +5,7 @@ import android.util.Log;
 public abstract class Projectile extends MovableEntity
 {
     // Debug info
-    private int                 DEBUG = 0;
+    private int                 DEBUG = 2;
     private String              DEBUG_TAG = "Projectile/";
 
     private Entity              owner;
@@ -40,7 +40,7 @@ public abstract class Projectile extends MovableEntity
     }
 
     @Override
-    public void updateHitbox(float x, float y)
+    public void updateHitbox(float displacement_x, float displacement_y)
     {
         if (DEBUG == 1)
         {
@@ -49,7 +49,7 @@ public abstract class Projectile extends MovableEntity
             Log.d(DEBUG_TAG + "updateHB", "Values within updateHB: " + "DIMENS: " + getObjInfo().getDimensions().toString());
         }
 
-        Position temp = new Position(getPosition().getX() - x + owner.getWidth(), getPosition().getY() - y + owner.getHeight()/3);
+        Position temp = new Position(getPosition().getX() - displacement_x, getPosition().getY() - displacement_y);
         setHitbox(new RectangleHitbox(temp, getPPM(), getObjInfo().getDimensions()));
     }
 
@@ -70,36 +70,39 @@ public abstract class Projectile extends MovableEntity
 
     public int inBounds()
     {
-        if (DEBUG == 1)
-            Log.d("Bullet/inBounds", "Position inBounds: " + getPosition().toString());
-
-            if (getPosition().getX() < 0.0f)
-            {
-                if (DEBUG == 1)
-                    Log.d(DEBUG_TAG + "inBounds", "MIN_X exceeded");
-
-                return 1;
-            }
-
-        if (getPosition().getX() + getWidth() > getMaxBounds().getX())
+        if (DEBUG == 2)
         {
-            if (DEBUG == 1)
+            Log.d(DEBUG_TAG + "inBounds", "Position inBounds: " + getPosition().toString());
+            Log.d(DEBUG_TAG + "hitbox", "Current hitbox: " + getHitbox().toString());
+        }
+
+        if (getHitbox().left < 0.0f || getHitbox().right < 0.0f)
+        {
+            if (DEBUG == 2)
+                Log.d(DEBUG_TAG + "inBounds", "MIN_X exceeded");
+
+            return 1;
+        }
+
+        if (getHitbox().right > getMaxBounds().getX() || getHitbox().left > getMaxBounds().getX())
+        {
+            if (DEBUG == 2)
                 Log.d(DEBUG_TAG + "inBounds", "MAX_X exceeded");
 
             return 2;
         }
 
-        if (getPosition().getY() < 0.0f)
+        if (getHitbox().top < 0.0f || getHitbox().bottom < 0.0f)
         {
-            if (DEBUG == 1)
+            if (DEBUG == 2)
                 Log.d(DEBUG_TAG + "inBounds", "MIN_Y exceeded");
 
             return 3;
         }
 
-        if (getPosition().getY() + getHeight() > getMaxBounds().getY())
+        if (getHitbox().top > getMaxBounds().getY() || getHitbox().bottom > getMaxBounds().getY())
         {
-            if (DEBUG == 1)
+            if (DEBUG == 2)
                 Log.d(DEBUG_TAG + "inBounds", "MAX_Y exceeded");
 
             return 4;

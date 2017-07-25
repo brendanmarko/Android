@@ -197,7 +197,7 @@ public abstract class Entity
         return hitbox_object.getHitbox();
     }
 
-    public void updateHitbox(float x, float y)
+    public void updateHitbox(float displacement_x, float displacement_y)
     {
         if (DEBUG == 1)
         {
@@ -206,7 +206,7 @@ public abstract class Entity
             Log.d(DEBUG_TAG, "Values within updateHB: " + "DIMENS: " + getObjInfo().getDimensions().toString());
         }
 
-        Position temp = new Position(getPosition().getX() - x, getPosition().getY() - y);
+        Position temp = new Position(getPosition().getX() - displacement_x, getPosition().getY() - displacement_y);
         hitbox_object = new RectangleHitbox(temp, pixels_per_metre, info.getDimensions());
     }
 

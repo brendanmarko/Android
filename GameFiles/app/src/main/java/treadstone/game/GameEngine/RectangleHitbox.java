@@ -13,11 +13,6 @@ public class RectangleHitbox
     private Rect        hitbox;
     private int         l, b, r, t;
 
-    public RectangleHitbox()
-    {
-        //
-    }
-
     public RectangleHitbox(Position pos, Position ppm, Position dimens)
     {
         l = (int) pos.getX();

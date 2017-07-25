@@ -220,19 +220,19 @@ public class GameView extends SurfaceView implements Runnable
         {
             case BULLET:
                 type = 'b';
-                x = new Bullet(curr_player, curr_player.getPosition(), viewport.getMaxBounds(), pixels_per_metre, type);
+                x = new Bullet(curr_player, curr_player.getFiringPosition(), viewport.getMaxBounds(), pixels_per_metre, type);
                 projectile_buffer.add(x);
                 break;
 
             case MISSILE:
                 type = 'm';
-                x = new Missile(curr_player, curr_player.getPosition(), viewport.getMaxBounds(), pixels_per_metre, type);
+                x = new Missile(curr_player, curr_player.getFiringPosition(), viewport.getMaxBounds(), pixels_per_metre, type);
                 projectile_buffer.add(x);
                 break;
 
             case SHIELD:
                 type = 's';
-                x = new Bullet(curr_player, curr_player.getPosition(), viewport.getMaxBounds(), pixels_per_metre, type);
+                x = new Bullet(curr_player, curr_player.getFiringPosition(), viewport.getMaxBounds(), pixels_per_metre, type);
                 projectile_buffer.add(x);
                 break;
         }

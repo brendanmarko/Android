@@ -13,3 +13,11 @@ Projectile 2.002
 a) Projectiles now properly bounce off the world boundaries (perpindicular or reversal)
 b) Cleaned up MovableEntity
 c) Issue with objects not detecting bounds properly when colliding (calculating too soon!)
+
+July 25
+=======
+Projectile 2.003
+================
+a) Detected problem with values not matching position/hitbox wrt Projectiles
+b) Introduction of new variable/function to handle the 'firing_position' of ArmedEntities
+c) Fixed creation of hitbox/projectile positions

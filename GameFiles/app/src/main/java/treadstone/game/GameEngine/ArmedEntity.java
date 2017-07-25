@@ -232,4 +232,9 @@ public abstract class ArmedEntity extends MovableEntity
             Log.d(DEBUG_TAG, "REV: Value of aim_angle " + getRotationAngle() + " and aim_bounds: " + aim_handler.getAimBounds().toString() + " aim = " + getAimAngle());
     }
 
+    public Position getFiringPosition()
+    {
+        return new Position();
+    }
+
 }

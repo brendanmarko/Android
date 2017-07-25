@@ -27,7 +27,7 @@ public class EntityManager extends Manager
         initDirections();
     }
 
-    public void update(float x, float y)
+    public void update(float displacement_x, float displacement_y)
     {
         for (Iterator<Entity> iterator = getList().iterator(); iterator.hasNext();)
         {
@@ -63,7 +63,7 @@ public class EntityManager extends Manager
                 if (DEBUG == 1)
                     Log.d(DEBUG_TAG, "Post-Examining: " + e.toString());
 
-                e.updateHitbox(x, y);
+                e.updateHitbox(displacement_x, displacement_y);
             }
         }
     }
