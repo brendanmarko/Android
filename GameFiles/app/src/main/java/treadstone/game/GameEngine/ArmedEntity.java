@@ -8,7 +8,7 @@ public abstract class ArmedEntity extends MovableEntity
 {
     // Debug info
     private int                     DEBUG = 1;
-    private String                  DEBUG_TAG = "ArmedEntity";
+    private String                  DEBUG_TAG = "ArmedEntity/";
 
     private double                  aim_angle;
     private String                  aim_direction;
@@ -204,7 +204,6 @@ public abstract class ArmedEntity extends MovableEntity
 
         if (DEBUG == 1)
             Log.d(DEBUG_TAG, "CNT: Value of rotation " + getRotationAngle() + " and aim_bounds: " +aim_handler.getAimBounds().toString() + " aim = " + getAimAngle());
-
     }
 
     // void reverseRotation
@@ -234,7 +233,7 @@ public abstract class ArmedEntity extends MovableEntity
 
     public Position getFiringPosition()
     {
-        return new Position();
+        return new Position(getX() + getWidth(), getY() + getHeight()/3);
     }
 
 }

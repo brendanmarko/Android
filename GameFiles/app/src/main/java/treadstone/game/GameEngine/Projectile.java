@@ -17,7 +17,7 @@ public abstract class Projectile extends MovableEntity
 
     public Projectile(ArmedEntity o, Position pos, Position max, Position p, char t)
     {
-        super(pos, max, p, t);
+        super(new Position(o.getX() + o.getWidth(), + o.getY() + (o.getHeight()/3)), max, p, t);
         owner = o;
         range = getObjInfo().getEffectiveRange();
         angle_of_movement = o.getAimAngle();
@@ -37,20 +37,6 @@ public abstract class Projectile extends MovableEntity
     public String toString()
     {
         return "Projectile info: " + "Owner: " + owner.toString() + ", Position: " + getPosition().toString();
-    }
-
-    @Override
-    public void updateHitbox(float displacement_x, float displacement_y)
-    {
-        if (DEBUG == 1)
-        {
-            Log.d(DEBUG_TAG + "updateHB", "Values within updateHB: " + "POS: " + getPosition().toString());
-            Log.d(DEBUG_TAG + "updateHB", "Values within updateHB: " + "PPM: " + getPPM().toString());
-            Log.d(DEBUG_TAG + "updateHB", "Values within updateHB: " + "DIMENS: " + getObjInfo().getDimensions().toString());
-        }
-
-        Position temp = new Position(getPosition().getX() - displacement_x, getPosition().getY() - displacement_y);
-        setHitbox(new RectangleHitbox(temp, getPPM(), getObjInfo().getDimensions()));
     }
 
     public float getRange()
