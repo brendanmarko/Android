@@ -43,7 +43,7 @@ public class GameObject
                 image_name = "bullet";
                 frame_count = 1;
                 dimensions = new Position(1.0f, 1.0f);
-                speed = 05.0f;
+                speed = 12.0f;
                 movementType = "dynamic";
                 effective_range = 2000.0f;
                 break;

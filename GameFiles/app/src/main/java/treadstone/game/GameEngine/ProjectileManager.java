@@ -152,7 +152,7 @@ public class ProjectileManager extends Manager
                 if (p.isVisible() && p.getLayer() == layer)
                 {
                     r.set(viewport.worldToScreen(p.getPosition(), p.getObjInfo().getDimensions()));
-                    canvas.drawBitmap(getBitmap(p.getObjInfo().getType()), r.left + p.getOwner().getWidth(), r.top + p.getOwner().getHeight()/3, paint);
+                    canvas.drawBitmap(getBitmap(p.getObjInfo().getType()), r.left, r.top, paint);
                 }
             }
         }

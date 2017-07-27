@@ -7,13 +7,14 @@ import java.util.ArrayList;
 
 public class CollisionManager
 {
-    // Debug toggle
-    private int DEBUG = 0;
+    // Debug info
+    private String      DEBUG_TAG = "CollMgr/";
+    private int         DEBUG = 0;
 
     public CollisionManager()
     {
         if (DEBUG == 1)
-            Log.d("CollMgr/CTOR", "CollisionMgr created");
+            Log.d(DEBUG_TAG, "CollisionMgr created");
     }
 
     // void entityCollisions()
@@ -21,7 +22,7 @@ public class CollisionManager
     public void entityCollisions(ArrayList<Entity> e)
     {
         if (DEBUG == 1)
-            Log.d("CollMgr/eCollide", "Checking entities for collisions...");
+            Log.d(DEBUG_TAG + "eCollide", "Checking entities for collisions...");
 
         for (int i = 0; i < e.size(); i++)
         {
@@ -32,19 +33,19 @@ public class CollisionManager
                     if (e.get(j).isVisible())
                     {
                         if (DEBUG == 1)
-                            Log.d("CollMgr/entityColl", e.get(i).toString() + ", " + e.get(j).toString());
+                            Log.d(DEBUG_TAG + "entityColl", e.get(i).toString() + ", " + e.get(j).toString());
 
                         if (Rect.intersects(e.get(j).getHitbox(), e.get(i).getHitbox()))
                         {
                             if (DEBUG == 1)
-                                Log.d("CollMgr/entityColl", "Collision between entities found!");
+                                Log.d(DEBUG_TAG, "Collision between entities found!");
                         }
                     }
                 }
             }
 
             if (DEBUG == 1)
-                Log.d("CollMgr/entityColl", "=======================================");
+                Log.d(DEBUG_TAG, "=======================================");
         }
     }
 
@@ -54,7 +55,7 @@ public class CollisionManager
     public void projectileCollisions(ArrayList<Entity> e, ArrayList<Projectile> p)
     {
         if (DEBUG == 1)
-            Log.d("CollMgr/pCollide", "Checking entities & projectiles for collisions...");
+            Log.d(DEBUG_TAG + "pCollide", "Checking entities & projectiles for collisions...");
 
         for (Projectile prj : p)
         {
@@ -65,7 +66,7 @@ public class CollisionManager
                     if (obj.getHitbox().intersect(prj.getHitbox()) && prj.getOwner() != obj)
                     {
                         if (DEBUG == 1)
-                            Log.d("CollMgr/prjColl", "Collision between entity and projectile found!");
+                            Log.d(DEBUG_TAG, "Collision between entity and projectile found!");
 
                     }
                 }

@@ -233,7 +233,13 @@ public abstract class ArmedEntity extends MovableEntity
 
     public Position getFiringPosition()
     {
-        return new Position(getX() + getWidth(), getY() + getHeight()/3);
+        if (DEBUG == 1)
+        {
+            Log.d(DEBUG_TAG + "POS", "Starting ArmedE pos: " + getPosition().toString());
+            Log.d(DEBUG_TAG + "DIM", "Width/Height of ArmedE: " + getWidth() +  ", " + getHeight());
+            Log.d(DEBUG_TAG + "GFP", "Testing firing_pos: " + new Position(getX() + getWidth(), getY() + getHeight()/2).toString());
+        }
+        return new Position(getX() + getWidth(), getY() + getHeight()/2);
     }
 
 }

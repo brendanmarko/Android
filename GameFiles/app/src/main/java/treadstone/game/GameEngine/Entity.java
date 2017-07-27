@@ -11,7 +11,7 @@ public abstract class Entity
 {
     // Debug info
     private int                 DEBUG = 0;
-    private String              DEBUG_TAG = "Entity";
+    private String              DEBUG_TAG = "Entity/";
 
     private Position            pixels_per_metre;
     private Position            position;
@@ -39,8 +39,8 @@ public abstract class Entity
 
     Entity(Position pos, Position max, Position p, char t)
     {
-        if (DEBUG == 1)
-            Log.d(DEBUG_TAG, "Entity created @ " + pos.toString() + ", type = " + t);
+        if (DEBUG == 2)
+            Log.d(DEBUG_TAG + "creation", "Entity created @ " + pos.toString() + ", type = " + t);
 
         max_bounds = new Position(max.getX() * p.getX(), max.getY() * p.getY());
         pixels_per_metre = p;

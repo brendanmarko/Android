@@ -14,7 +14,7 @@ public class Bullet extends Projectile
         startMovement();
 
         if (DEBUG == 1)
-            Log.d(DEBUG_TAG, "Angle [bullet creation]: " + getMovementAngle());
+            Log.d(DEBUG_TAG, "Angle [bullet creation]: " + getMovementAngle() + " @ " + getPosition().toString());
     }
 
     public void update()
@@ -22,7 +22,7 @@ public class Bullet extends Projectile
         //if (DEBUG == 1)
             //Log.d("Projectile/CTOR", "Before update: " + getPosition().toString());
 
-        setPosition(getPosition().getX() + getTravelVector().getX(), getPosition().getY() + getTravelVector().getY());
+        setPosition(getX() + getTravelVector().getX(), getY() + getTravelVector().getY());
 
         //if (DEBUG == 1)
             //Log.d("Prj/update", " === New position: " + getPosition().toString());
