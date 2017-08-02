@@ -58,7 +58,6 @@ public class AimBoundHandler
         return false;
     }
 
-    //
     public void updateAimBounds(double new_angle)
     {
         if (DEBUG == 1)
@@ -71,7 +70,6 @@ public class AimBoundHandler
             Log.d(DEBUG_TAG, "New aim_dir value: " + rotation_angle);
     }
 
-    //
     private float wrapAroundValue(float x)
     {
         if (x < 0)

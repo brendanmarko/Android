@@ -14,12 +14,14 @@ public abstract class ArmedEntity extends MovableEntity
     private String                  aim_direction;
     private ArrayList<Projectile>   projectiles;
 
-    // AimBound Handler
+    // Handlers
     private AimBoundHandler         aim_handler;
+    private FiringPositionHandler   firing_position;
 
     public ArmedEntity(Position p, Position m, Position ppm, char t)
     {
         super(p, m, ppm, t);
+        firing_position = new FiringPositionHandler(getWidth(), getHeight());
         aim_handler = new AimBoundHandler();
         projectiles = new ArrayList<>();
     }
@@ -239,7 +241,9 @@ public abstract class ArmedEntity extends MovableEntity
             Log.d(DEBUG_TAG + "DIM", "Width/Height of ArmedE: " + getWidth() +  ", " + getHeight());
             Log.d(DEBUG_TAG + "GFP", "Testing firing_pos: " + new Position(getX() + getWidth(), getY() + getHeight()/2).toString());
         }
-        return new Position(getX() + getWidth(), getY() + getHeight()/2);
+
+        return firing_position.getFiringPosition();
     }
+
 
 }

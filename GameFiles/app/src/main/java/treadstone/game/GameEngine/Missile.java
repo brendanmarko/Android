@@ -4,7 +4,8 @@ import android.util.Log;
 
 public class Missile extends Projectile
 {
-    // Debug toggle
+    // Debug info
+    private String  DEBUG_TAG = "Missile/";
     private int     DEBUG = 0;
 
     public Missile(ArmedEntity o, Position pos, Position p, Position max, char t)
@@ -14,12 +15,6 @@ public class Missile extends Projectile
 
     public void update()
     {
-        if (DEBUG == 1)
-            Log.d("Projectile/CTOR", "Before update: " + getPosition().toString());
-
-        setPosition(getPosition().getX() + getObjInfo().getSpeed(), getPosition().getY());
-
-        if (DEBUG == 1)
-            Log.d("Prj/update", " === New position: " + getPosition().toString());
+        setPosition(getX() + getTravelVector().getX(), getY() + getTravelVector().getY());
     }
 }
