@@ -9,7 +9,7 @@ public abstract class Projectile extends MovableEntity
     private String              DEBUG_TAG = "Projectile/";
 
     private Entity              owner;
-    private float               range;
+    private double              range;
     private double              angle_of_movement;
 
     // Abstract functions
@@ -40,7 +40,7 @@ public abstract class Projectile extends MovableEntity
         return "Projectile info: " + "Owner: " + owner.toString() + ", Position: " + getPosition().toString();
     }
 
-    public float getRange()
+    public double getRange()
     {
         return range;
     }

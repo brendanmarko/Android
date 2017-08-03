@@ -8,10 +8,10 @@ public abstract class MovableEntity extends Entity
     private int                     DEBUG = 0;
     private String                  DEBUG_TAG = "MovableEntity/";
 
-    private float                   speed, x_dir, y_dir;
+    private double                  speed, x_dir, y_dir;
     private String                  direction;
     private boolean                 moving;
-    public Position                 travel_vector;
+    public  Position                travel_vector;
     private float                   SPEED_REDUCTION_FACTOR = 0.75f;
 
     public abstract void update();
@@ -36,7 +36,7 @@ public abstract class MovableEntity extends Entity
         return "Current MovableE @" + getPosition().toString() + " w/ speed " + getSpeed();
     }
 
-    public float getSpeed()
+    public double getSpeed()
     {
         return speed;
     }
@@ -110,7 +110,7 @@ public abstract class MovableEntity extends Entity
 
     public void calcDisplacementBoosted(String d)
     {
-        float boost_speed = speed * getObjInfo().getBoostFactor();
+        double boost_speed = speed * getObjInfo().getBoostFactor();
 
         if (d.equals(("E")))
         {
@@ -167,23 +167,23 @@ public abstract class MovableEntity extends Entity
         setPosition(getPosition().getX() + x_dir, getPosition().getY() + y_dir);
     }
 
-    public float directionX()
+    public double directionX()
     {
         return x_dir;
     }
 
-    public float directionY()
+    public double directionY()
     {
         return y_dir;
     }
 
-    public void boundsCheck(float x, float y)
+    public void boundsCheck(double x, double y)
     {
         if (DEBUG == 2)
             Log.d(DEBUG_TAG + "bounds", "Checking bounds for MovableEntity with [X, Y]: " + x + ", " + y);
 
-        float new_x = 0.0f;
-        float new_y = 0.0f;
+        double new_x = 0.0f;
+        double new_y = 0.0f;
 
         if (x < 0.0f)
         {

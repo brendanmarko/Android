@@ -6,23 +6,26 @@ public class FiringPositionHandler
 {
     // Debug info
     private int         DEBUG = 1;
-    private String      DEBUG_TAG = "FPH";
+    private String      DEBUG_TAG = "FPH/";
 
     private Position    firing_position;
+    private double      hyp, width_angle, height_angle;
+    private MathHelper  math_helper;
 
-    // Angles
-    private float       width_angle, height_angle;
-
-    FiringPositionHandler(float width, float height)
+    // Builds the initial firing position parameters that are needed to solve updates wrt FP
+    FiringPositionHandler(ArmedEntity a)
     {
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG + "CTOR", "FPH Started at: " + a.getPosition().toString() + " , w|h = " + a.getWidth() + ", " + a.getHeight());
+        math_helper = new MathHelper();
+        hyp = math_helper.findHypotenuse(a.getWidth(), a.getHeight());
 
-    }
-
-    // void buildFiringPosition()
-    // This function builds the initial firing position parameters that are needed to solve updates wrt FP
-    public void buildFiringPosition()
-    {
-        double angle_x, angle_y, fp_x, fp_y;
+        // Angles for w|h
+        width_angle = math_helper.sineLawCalc(a.getWidth(), hyp);
+        height_angle = 90.0d - width_angle;
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG + "CTOR", "FPH Created.");
+        firing_position = new Position(a.getPosition().getX() + a.getWidth(), a.getPosition().getY() + a.getHeight()/2);
     }
 
     public Position updateFiringPosition(double a)

@@ -8,7 +8,7 @@ public class GameObject
 {
     private char            type;
     private int             frame_count, layer, boost_factor;
-    private float           speed, effective_range;
+    private double          speed, effective_range;
     private String          movementType;
     private String          image_name;
     private Position        dimensions; // assigned as [Width, Height]
@@ -29,8 +29,8 @@ public class GameObject
                 layer = 2;
                 image_name = "bob";
                 frame_count = 1;
-                dimensions = new Position(2.0f, 3.0f);
-                speed = 3.5f;
+                dimensions = new Position(2.0d, 3.0d);
+                speed = 3.5d;
                 movementType = "dynamic";
                 boost_factor = 3;
                 break;
@@ -42,10 +42,10 @@ public class GameObject
                 layer = 2;
                 image_name = "bullet";
                 frame_count = 1;
-                dimensions = new Position(1.0f, 1.0f);
-                speed = 12.0f;
+                dimensions = new Position(1.0d, 1.0d);
+                speed = 12.0d;
                 movementType = "dynamic";
-                effective_range = 2000.0f;
+                effective_range = 2000.0d;
                 break;
             }
 
@@ -55,7 +55,7 @@ public class GameObject
                 layer = 1;
                 image_name = "debris";
                 frame_count = 1;
-                dimensions = new Position(1.0f, 1.0f);
+                dimensions = new Position(1.0d, 1.0d);
                 movementType = "static";
                 break;
             }
@@ -66,8 +66,8 @@ public class GameObject
                 layer = 2;
                 image_name = "bob_evil";
                 frame_count = 1;
-                dimensions = new Position(2.0f, 3.0f);
-                speed = 10.0f;
+                dimensions = new Position(2.0d, 3.0d);
+                speed = 10.0d;
                 movementType = "dynamic";
                 break;
             }
@@ -78,10 +78,10 @@ public class GameObject
                 layer = 2;
                 image_name = "missile";
                 frame_count = 1;
-                dimensions = new Position(2.0f, 1.0f);
-                speed = 14.0f;
+                dimensions = new Position(2.0d, 1.0d);
+                speed = 14.0d;
                 movementType = "dynamic";
-                effective_range = 3000.0f;
+                effective_range = 3000.0d;
                 break;
             }
 
@@ -91,9 +91,9 @@ public class GameObject
                 layer = 0;
                 image_name = "star_small";
                 frame_count = 1;
-                dimensions = new Position(1f, 1f);
+                dimensions = new Position(1.0d, 1.0d);
                 Random r = new Random();
-                speed = 18.0f * r.nextFloat();
+                speed = 18.0d * r.nextDouble();
                 movementType = "dynamic";
                 break;
             }
@@ -104,9 +104,9 @@ public class GameObject
                 layer = 0;
                 image_name = "star_yellow";
                 frame_count = 1;
-                dimensions = new Position(1.0f, 1.0f);
+                dimensions = new Position(1.0d, 1.0d);
                 Random r = new Random();
-                speed = 12.0f * r.nextFloat();
+                speed = 12.0d * r.nextDouble();
                 movementType = "dynamic";
                 break;
             }
@@ -116,9 +116,9 @@ public class GameObject
             {
                 layer = 1;
                 image_name = "planet_small";
-                speed = 0.0f;
+                speed = 0.0d;
                 movementType = "static";
-                dimensions = new Position(4.0f, 4.0f);
+                dimensions = new Position(4.0d, 4.0d);
                 frame_count = 1;
             }
 
@@ -126,8 +126,8 @@ public class GameObject
                 layer = 0;
                 frame_count = 1;
                 image_name = "default";
-                speed = 0.0f;
-                dimensions = new Position(0.0f, 0.0f);
+                speed = 0.0d;
+                dimensions = new Position(0.0d, 0.0d);
                 movementType = "static";
         }
     }
@@ -152,7 +152,7 @@ public class GameObject
         return dimensions;
     }
 
-    public float getSpeed()
+    public double getSpeed()
     {
         return speed;
     }
@@ -173,7 +173,7 @@ public class GameObject
         return movementType;
     }
 
-    public float getEffectiveRange()
+    public double getEffectiveRange()
     {
         return effective_range;
     }

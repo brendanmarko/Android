@@ -2,5 +2,5 @@ package treadstone.game.GameEngine;
 
 public interface Shooter
 {
-    void adjustAimDirection(float x, float y);
+    void adjustAimDirection(double x, double y);
 }

@@ -27,7 +27,7 @@ public class EntityManager extends Manager
         initDirections();
     }
 
-    public void update(float displacement_x, float displacement_y)
+    public void update(double displacement_x, double displacement_y)
     {
         for (Iterator<Entity> iterator = getList().iterator(); iterator.hasNext();)
         {

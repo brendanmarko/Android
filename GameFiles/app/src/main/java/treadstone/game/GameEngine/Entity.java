@@ -21,7 +21,7 @@ public abstract class Entity
     private Bitmap              image;
     private GameObject          info;
     private boolean             active, visible;
-    private float               height, width;
+    private double              height, width;
 
     private RectangleHitbox     hitbox_object;
 
@@ -102,12 +102,12 @@ public abstract class Entity
         return layer;
     }
 
-    public float getX()
+    public double getX()
     {
         return position.getX();
     }
 
-    public float getY()
+    public double getY()
     {
         return position.getY();
     }
@@ -119,7 +119,7 @@ public abstract class Entity
 
     // setPosition(float, float)
     // This function takes 2 float inputs and saves them as pixel (x,y) co-ordinates for later use
-    public void setPosition(float x, float y)
+    public void setPosition(double x, double y)
     {
         position = new Position(x, y);
     }
@@ -139,12 +139,12 @@ public abstract class Entity
         return max_bounds;
     }
 
-    public float getHeight()
+    public double getHeight()
     {
         return height;
     }
 
-    public float getWidth()
+    public double getWidth()
     {
         return width;
     }
@@ -197,7 +197,7 @@ public abstract class Entity
         return hitbox_object.getHitbox();
     }
 
-    public void updateHitbox(float displacement_x, float displacement_y)
+    public void updateHitbox(double displacement_x, double displacement_y)
     {
         if (DEBUG == 1)
         {

@@ -13,7 +13,7 @@ public class TouchManager implements OnGestureListener, OnDoubleTapListener
 
     private Player      curr_player;
     private ViewPort    viewport;
-    private float       displacementX, displacementY;
+    private double      displacementX, displacementY;
 
     TouchManager(Player p, ViewPort v)
     {
@@ -100,7 +100,7 @@ public class TouchManager implements OnGestureListener, OnDoubleTapListener
         return true;
     }
 
-    public void updateTouchDisplacement(float dX, float dY)
+    public void updateTouchDisplacement(double dX, double dY)
     {
         displacementX = dX;
         displacementY = dY;

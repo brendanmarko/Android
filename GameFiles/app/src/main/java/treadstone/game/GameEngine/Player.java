@@ -5,15 +5,16 @@ import android.util.Log;
 public class Player extends ArmedEntity implements Shooter, AngleFinder
 {
     // Debug info
-    private int                         DEBUG = 0;
-    private String                      DEBUG_TAG = "Player";
-
-    private float                       spanX, spanY, spanZ;
-    private double                      angle_of_movement;
+    private int                         DEBUG = 2;
+    private String                      DEBUG_TAG = "Player/";
+    private double                      angle_of_movement, spanX, spanY, spanZ;
 
     Player(Position s, Position m, Position ppm, char t)
     {
         super(s, m, ppm, t);
+
+        if (DEBUG == 2)
+            Log.d(DEBUG_TAG + "processMove", "Current Player location: " + getX() + ", " + getY());
     }
 
     public void initCenter(Position p, Position ppm)
@@ -21,12 +22,12 @@ public class Player extends ArmedEntity implements Shooter, AngleFinder
         setPosition(p.getX() - (getObjInfo().getDimensions().getX() * ppm.getX())/2, p.getY() - (getObjInfo().getDimensions().getY() * ppm.getY())/2);
     }
 
-    public void processMovement(float x_location, float y_location, boolean boosted)
+    public void processMovement(double x_location, double y_location, boolean boosted)
     {
         if (DEBUG == 1)
         {
-            Log.d("Player/processMove", "Target location: " + x_location + ", " + y_location);
-            Log.d("Player/processMove", "Current Player location: " + getX() + ", " + getY());
+            Log.d(DEBUG_TAG + "processMove", "Target location: " + x_location + ", " + y_location);
+            Log.d(DEBUG_TAG + "processMove", "Current Player location: " + getX() + ", " + getY());
         }
 
         startMovement();
@@ -34,7 +35,7 @@ public class Player extends ArmedEntity implements Shooter, AngleFinder
         // Get lengths of sides
         spanX = x_location - getX();
         spanY = y_location - getY() + (0.5f * getHeight());
-        spanZ = (float) Math.sqrt((spanX * spanX) + (spanY * spanY));
+        spanZ = Math.sqrt((spanX * spanX) + (spanY * spanY));
 
         // Find angle for movement
         angle_of_movement = calcAngle(Math.toDegrees(Math.asin(Math.abs(radianFinder(spanX, spanY, spanZ)))));
@@ -73,7 +74,7 @@ public class Player extends ArmedEntity implements Shooter, AngleFinder
         }
     }
 
-    public double radianFinder(float x, float y, float z)
+    public double radianFinder(double x, double y, double z)
     {
         if (x >= y)
             return y/z;
@@ -186,7 +187,7 @@ public class Player extends ArmedEntity implements Shooter, AngleFinder
         }
     }
 
-    public void adjustAimDirection(float x, float y)
+    public void adjustAimDirection(double x, double y)
     {
         if (DEBUG == 1)
             Log.d(DEBUG_TAG, "Setting player aim direction wrt: " + x + ", " + y);

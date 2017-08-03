@@ -2,7 +2,7 @@ package treadstone.game.GameEngine;
 
 public class Position
 {
-    private float position[] = {0.0f, 0.0f};
+    private double position[] = {0.0d, 0.0d};
 
     Position()
     {
@@ -10,7 +10,7 @@ public class Position
         position[1] = 0.0f;
     }
 
-    Position(float x, float y)
+    Position(double x, double y)
     {
         position[0] = x;
         position[1] = y;
@@ -22,22 +22,22 @@ public class Position
         position[1] = p.getY();
     }
 
-    public void changeX(float new_x)
+    public void changeX(double new_x)
     {
         position[0] = new_x;
     }
 
-    public void changeY(float new_y)
+    public void changeY(double new_y)
     {
         position[1] = new_y;
     }
 
-    public float getX()
+    public double getX()
     {
         return position[0];
     }
 
-    public float getY()
+    public double getY()
     {
         return position[1];
     }

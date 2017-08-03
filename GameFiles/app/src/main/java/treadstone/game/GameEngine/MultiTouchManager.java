@@ -12,7 +12,7 @@ public class MultiTouchManager
     private Position    left_finger, right_finger;
     private Player      curr_player;
     private ViewPort    viewport;
-    private float       displacementX, displacementY, displacement_l_finger, displacement_r_finger, rotation_increment;
+    private double      displacementX, displacementY, displacement_l_finger, displacement_r_finger, rotation_increment;
     private Position    prevPoints[] = {new Position(), new Position(), new Position()};
     private Position    pointerPos[] = {new Position(), new Position(), new Position()};
     private boolean     active_touch, direction_found;
@@ -182,8 +182,8 @@ public class MultiTouchManager
         displacement_r_finger += prevPoints[r_finger_index].getY() - pointerPos[r_finger_index].getY();
 
         // Calculate value to scale displacement
-        float result_l = displacement_l_finger/rotation_increment;
-        float result_r = displacement_r_finger/rotation_increment;
+        double result_l = displacement_l_finger/rotation_increment;
+        double result_r = displacement_r_finger/rotation_increment;
 
         int curr_rotation_num = 0;
 
@@ -263,7 +263,7 @@ public class MultiTouchManager
 
     }
 
-    public void updateTouchDisplacement(float dX, float dY)
+    public void updateTouchDisplacement(double dX, double dY)
     {
         displacementX = dX;
         displacementY = dY;

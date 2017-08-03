@@ -27,7 +27,7 @@ public class GameView extends SurfaceView implements Runnable
     private Player                          curr_player;
     private ViewPort                        viewport;
     private LevelManager                    level_manager;
-    private float                           displacementX, displacementY;
+    private double                          displacementX, displacementY;
 
     // Canvas
     private Paint                           paint;

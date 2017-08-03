@@ -20,7 +20,7 @@ public class ViewPort
     private final int   viewport_width = 30;
     private final int   viewport_height = 20;
 
-    private float       view_l, view_t, view_r, view_b;
+    private double      view_l, view_t, view_r, view_b;
 
     private Rect        scaled_view_space;
 
@@ -106,7 +106,7 @@ public class ViewPort
         return scaled_view_space;
     }
 
-    private float calcScaledLeft(Position p)
+    private double calcScaledLeft(Position p)
     {
         if (DEBUG == 1)
         {
@@ -117,7 +117,7 @@ public class ViewPort
         return (screen_centre.getX() + (p.getX() - viewport_centre.getX()));
     }
 
-    private float calcScaledTop(Position p)
+    private double calcScaledTop(Position p)
     {
         if (DEBUG == 1)
         {
@@ -329,8 +329,8 @@ public class ViewPort
     // when can apply a lock to the ViewPort's center based on the 1 or 2 edges extending too far.
     public Position adjustViewportCentre(Position p)
     {
-        float x = 0.0f;
-        float y = 0.0f;
+        double x = 0.0f;
+        double y = 0.0f;
 
         if (DEBUG == 1)
             Log.d("vp.adjustEdges", "Viewport Centre before adjust: " + p.toString());

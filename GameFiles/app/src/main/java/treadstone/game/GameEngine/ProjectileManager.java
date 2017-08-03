@@ -44,7 +44,7 @@ public class ProjectileManager extends Manager
             Log.d(DEBUG_TAG + "addBuffer" , "New Size of projectiles: " + getList().size());
     }
 
-    public void update(float x, float y)
+    public void update(double x, double y)
     {
     	for (Iterator<Projectile> iterator = getList().iterator(); iterator.hasNext();)
         {
