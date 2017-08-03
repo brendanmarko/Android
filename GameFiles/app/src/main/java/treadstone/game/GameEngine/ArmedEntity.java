@@ -21,10 +21,6 @@ public abstract class ArmedEntity extends MovableEntity
     public ArmedEntity(Position p, Position m, Position ppm, char t)
     {
         super(p, m, ppm, t);
-
-        if (DEBUG == 1)
-            Log.d(DEBUG_TAG + "CTOR", "Position passed into FPH: " + getPosition());
-
         firing_position = new FiringPositionHandler(this);
         aim_handler = new AimBoundHandler();
         projectiles = new ArrayList<>();
@@ -207,6 +203,7 @@ public abstract class ArmedEntity extends MovableEntity
         }
 
         aim_handler.updateAimBounds(getRotationAngle());
+        firing_position.buildFiringPosition(convertAngleToString(getRotationAngle()), this);
         setAimAngle(getRotationAngle());
 
         if (DEBUG == 1)
@@ -232,6 +229,7 @@ public abstract class ArmedEntity extends MovableEntity
         }
 
         aim_handler.updateAimBounds(getRotationAngle());
+        firing_position.buildFiringPosition(convertAngleToString(getRotationAngle()), this);
         setAimAngle(getRotationAngle());
 
         if (DEBUG == 1)
@@ -240,17 +238,16 @@ public abstract class ArmedEntity extends MovableEntity
 
     public Position getFiringPosition()
     {
+        firing_position.buildFiringPosition(aim_direction, this);
+
         if (DEBUG == 1)
         {
             Log.d(DEBUG_TAG + "POS", "Starting ArmedE pos: " + getPosition().toString());
             Log.d(DEBUG_TAG + "DIM", "Width/Height of ArmedE: " + getWidth() +  ", " + getHeight());
-            // Log.d(DEBUG_TAG + "GFP", "Testing firing_pos: " + new Position(getX() + getWidth(), getY() + getHeight()/2).toString());
             Log.d(DEBUG_TAG + "GFP", "Testing firing_pos (fph): " + firing_position.getFiringPosition());
         }
 
-        firing_position.buildFiringPosition(aim_direction, this);
         return firing_position.getFiringPosition();
-        //return new Position(getX() + getWidth(), getY() + getHeight()/2);
     }
 
 

@@ -19,21 +19,21 @@ public class FiringPositionHandler
             Log.d(DEBUG_TAG + "CTOR", "w|h = " + a.getWidth() + ", " + a.getHeight());
 
         math_helper = new MathHelper();
-        hyp = math_helper.findHypotenuse(a.getWidth(), a.getHeight());
+        hyp = math_helper.findHypotenuse(a.getWidth(), a.getHeight()/2);
 
         // Angles for w|h
         width_angle = math_helper.sineLawCalc(a.getWidth(), hyp);
         height_angle = 90.0d - width_angle;
 
         if (DEBUG == 1)
-            Log.d(DEBUG_TAG + "CTOR", "FPH Created.");
+            Log.d(DEBUG_TAG + "CTOR", "FPH Created with angles: " + width_angle + ", " + height_angle);
     }
 
     public void buildFiringPosition(String aim_direction, ArmedEntity a)
     {
         if (DEBUG == 1)
             Log.d(DEBUG_TAG + "buildFP", "Passed aim_direction: " + aim_direction);
-        firing_position = new Position(a.getPosition().getX() + a.getWidth(), a.getPosition().getY() + a.getHeight()/3);
+        firing_position = new Position(a.getPosition().getX() + a.getWidth(), a.getPosition().getY() + a.getHeight()/2);
     }
 
     public Position getFiringPosition()

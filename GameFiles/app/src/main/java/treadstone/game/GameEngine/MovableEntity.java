@@ -31,9 +31,7 @@ public abstract class MovableEntity extends Entity
     @Override
     public String toString()
     {
-        if (DEBUG == 1)
-            Log.d(DEBUG_TAG, "Current MovableE @" + getPosition().toString() + " w/ speed " + getSpeed());
-        return "Current MovableE @" + getPosition().toString() + " w/ speed " + getSpeed();
+        return "Current MovableE @ " + getPosition().toString() + " w/ speed " + getSpeed();
     }
 
     public double getSpeed()

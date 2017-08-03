@@ -25,7 +25,7 @@ public class Player extends ArmedEntity implements Shooter, AngleFinder
 
     public void processMovement(double x_location, double y_location, boolean boosted)
     {
-        if (DEBUG == 1)
+        if (DEBUG == 2)
         {
             Log.d(DEBUG_TAG + "processMove", "Target location: " + x_location + ", " + y_location);
             Log.d(DEBUG_TAG + "processMove", "Current Player location: " + getX() + ", " + getY());
@@ -85,7 +85,7 @@ public class Player extends ArmedEntity implements Shooter, AngleFinder
         if (spanX >= 0 && spanY <= 0)
         {
             if (DEBUG == 1)
-                Log.d("Player.procMove", "Tapped into Q1");
+                Log.d(DEBUG_TAG + "calcAngle", "Tapped into Q1");
 
             f += 0.0d;
         }
@@ -93,7 +93,7 @@ public class Player extends ArmedEntity implements Shooter, AngleFinder
         else if (spanX < 0 && spanY < 0)
         {
             if (DEBUG == 1)
-                Log.d("Player.procMove", "Tapped into Q2");
+                Log.d(DEBUG_TAG + "calcAngle", "Tapped into Q2");
 
             if (Math.abs(spanX) < Math.abs(spanY))
                 f = 180.0d - f;
@@ -105,7 +105,7 @@ public class Player extends ArmedEntity implements Shooter, AngleFinder
         else if (spanX <= 0 && spanY >= 0)
         {
             if (DEBUG == 1)
-                Log.d("Player.procMove", "Tapped into Q3");
+                Log.d(DEBUG_TAG + "calcAngle", "Tapped into Q3");
 
             if (Math.abs(spanX) < Math.abs(spanY))
                 f = 180.0d + f;
@@ -117,7 +117,7 @@ public class Player extends ArmedEntity implements Shooter, AngleFinder
         else if (spanX > 0 & spanY > 0)
         {
             if (DEBUG == 1)
-                Log.d("Player.procMove", "Tapped into Q4");
+                Log.d(DEBUG_TAG + "calcAngle", "Tapped into Q4");
 
             if (Math.abs(spanX) < Math.abs(spanY))
                 f = 270.0d + f;

@@ -29,7 +29,7 @@ public class GameObject
                 layer = 2;
                 image_name = "bob";
                 frame_count = 1;
-                dimensions = new Position(2.0d, 3.0d);
+                dimensions = new Position(3.0d, 4.0d);
                 speed = 3.5d;
                 movementType = "dynamic";
                 boost_factor = 3;
