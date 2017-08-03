@@ -21,7 +21,7 @@ public abstract class Projectile extends MovableEntity
         owner = o;
         range = getObjInfo().getEffectiveRange();
         angle_of_movement = o.getAimAngle();
-        setPosition(getX(), adjustedFiringPosition(getPosition()).getY());
+        setPosition(o.getFiringPosition().getX(), o.getFiringPosition().getY());
         buildTravelVector(angle_of_movement);
         startMovement();
 
@@ -97,12 +97,6 @@ public abstract class Projectile extends MovableEntity
 
         else
             return 0;
-    }
-
-    public Position adjustedFiringPosition(Position p)
-    {
-        p.changeY(p.getY() - getHeight()/2);
-        return p;
     }
 
 }

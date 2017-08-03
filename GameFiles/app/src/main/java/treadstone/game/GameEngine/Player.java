@@ -7,6 +7,7 @@ public class Player extends ArmedEntity implements Shooter, AngleFinder
     // Debug info
     private int                         DEBUG = 2;
     private String                      DEBUG_TAG = "Player/";
+
     private double                      angle_of_movement, spanX, spanY, spanZ;
 
     Player(Position s, Position m, Position ppm, char t)
@@ -62,16 +63,12 @@ public class Player extends ArmedEntity implements Shooter, AngleFinder
     public void update()
     {
         if (isMoving())
-        {
             setPosition(getPosition().getX() + directionX(), getPosition().getY() + directionY());
-            boundsCheck(getX(), getY());
-        }
 
         else
-        {
             setPosition(getPosition().getX(), getPosition().getY());
-            boundsCheck(getX(), getY());
-        }
+
+        boundsCheck(getX(), getY());
     }
 
     public double radianFinder(double x, double y, double z)

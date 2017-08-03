@@ -104,6 +104,7 @@ public abstract class ArmedEntity extends MovableEntity
         if (DEBUG == 1)
             Log.d(DEBUG_TAG, "Input values into calcAimAngle: " + x + ", " + y + ", Position: " + getPosition().toString());
 
+        // Will require firing_position later *****************************
         xDiff = x - (getX() + getWidth());
         yDiff = y - (getY() + getHeight()/2);
 
@@ -247,7 +248,9 @@ public abstract class ArmedEntity extends MovableEntity
             Log.d(DEBUG_TAG + "GFP", "Testing firing_pos (fph): " + firing_position.getFiringPosition());
         }
 
-        return new Position(getX() + getWidth(), getY() + getHeight()/2);
+        firing_position.buildFiringPosition(aim_direction, this);
+        return firing_position.getFiringPosition();
+        //return new Position(getX() + getWidth(), getY() + getHeight()/2);
     }
 
 

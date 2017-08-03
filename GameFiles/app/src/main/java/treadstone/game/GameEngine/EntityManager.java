@@ -12,7 +12,7 @@ public class EntityManager extends Manager
 {
     // Debug info
     private int                 DEBUG = 0;
-    private String              DEBUG_TAG = "EntityMgr";
+    private String              DEBUG_TAG = "EntityMgr/";
 
     private ViewPort            viewport;
     private Position            start_point, end_point;
@@ -149,7 +149,7 @@ public class EntityManager extends Manager
 
     public double rotationValue(double f)
     {
-        return matrixRotationConversion(wrapAroundValue((float) f + 90.0f));
+        return matrixRotationConversion(wrapAroundValue(f + 90.0d));
     }
 
 }
