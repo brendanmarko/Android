@@ -10,7 +10,7 @@ import android.util.Log;
 public abstract class Entity
 {
     // Debug info
-    private int                 DEBUG = 0;
+    private int                 DEBUG = 3;
     private String              DEBUG_TAG = "Entity/";
 
     private Position            pixels_per_metre;
@@ -213,6 +213,15 @@ public abstract class Entity
     public void setHitbox(RectangleHitbox r)
     {
         hitbox_object = r;
+    }
+
+    public void destroy()
+    {
+        if (DEBUG == 3)
+            Log.d(DEBUG_TAG + "destroy/", "Destroying entity @ " + getPosition().toString());
+        image = null;
+        hitbox_object = null;
+        active = false;
     }
 
 }

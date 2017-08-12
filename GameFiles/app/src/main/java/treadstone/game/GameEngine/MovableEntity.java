@@ -5,7 +5,7 @@ import android.util.Log;
 public abstract class MovableEntity extends Entity
 {
     // Debug info
-    private int                     DEBUG = 0;
+    private int                     DEBUG = 3;
     private String                  DEBUG_TAG = "MovableEntity/";
 
     private double                  speed, x_dir, y_dir;
@@ -307,7 +307,7 @@ public abstract class MovableEntity extends Entity
 
     public void buildTravelVector(double a)
     {
-        if (DEBUG == 2)
+        if (DEBUG == 3)
             Log.d(DEBUG_TAG + "travelV", "Input angle into buildTravelVector " + a);
 
         double x, y;
@@ -315,14 +315,14 @@ public abstract class MovableEntity extends Entity
         if ((a >= 0.0d && a <= 90.0d) || (a >= 270.0d && a <= 360.0d)) // Q1 && Q4
         {
             x = Math.cos(Math.toRadians(a)) * getSpeed();
-            if (DEBUG == 2)
+            if (DEBUG == 3)
                 Log.d(DEBUG_TAG, "[X] Angle is within (0<x<90) OR (270<x<360) -> POSITIVE: " + x);
         }
 
         else // Q2 && Q3
         {
             x = Math.cos(Math.toRadians(a)) * getSpeed();
-            if (DEBUG == 2)
+            if (DEBUG == 3)
                 Log.d(DEBUG_TAG, "[X] Angle is within (90<x<270) -> NEGATIVE: " + x);
         }
 
@@ -330,7 +330,7 @@ public abstract class MovableEntity extends Entity
         if (Math.abs(x) == getSpeed())
         {
             y = 0.0d;
-            if (DEBUG == 2)
+            if (DEBUG == 3)
                 Log.d(DEBUG_TAG + "S=TV", "Projectile speed is focused in one direction; y = 0");
         }
 
@@ -339,14 +339,14 @@ public abstract class MovableEntity extends Entity
             if (a >= 180.0d && a <= 360.0d) // Q3 && Q4
             {
                 y = Math.abs(Math.sin(Math.toRadians(a)) * getSpeed());
-                if (DEBUG == 2)
+                if (DEBUG == 3)
                     Log.d(DEBUG_TAG, "[Y] Angle is within (180<x<360) -> POSITIVE: " + y);
             }
 
             else // Q1 && Q2
             {
                 y = 0 - Math.sin(Math.toRadians(a)) * getSpeed();
-                if (DEBUG == 2)
+                if (DEBUG == 3)
                     Log.d(DEBUG_TAG, "[Y] Angle is within (0<x<180) -> NEGATIVE: " + y);
             }
 
@@ -356,11 +356,11 @@ public abstract class MovableEntity extends Entity
         if (Math.abs(y) == getSpeed())
         {
             x = 0.0d;
-            if (DEBUG == 2)
+            if (DEBUG == 3)
                 Log.d(DEBUG_TAG + "S=TV", "Projectile speed is focused in one direction; x = 0");
         }
 
-        if (DEBUG == 2)
+        if (DEBUG == 3)
         {
             Log.d(DEBUG_TAG, "calcDisplacement value X: " + x + " converted into float: " + (float) x);
             Log.d(DEBUG_TAG, "calcDisplacement value Y: " + y + " converted into float: " + (float) y);

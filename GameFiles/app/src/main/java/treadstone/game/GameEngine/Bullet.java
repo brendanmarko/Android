@@ -19,8 +19,8 @@ public class Bullet extends Projectile
 
     public void update()
     {
-        //if (DEBUG == 1)
-            //Log.d("Projectile/CTOR", "Before update: " + getPosition().toString());
+        if (DEBUG == 1)
+            Log.d(DEBUG_TAG + "update/", "Travel Vector: " + getTravelVector());
 
         setPosition(getX() + getTravelVector().getX(), getY() + getTravelVector().getY());
 

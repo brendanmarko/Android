@@ -68,10 +68,17 @@ public class ProjectileManager extends Manager
 
                 int temp = e.inBounds();
 
-                if (temp != 0)
+                // Destroys projectile for crossing the minimum boundary
+                if (temp == 1)
+                {
+                    e.destroy();
+                    iterator.remove();
+                }
+
+                else if (temp != 0)
                 {
                     if (DEBUG == 1)
-                        Log.d(DEBUG_TAG + "!OB", "Prj found to need refracting.");
+                        Log.d(DEBUG_TAG + "OB/", "Prj found to need refracting.");
                     refraction_handler.refractionChange(e, temp);
                     e.buildTravelVector(e.getMovementAngle());
                 }

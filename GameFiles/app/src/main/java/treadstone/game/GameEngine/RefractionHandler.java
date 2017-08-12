@@ -24,6 +24,9 @@ public class RefractionHandler
             double temp = 0.0d;
             double move_angle = p.getMovementAngle();
 
+            if (DEBUG == 1)
+                Log.d(DEBUG_TAG + "refract", "Movement angle: " + move_angle);
+
             // Tests angle 0<x<90
             if (move_angle > 0.0d && move_angle < 90.0d)
             {
@@ -33,7 +36,7 @@ public class RefractionHandler
                 if (q == 2)
                     temp = move_angle + 90.0d;
 
-                if (q == 3)
+                else if (q == 3)
                     temp = move_angle - 90.0d;
             }
 
@@ -46,9 +49,8 @@ public class RefractionHandler
                 if (q == 1)
                     temp = move_angle - 90.0d;
 
-                if (q == 3)
+                else if (q == 3)
                     temp = move_angle + 90.0d;
-
             }
 
             // Tests angle 180<x<270
@@ -60,7 +62,7 @@ public class RefractionHandler
                 if (q == 1)
                     temp = move_angle + 90.0d;
 
-                if (q == 4)
+                else if (q == 4)
                     temp = move_angle - 90.0d;
             }
 
@@ -73,7 +75,7 @@ public class RefractionHandler
                 if (q == 2)
                     temp = move_angle - 90.0d;
 
-                if (q == 4)
+                else if (q == 4)
                     temp = move_angle + 90.0d;
             }
 
@@ -90,6 +92,16 @@ public class RefractionHandler
                 }
 
             }
+
+            if (DEBUG == 1)
+                Log.d(DEBUG_TAG + "tempPre", "Tmp: " + temp + " vs. Move Angle: " + move_angle);
+
+            // This statement handles the case where no collision changes must be handled
+            if (temp == 0.0d)
+                temp = move_angle;
+
+            if (DEBUG == 1)
+                Log.d(DEBUG_TAG + "tempPos", "Resulting temp value: " + temp);
 
             p.setMovementAngle(wrapAroundValue(temp));
 

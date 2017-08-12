@@ -63,7 +63,7 @@ public abstract class Projectile extends MovableEntity
             Log.d(DEBUG_TAG + "hitbox", "Current hitbox: " + getHitbox().toString());
         }
 
-        if (getX() <= 0.0f)
+        if (getX() < 0.0f)
         {
             if (DEBUG == 2)
                 Log.d(DEBUG_TAG + "inBounds", "MIN_X exceeded");
