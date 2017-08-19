@@ -5,7 +5,7 @@ import android.util.Log;
 public class AimBoundHandler
 {
     // Debug info
-    private String      DEBUG_TAG = "AimBounds";
+    private String      DEBUG_TAG = "AimBounds/";
     private int         DEBUG     = 1;
 
     private double      rotation_angle;

@@ -1,0 +1,29 @@
+August 12
+=========
+Been falling behind on my logs sadly for the last month or so due to the amount of work I've had to do on paper. The implementation of the rotating
+firing position definitely has proven to be more difficult than initially planned as well as some bugs that needed to be corrected along the way.
+
+Completed
+=========
+1. Fixed RefractionHandler bugs wrt min/max bounds
+2. Added some new helper classes
+3. Solved (and proved) using mathematics an algorithm to solve rotation of the FP
+
+To do
+=====
+1. Implement algorithm to handle FP rotations
+
+August 18
+=========
+After further analysis of the problem, my initial interpretations of the problem were proven false. Even though this problem has plagued me since
+the end of July, I stuck with it and finally completed it. The math backs it up and the testing gives the results given from the mathematical
+testing!!!
+
+Completed
+=========
+1. Added more functions to MathHelper
+2. FiringPositionHandler now properly calculates the displacements of the FP when rotations occur
+
+To do
+=====
+1. Add the displacements to the position and ensure that they give the proper result!

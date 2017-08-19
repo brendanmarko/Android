@@ -6,7 +6,7 @@ import android.util.Log;
 public class ViewPort
 {
     // Debug toggle
-    private int         DEBUG = 0;
+    private int         DEBUG = 2;
 
     private Position    screen_resolution;
     private Position    screen_centre;
@@ -57,7 +57,7 @@ public class ViewPort
 
         pixels_per_metre = new Position(r.getX()/viewport_width, r.getY()/viewport_height);
 
-        if (DEBUG == 1)
+        if (DEBUG == 2)
             Log.d("Viewport/initP", "PPM: " + pixels_per_metre.toString());
     }
 

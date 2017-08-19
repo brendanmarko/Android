@@ -1,0 +1,5 @@
+#!/usr/bin
+echo 	'Switching to active Log directory'
+cd 	/mnt/d/Linux/Game/AndroidGame/Logs/2017/August/
+echo 	'Directory loaded'
+

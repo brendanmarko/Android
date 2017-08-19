@@ -18,12 +18,16 @@ public abstract class ArmedEntity extends MovableEntity
     private AimBoundHandler         aim_handler;
     private FiringPositionHandler   firing_position;
 
+    // Math helper
+    private MathHelper              math_helper;
+
     public ArmedEntity(Position p, Position m, Position ppm, char t)
     {
         super(p, m, ppm, t);
         firing_position = new FiringPositionHandler(this);
         aim_handler = new AimBoundHandler();
         projectiles = new ArrayList<>();
+        math_helper = new MathHelper();
     }
 
     public double getAimAngle()
@@ -145,18 +149,6 @@ public abstract class ArmedEntity extends MovableEntity
         aim_handler.updateAimBounds(aim_dir);
     }
 
-    private double wrapAroundValue(double x)
-    {
-        if (x < 0)
-            return 360.0f + x;
-
-        else if (x > 360)
-            return x - 360.0f;
-
-        else
-            return x;
-    }
-
     public boolean withinAimBounds(double a)
     {
         if (DEBUG == 1)
@@ -194,16 +186,16 @@ public abstract class ArmedEntity extends MovableEntity
 
         if (dir.equals("CW"))
         {
-            setRotationAngle(wrapAroundValue(getRotationAngle() - 45.0d));
+            setRotationAngle(math_helper.wrapAroundValue(getRotationAngle() - 45.0d));
         }
 
         else if (dir.equals("CCW"))
         {
-            setRotationAngle(wrapAroundValue(getRotationAngle() + 45.0d));
+            setRotationAngle(math_helper.wrapAroundValue(getRotationAngle() + 45.0d));
         }
 
         aim_handler.updateAimBounds(getRotationAngle());
-        firing_position.buildFiringPosition(convertAngleToString(getRotationAngle()), this);
+        firing_position.updateFiringPosition(this);
         setAimAngle(getRotationAngle());
 
         if (DEBUG == 1)
@@ -220,16 +212,16 @@ public abstract class ArmedEntity extends MovableEntity
 
         if (dir.equals("CW"))
         {
-            setRotationAngle(wrapAroundValue((float) getRotationAngle() + 45.0f));
+            setRotationAngle(math_helper.wrapAroundValue((float) getRotationAngle() + 45.0f));
         }
 
         else if (dir.equals("CCW"))
         {
-            setRotationAngle(wrapAroundValue((float) getRotationAngle() - 45.0f));
+            setRotationAngle(math_helper.wrapAroundValue((float) getRotationAngle() - 45.0f));
         }
 
         aim_handler.updateAimBounds(getRotationAngle());
-        firing_position.buildFiringPosition(convertAngleToString(getRotationAngle()), this);
+        firing_position.updateFiringPosition(this);
         setAimAngle(getRotationAngle());
 
         if (DEBUG == 1)
@@ -238,7 +230,8 @@ public abstract class ArmedEntity extends MovableEntity
 
     public Position getFiringPosition()
     {
-        firing_position.buildFiringPosition(aim_direction, this);
+        if (!firing_position.priorInit())
+            firing_position.buildFiringPosition(aim_direction, this);
 
         if (DEBUG == 1)
         {

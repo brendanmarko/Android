@@ -11,6 +11,7 @@ public class Laser extends Projectile
     {
         super(o, p, m, ppm, t);
     }
+
     public void update()
     {
         if (DEBUG == 1)

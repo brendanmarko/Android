@@ -2,22 +2,139 @@
 <items version="2" >
 
     <item
-        is-multidex="true"
-        jar="/home/brendan/Desktop/Misc/Game/AndroidGame/GameFiles/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\brend\.android\build-cache\c5b61acdf1ee56b8a629d1a50d801fd648a71bb5\output\jars\classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.0"
-        sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
-        <dex dex="/home/brendan/Desktop/Misc/Game/AndroidGame/GameFiles/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_fb66a637d1d16830f1af9996e2c8121b20fe7a20/classes.dex" />
+        sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
+        <dex dex="D:\Linux\Game\AndroidGame\GameFiles\app\build\intermediates\pre-dexed\debug\classes_b8c2bda762e0e8d44623d0059e86c36a56d969ed.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="/home/brendan/Desktop/Misc/Game/AndroidGame/GameFiles/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="C:\Users\brend\.android\build-cache\1c405bc75f9c75af266aa4971a86fe6621b82acb\output\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.0"
-        sha1="cfe12ff4fb7d5a15617b4be15bfeefaf6b18c621">
-        <dex dex="/home/brendan/Desktop/Misc/Game/AndroidGame/GameFiles/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_cc0720d68394d1e364d4612c4e0dfd290f7a6e59/classes.dex" />
+        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
+        <dex dex="D:\Linux\Game\AndroidGame\GameFiles\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_ac3e48b8b7086a8a6f765f5c1d86707c886cf0c7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\brend\.android\build-cache\624ab3b4ef30f9a3137a6c472baab09ad320d511\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
+        <dex dex="D:\Linux\Game\AndroidGame\GameFiles\app\build\intermediates\pre-dexed\debug\classes_bf4a06f49be7cca69eb67947a9699c260eba46df.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\brend\.android\build-cache\5e4d85ddbd5022647b1b854aeebee640909b5065\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
+        <dex dex="D:\Linux\Game\AndroidGame\GameFiles\app\build\intermediates\pre-dexed\debug\classes_6aeacddfd2229c429a5ec706b263796a8f17e5ed.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\brend\.android\build-cache\9218f8f7be53139352f7e71a004ef7d53b04ae28\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="09b462bbcb77650284bd6614f1a32f360ef369f8">
+        <dex dex="D:\Linux\Game\AndroidGame\GameFiles\app\build\intermediates\pre-dexed\debug\classes_93d28e44428390577521929557fd0d80f5be14e6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\brend\.android\build-cache\5a569ca91dd8d801d79b1477d88bea227ebedacc\output\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="867dad63c33388ff8c7644b236579355036d075f">
+        <dex dex="D:\Linux\Game\AndroidGame\GameFiles\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_98e3e604bd62639bafa5879398653b9c59d6f150.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\brend\.android\build-cache\fd692b7441bf579a506190bfe9254006fa0d13f1\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
+        <dex dex="D:\Linux\Game\AndroidGame\GameFiles\app\build\intermediates\pre-dexed\debug\classes_f0b405d6692cab4e21a1d9dc9cdab3156ef1dd4c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\brend\.android\build-cache\3cc7717ed3b11267db4aefe41a03740a9391eda5\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="D:\Linux\Game\AndroidGame\GameFiles\app\build\intermediates\pre-dexed\debug\classes_9da5e96d26005a8e6f38024d9e76eb41773556ba.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\brend\.android\build-cache\1c405bc75f9c75af266aa4971a86fe6621b82acb\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
+        <dex dex="D:\Linux\Game\AndroidGame\GameFiles\app\build\intermediates\pre-dexed\debug\classes_431cda45e76fd42310ce18bb4ab046c61244c579.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\brend\.android\build-cache\fd692b7441bf579a506190bfe9254006fa0d13f1\output\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
+        <dex dex="D:\Linux\Game\AndroidGame\GameFiles\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_3ecbdc0733c10c02438d46b3e50ccfc9cb1b0a27.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\brend\.android\build-cache\e7edc2ba68211e85323270cd3479afebe4d2c10c\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
+        <dex dex="D:\Linux\Game\AndroidGame\GameFiles\app\build\intermediates\pre-dexed\debug\classes_2e15a91484695f30fee671649933d19cb00862c3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\brend\.android\build-cache\9218f8f7be53139352f7e71a004ef7d53b04ae28\output\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
+        <dex dex="D:\Linux\Game\AndroidGame\GameFiles\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_10f76b83f3dc9f35d2961c0792f4d01525dda671.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\brend\.android\build-cache\5a569ca91dd8d801d79b1477d88bea227ebedacc\output\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
+        <dex dex="D:\Linux\Game\AndroidGame\GameFiles\app\build\intermediates\pre-dexed\debug\classes_13a92f9b40f392911981af0a64228efa3fc65c2c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\brend\.android\build-cache\c5b61acdf1ee56b8a629d1a50d801fd648a71bb5\output\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
+        <dex dex="D:\Linux\Game\AndroidGame\GameFiles\app\build\intermediates\pre-dexed\debug\internal_impl-24.2.1_83768cdd4bf618a62380ab4754b5aa7306309aea.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\Users\brend\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\24.2.1\support-annotations-24.2.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.0"
+        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
+        <dex dex="D:\Linux\Game\AndroidGame\GameFiles\app\build\intermediates\pre-dexed\debug\support-annotations-24.2.1_d9a77e0f6c88e70b0ee56dc3cc7ec75c7baad276.jar" />
     </item>
 
 </items>
