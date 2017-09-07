@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public abstract class ArmedEntity extends MovableEntity
 {
     // Debug info
-    private int                     DEBUG = 1;
+    private int                     DEBUG = 0;
     private String                  DEBUG_TAG = "ArmedEntity/";
 
     private double                  aim_angle;
@@ -194,12 +194,13 @@ public abstract class ArmedEntity extends MovableEntity
             setRotationAngle(math_helper.wrapAroundValue(getRotationAngle() + 45.0d));
         }
 
+        // Update aim_bounds and firing_position
         aim_handler.updateAimBounds(getRotationAngle());
-        firing_position.updateFiringPosition(this);
         setAimAngle(getRotationAngle());
+        firing_position.rotateFiringPosition(this);
 
         if (DEBUG == 1)
-            Log.d(DEBUG_TAG, "CNT: Value of rotation " + getRotationAngle() + " and aim_bounds: " +aim_handler.getAimBounds().toString() + " aim = " + getAimAngle());
+            Log.d(DEBUG_TAG, "CNT: Value of rotation " + getRotationAngle() + " and aim_bounds: " + aim_handler.getAimBounds().toString() + " aim = " + getAimAngle());
     }
 
     // void reverseRotation
@@ -220,9 +221,10 @@ public abstract class ArmedEntity extends MovableEntity
             setRotationAngle(math_helper.wrapAroundValue((float) getRotationAngle() - 45.0f));
         }
 
+        // Update aim_bounds and firing_position
         aim_handler.updateAimBounds(getRotationAngle());
-        firing_position.updateFiringPosition(this);
         setAimAngle(getRotationAngle());
+        firing_position.rotateFiringPosition(this);
 
         if (DEBUG == 1)
             Log.d(DEBUG_TAG, "REV: Value of aim_angle " + getRotationAngle() + " and aim_bounds: " + aim_handler.getAimBounds().toString() + " aim = " + getAimAngle());
@@ -230,18 +232,27 @@ public abstract class ArmedEntity extends MovableEntity
 
     public Position getFiringPosition()
     {
-        if (!firing_position.priorInit())
-            firing_position.buildFiringPosition(aim_direction, this);
-
-        if (DEBUG == 1)
-        {
-            Log.d(DEBUG_TAG + "POS", "Starting ArmedE pos: " + getPosition().toString());
-            Log.d(DEBUG_TAG + "DIM", "Width/Height of ArmedE: " + getWidth() +  ", " + getHeight());
-            Log.d(DEBUG_TAG + "GFP", "Testing firing_pos (fph): " + firing_position.getFiringPosition());
-        }
-
         return firing_position.getFiringPosition();
     }
 
+    public FiringPositionHandler FPHandler()
+    {
+        return firing_position;
+    }
+
+    public String getAimDirection()
+    {
+        return aim_direction;
+    }   
+
+    @Override
+    // resetEntityAt(Position p)
+    // This function takes a position and assigns an Entity to it as well as helper info
+    public void resetEntityAt(Position p)
+    {
+        setPosition(p);
+        rebuildCenter();
+        firing_position.updateFiringPosition(this);
+    }
 
 }

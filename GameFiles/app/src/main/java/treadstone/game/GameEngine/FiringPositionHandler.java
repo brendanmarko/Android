@@ -5,13 +5,12 @@ import android.util.Log;
 public class FiringPositionHandler
 {
     // Debug info
-    private int         DEBUG = 1;
+    private int         DEBUG = 2;
     private String      DEBUG_TAG = "FPH/";
 
     private Position    firing_position;
     private double      width_angle, displacement, rotation_increment, displacement_x, displacement_y;
     private MathHelper  math_helper;
-    private boolean     firing_pos_set;
 
     // Builds the initial firing position parameters that are needed to solve updates wrt FP
     FiringPositionHandler(ArmedEntity a)
@@ -21,15 +20,9 @@ public class FiringPositionHandler
 
         math_helper = new MathHelper();
         rotation_increment = 45.0d;
-        firing_pos_set = false;
-    }
-
-    public void buildFiringPosition(String aim_direction, ArmedEntity a)
-    {
-        if (DEBUG == 1)
-            Log.d(DEBUG_TAG + "buildFP/", "Passed aim_direction: " + aim_direction);
-        firing_position = new Position(a.getPosition().getX() + a.getWidth(), a.getPosition().getY() + a.getHeight()/2);
-        firing_pos_set = true;
+        displacement_x = 0.0d;
+        displacement_y = 0.0d;
+        firing_position = new Position(a.getCenter().getX() + (a.getWidth()/2), a.getCenter().getY());
     }
 
     public Position getFiringPosition()
@@ -37,7 +30,7 @@ public class FiringPositionHandler
         return firing_position;
     }
 
-    public void updateFiringPosition(ArmedEntity a)
+    public void rotateFiringPosition(ArmedEntity a)
     {
         // Find displacement value
         displacement = math_helper.simplifiedCosineLaw(a.getWidth()/2, rotation_increment);
@@ -56,9 +49,36 @@ public class FiringPositionHandler
             Log.d(DEBUG_TAG + "updateFP/", "Displacement values = [" + displacement_x + ", " + displacement_y + "]");
     }
 
-    public boolean priorInit()
+    public void updateFiringPosition(ArmedEntity a)
     {
-        return firing_pos_set;
+        // In this case; firing_pos can easily be calculated w/o angle finding techniques
+        if (a.getRotationAngle() == 0.0d)
+        {
+            if (DEBUG == 2)
+                Log.d(DEBUG_TAG + "UFP/=0", "Position prior to update: " + firing_position.toString() + " & Center value: " + a.getCenter().toString());
+
+            firing_position = new Position(a.getCenter().getX() + a.getWidth()/2, a.getCenter().getY());   
+
+            if (DEBUG == 2)
+                Log.d(DEBUG_TAG + "UFP/=0", "Position after update: " + firing_position.toString());         
+        }
+
+        // In this case; must calculate a new firing_pos wrt the rotation angle of the Entity
+        else
+        {
+            if (DEBUG == 2)
+                Log.d(DEBUG_TAG + "UFP/!0", "Position prior to update: " + firing_position.toString());
+
+            // The displacement_x/y values will already be calculated when rotations wrt the Player occur
+            // This might NOT hold true for AI controlled entities, but, we will worry about that later!
+            firing_position = new Position(a.getCenter().getX() + displacement_x, a.getCenter().getY() + displacement_y);
+
+            if (DEBUG == 2)
+                Log.d(DEBUG_TAG + "updateFP/", "Displacement values = [" + displacement_x + ", " + displacement_y + "]");
+
+            if (DEBUG == 2)
+                Log.d(DEBUG_TAG + "UFP/!0", "Position after update: " + firing_position.toString());
+        }
     }
 
 }

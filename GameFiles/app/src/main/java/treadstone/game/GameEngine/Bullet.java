@@ -22,7 +22,7 @@ public class Bullet extends Projectile
         if (DEBUG == 1)
             Log.d(DEBUG_TAG + "update/", "Travel Vector: " + getTravelVector());
 
-        setPosition(getX() + getTravelVector().getX(), getY() + getTravelVector().getY());
+       setPosition(getX() + getTravelVector().getX(), getY() + getTravelVector().getY());
 
         //if (DEBUG == 1)
             //Log.d("Prj/update", " === New position: " + getPosition().toString());

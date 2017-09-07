@@ -6,8 +6,8 @@ public class Position
 
     Position()
     {
-        position[0] = 0.0f;
-        position[1] = 0.0f;
+        position[0] = 0.0d;
+        position[1] = 0.0d;
     }
 
     Position(double x, double y)
@@ -20,6 +20,21 @@ public class Position
     {
         position[0] = p.getX();
         position[1] = p.getY();
+    }
+
+    public void updatePosition(double x, double y)
+    {
+        position[0] += x;
+        position[1] += y;
+    }
+
+    // equalTo(Pos)
+    // This function checks whether 2 positions are equal to each other
+    public boolean equalTo(Position p)
+    {
+        if (position[0] == p.getX() && position[1] == p.getY())
+            return true;
+        return false;
     }
 
     public void changeX(double new_x)

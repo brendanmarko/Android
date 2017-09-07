@@ -9,9 +9,6 @@ public class TestLevel extends LevelData
     {
 
         setTiles(new ArrayList<String>());
-        getTiles().add("d............................d");
-        getTiles().add("..............................");
-        getTiles().add("....................p.........");
         getTiles().add("..............................");
         getTiles().add("..............................");
         getTiles().add("..............................");
@@ -22,7 +19,10 @@ public class TestLevel extends LevelData
         getTiles().add("..............................");
         getTiles().add("..............................");
         getTiles().add("..............................");
-        getTiles().add(".....@.........d........#.....");
+        getTiles().add("..............................");
+        getTiles().add("..............................");
+        getTiles().add("..............................");
+        getTiles().add(".....@..................#.....");
         getTiles().add("..............................");
         getTiles().add("..............................");
         getTiles().add("..............................");
@@ -31,9 +31,9 @@ public class TestLevel extends LevelData
         getTiles().add("..............................");
         getTiles().add("..............................");
         getTiles().add("..............................");
+        getTiles().add(".........................p....");
         getTiles().add("..............................");
         getTiles().add("..............................");
-        getTiles().add("d............................d");
 
         /*
         getTiles().add("d.d.d.d.d.d.d.d.d.d.d.d.d.d.d.d.d.d.d.d.d.d.d.d.d.d.d.d.d.d.");

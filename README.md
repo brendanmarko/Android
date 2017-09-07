@@ -47,6 +47,8 @@ The ultimate goal of this project is to have a fully functioning 2D space shoote
   
   [x] Player Movement 2.0
 
+  [ ] Firing Position [rotations, movement updates]
+
   [ ] Add Projectile reaction to Entities/Boundaries
   
   ## Phase 4 (Pending)

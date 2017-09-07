@@ -11,9 +11,9 @@ public abstract class MovableEntity extends Entity
     private double                  speed, x_dir, y_dir;
     private String                  direction;
     private boolean                 moving;
-    public  Position                travel_vector;
     private float                   SPEED_REDUCTION_FACTOR = 0.75f;
 
+    // Extensions of MovableEntity can implement update()
     public abstract void update();
 
     public MovableEntity(Position p, Position m, Position ppm, char t)
@@ -99,7 +99,7 @@ public abstract class MovableEntity extends Entity
             y_dir = getSpeed() * SPEED_REDUCTION_FACTOR;
         }
 
-        if (DEBUG == 1)
+        if (DEBUG == 3)
             Log.d(DEBUG_TAG + "calcD", "New Direction: " + direction + " & values: " + x_dir + ", " + y_dir);
 
         // Update position with movement increases
@@ -158,10 +158,10 @@ public abstract class MovableEntity extends Entity
             y_dir = speed * SPEED_REDUCTION_FACTOR;
         }
 
-        if (DEBUG == 1)
+        if (DEBUG == 3)
             Log.d(DEBUG_TAG + "calcDB", "New Direction: " + direction + " & values: " + x_dir + ", " + y_dir);
 
-        // Update position with movement increases
+        // Update position with movement changes
         setPosition(getPosition().getX() + x_dir, getPosition().getY() + y_dir);
     }
 
@@ -175,19 +175,22 @@ public abstract class MovableEntity extends Entity
         return y_dir;
     }
 
-    public void boundsCheck(double x, double y)
+    public boolean boundsCheck(double x, double y)
     {
         if (DEBUG == 2)
             Log.d(DEBUG_TAG + "bounds", "Checking bounds for MovableEntity with [X, Y]: " + x + ", " + y);
 
-        double new_x = 0.0f;
-        double new_y = 0.0f;
+        double      new_x = 0.0f;
+        double      new_y = 0.0f;
+        boolean     in_bounds = true;
 
+        // Handles the X co-ordinate of the updated Position
         if (x < 0.0f)
         {
             if (DEBUG == 2)
                 Log.d(DEBUG_TAG + "bounds", "X < 0");
             new_x = 0.0f;
+            in_bounds = false;
         }
 
         else if (x + getWidth() > getMaxBounds().getX())
@@ -195,6 +198,7 @@ public abstract class MovableEntity extends Entity
             if (DEBUG == 2)
                 Log.d(DEBUG_TAG + "bounds", "X > max");
             new_x = getMaxBounds().getX() - getWidth();
+            in_bounds = false;
         }
 
         else if (new_x == 0.0f)
@@ -202,11 +206,13 @@ public abstract class MovableEntity extends Entity
             new_x = x;
         }
 
+        // Handles the Y co-ordinate of the updated Position
         if (y < 0.0f)
         {
             if (DEBUG == 2)
                 Log.d(DEBUG_TAG + "bounds", "Y < 0");
             new_y = 0.0f;
+            in_bounds = false;
         }
 
         else if (y + getHeight() > getMaxBounds().getY())
@@ -214,6 +220,7 @@ public abstract class MovableEntity extends Entity
             if (DEBUG == 2)
                 Log.d(DEBUG_TAG + "bounds", "Y > max");
             new_y = getMaxBounds().getY() - getHeight();
+            in_bounds = false;
         }
 
         else if (new_y == 0.0f)
@@ -225,6 +232,7 @@ public abstract class MovableEntity extends Entity
             Log.d(DEBUG_TAG + "bounds", "Checking bounds for Player with [X, Y]: " + new_x + ", " + new_y);
 
         setPosition(new_x, new_y);
+        return in_bounds;
     }
 
     public void stopMovement()
@@ -303,75 +311,6 @@ public abstract class MovableEntity extends Entity
 
         else
             return 0.0d;
-    }
-
-    public void buildTravelVector(double a)
-    {
-        if (DEBUG == 3)
-            Log.d(DEBUG_TAG + "travelV", "Input angle into buildTravelVector " + a);
-
-        double x, y;
-
-        if ((a >= 0.0d && a <= 90.0d) || (a >= 270.0d && a <= 360.0d)) // Q1 && Q4
-        {
-            x = Math.cos(Math.toRadians(a)) * getSpeed();
-            if (DEBUG == 3)
-                Log.d(DEBUG_TAG, "[X] Angle is within (0<x<90) OR (270<x<360) -> POSITIVE: " + x);
-        }
-
-        else // Q2 && Q3
-        {
-            x = Math.cos(Math.toRadians(a)) * getSpeed();
-            if (DEBUG == 3)
-                Log.d(DEBUG_TAG, "[X] Angle is within (90<x<270) -> NEGATIVE: " + x);
-        }
-
-        // Checks if x consumes entire displacement
-        if (Math.abs(x) == getSpeed())
-        {
-            y = 0.0d;
-            if (DEBUG == 3)
-                Log.d(DEBUG_TAG + "S=TV", "Projectile speed is focused in one direction; y = 0");
-        }
-
-        else
-        {
-            if (a >= 180.0d && a <= 360.0d) // Q3 && Q4
-            {
-                y = Math.abs(Math.sin(Math.toRadians(a)) * getSpeed());
-                if (DEBUG == 3)
-                    Log.d(DEBUG_TAG, "[Y] Angle is within (180<x<360) -> POSITIVE: " + y);
-            }
-
-            else // Q1 && Q2
-            {
-                y = 0 - Math.sin(Math.toRadians(a)) * getSpeed();
-                if (DEBUG == 3)
-                    Log.d(DEBUG_TAG, "[Y] Angle is within (0<x<180) -> NEGATIVE: " + y);
-            }
-
-        }
-
-        // Checks if y consumes entire displacement
-        if (Math.abs(y) == getSpeed())
-        {
-            x = 0.0d;
-            if (DEBUG == 3)
-                Log.d(DEBUG_TAG + "S=TV", "Projectile speed is focused in one direction; x = 0");
-        }
-
-        if (DEBUG == 3)
-        {
-            Log.d(DEBUG_TAG, "calcDisplacement value X: " + x + " converted into float: " + (float) x);
-            Log.d(DEBUG_TAG, "calcDisplacement value Y: " + y + " converted into float: " + (float) y);
-        }
-
-        travel_vector = new Position((float) x, (float) y);
-    }
-
-    public Position getTravelVector()
-    {
-        return travel_vector;
     }
 
 }

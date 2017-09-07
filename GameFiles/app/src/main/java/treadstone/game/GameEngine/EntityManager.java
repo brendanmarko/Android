@@ -71,7 +71,7 @@ public class EntityManager extends Manager
     public void addBuffer(Context c, ArrayList<Entity> buffer)
     {
         if (DEBUG == 1)
-            Log.d(DEBUG_TAG, "Adding buffer to projectiles!");
+            Log.d(DEBUG_TAG, "Adding buffer to entities!");
 
         for (Entity e : buffer)
             checkBitmap(c, e, e.getObjInfo().getType());
@@ -79,7 +79,7 @@ public class EntityManager extends Manager
         getList().addAll(buffer);
 
         if (DEBUG == 1)
-            Log.d(DEBUG_TAG, "New Size of projectiles: " + getList().size());
+            Log.d(DEBUG_TAG, "New Size of entities: " + getList().size());
     }
 
     public void draw(Canvas canvas, Paint paint)

@@ -256,8 +256,8 @@ public class GameView extends SurfaceView implements Runnable
     // These values are used for updating screen touches with the Game World.
     public void calcDisplacement()
     {
-        displacementX = viewport.getViewPortCentre().getX() - viewport.getCentre().getX();
-        displacementY = viewport.getViewPortCentre().getY() - viewport.getCentre().getY();
+        displacementX = viewport.getViewPortCentre().getX() - viewport.getScreenCentre().getX();
+        displacementY = viewport.getViewPortCentre().getY() - viewport.getScreenCentre().getY();
 
         if (DEBUG == 1)
             Log.d(DEBUG_TAG, "Displacements: " + displacementX + ", " + displacementY);
@@ -280,7 +280,10 @@ public class GameView extends SurfaceView implements Runnable
     public void initPlayer()
     {
         curr_player = level_manager.getPlayer();
-        curr_player.initCenter(viewport.getCentre(), pixels_per_metre);
+
+        // Resets Player at the newly assigned position wrt:
+        // Center, Firing Position and Position
+        curr_player.resetEntityAt(viewport.getScreenCentre());
     }
 
     public void collisionCheck()

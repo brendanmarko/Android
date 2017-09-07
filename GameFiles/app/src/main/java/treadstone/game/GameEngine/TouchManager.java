@@ -9,7 +9,7 @@ public class TouchManager implements OnGestureListener, OnDoubleTapListener
 {
     // Debug info
     private int         DEBUG = 1;
-    private String      DEBUG_TAG = "TouchMgr";
+    private String      DEBUG_TAG = "TouchMgr/";
 
     private Player      curr_player;
     private ViewPort    viewport;

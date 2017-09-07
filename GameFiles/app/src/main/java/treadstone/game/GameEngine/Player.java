@@ -18,11 +18,6 @@ public class Player extends ArmedEntity implements Shooter, AngleFinder
             Log.d(DEBUG_TAG + "processMove", "Current Player location: " + getX() + ", " + getY());
     }
 
-    public void initCenter(Position p, Position ppm)
-    {
-        setPosition(p.getX() - (getObjInfo().getDimensions().getX() * ppm.getX())/2, p.getY() - (getObjInfo().getDimensions().getY() * ppm.getY())/2);
-    }
-
     public void processMovement(double x_location, double y_location, boolean boosted)
     {
         if (DEBUG == 2)
@@ -55,20 +50,37 @@ public class Player extends ArmedEntity implements Shooter, AngleFinder
 
         else
             calcDirDisplacement(convertAngleToString(angle_of_movement));
-
-        boundsCheck(getX(), getY());
     }
 
     @Override
     public void update()
     {
+        if (DEBUG == 2)
+            Log.d(DEBUG_TAG + "update/", "Current pos: " + getPosition().toString() + ", Firing pos: " + getFiringPosition().toString());
+
         if (isMoving())
-            setPosition(getPosition().getX() + directionX(), getPosition().getY() + directionY());
+        {
+            getPosition().updatePosition(directionX(), directionY());
 
-        else
-            setPosition(getPosition().getX(), getPosition().getY());
+            if (DEBUG == 2)
+                Log.d(DEBUG_TAG + "update/Moved", "Current pos: " + getPosition().toString() + ", Firing pos: " + getFiringPosition().toString());
 
-        boundsCheck(getX(), getY());
+            if (boundsCheck(getX(), getY()))
+            {
+                //rebuildCenter();
+                updateCenter(directionX(), directionY()); // Problem may be here...
+                FPHandler().updateFiringPosition(this);
+            }
+
+            else  
+            {
+                rebuildCenter();
+                FPHandler().updateFiringPosition(this); 
+            }
+        }
+
+  //      else
+//            setPosition(getPosition().getX(), getPosition().getY());      
     }
 
     public double radianFinder(double x, double y, double z)

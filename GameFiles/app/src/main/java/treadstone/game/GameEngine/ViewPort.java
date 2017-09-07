@@ -5,8 +5,9 @@ import android.util.Log;
 
 public class ViewPort
 {
-    // Debug toggle
+    // Debug info
     private int         DEBUG = 2;
+    private String      DEBUG_TAG = "ViewPort/";
 
     private Position    screen_resolution;
     private Position    screen_centre;
@@ -49,6 +50,8 @@ public class ViewPort
 
     private void initializeParam(Position r)
     {
+        if (DEBUG == 2)
+            Log.d(DEBUG_TAG + "initP/", "Size of screen passed: " + r.toString());
         viewable_size = new Position(r.getX(), r.getY());
         screen_centre = new Position(r.getX()/4, r.getY()/2);
 
@@ -127,7 +130,7 @@ public class ViewPort
 
         return (screen_centre.getY() + (p.getY() - viewport_centre.getY()));
     }
-    public Position getCentre()
+    public Position getScreenCentre()
     {
         return screen_centre;
     }

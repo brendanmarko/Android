@@ -10,11 +10,11 @@ import android.util.Log;
 public abstract class Entity
 {
     // Debug info
-    private int                 DEBUG = 3;
+    private int                 DEBUG = 4;
     private String              DEBUG_TAG = "Entity/";
 
     private Position            pixels_per_metre;
-    private Position            position;
+    private Position            position, center;
     private Position            max_bounds;
 
     private int                 layer;
@@ -57,14 +57,51 @@ public abstract class Entity
 
         position = pos;
 
+        // Initialize center of Entity
+        initCenter(position);
+
         if (t == 'p')
             Log.d(DEBUG_TAG, "Player max location = " + max.toString());
 
         // Set hitbox
-        hitbox_object = new RectangleHitbox(pos, pixels_per_metre, info.getDimensions());
+        hitbox_object = new RectangleHitbox(position, pixels_per_metre, info.getDimensions());
 
-        if (DEBUG == 1)
-            Log.d(DEBUG_TAG, "Hitbox set properly");
+        if (DEBUG == 4)
+            Log.d(DEBUG_TAG, "Center of Entity: " + center.toString());
+    }
+
+    // initCenter(pos, ppm)
+    // This function locates the center of the specified Entity; used later for FPH
+    public void initCenter(Position p)
+    {
+        if (DEBUG == 4)
+            Log.d(DEBUG_TAG + "initCenter/", "Position: " + p.toString() + " && dims: " + width + ", " + height);
+        center = new Position(p.getX() + (width/2), p.getY() + (height/2));
+        if (DEBUG == 4)
+            Log.d(DEBUG_TAG + "initCenter/", "Init value of Center: " + center.toString());
+    }
+
+    // rebuildCenter()
+    // Resets the center of the Entity at the current position
+    public void rebuildCenter()
+    {
+        center = new Position(position.getX() + (width/2), position.getY() + (height/2));
+    }
+
+    // updateCenter(x, y)
+    // This function updates the value of the center of the Entity
+    public void updateCenter(double x, double y)
+    {
+        if (DEBUG == 4)
+            Log.d(DEBUG_TAG + "UpdateCenter/", "Value of Center: " + center.toString() + " with x/y changes of " + x + ", " + y);
+        center.updatePosition(x, y);
+    }
+
+    // getCenter()
+    // Returns the center of the Entity that was previously assigned
+    public Position getCenter()
+    {
+        return center;
     }
 
     public Bitmap createBitmap(Context c, String s)
@@ -115,6 +152,13 @@ public abstract class Entity
     public Position getPosition()
     {
         return position;
+    }
+    
+    // setPosition(Position)
+    // Assigns a position to the Entity
+    public void setPosition(Position p)
+    {
+        position = p;
     }
 
     // setPosition(float, float)
@@ -222,6 +266,14 @@ public abstract class Entity
         image = null;
         hitbox_object = null;
         active = false;
+    }
+
+    // resetEntityAt(Position p)
+    // This function takes a position and assigns an Entity to it as well as helper info
+    public void resetEntityAt(Position p)
+    {
+        position = p;
+        center = new Position(p.getX() + (width/2), p.getY() + (height/2));
     }
 
 }
